@@ -17,8 +17,8 @@
             <div class="collapse navbar-collapse" id="navMain">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link" href="{{ path('app_homepage') }}">Accueil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ path('app_menus') }}">Nos menus</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ path('app_contact') }}">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Nos menus</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                 </ul>
                 <ul class="navbar-nav">
                     {% if app.user %}
@@ -27,12 +27,12 @@
                                 {{ app.user.nomComplet }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="{{ path('app_user_dashboard') }}">Mon espace</a></li>
+                                <li><a class="dropdown-item" href="#">Mon espace</a></li>
                                 {% if is_granted('ROLE_EMPLOYE') %}
-                                    <li><a class="dropdown-item" href="{{ path('app_employee_dashboard') }}">Espace employe</a></li>
+                                    <li><a class="dropdown-item" href="#">Espace employe</a></li>
                                 {% endif %}
                                 {% if is_granted('ROLE_ADMIN') %}
-                                    <li><a class="dropdown-item" href="{{ path('app_admin_dashboard') }}">Administration</a></li>
+                                    <li><a class="dropdown-item" href="#">Administration</a></li>
                                 {% endif %}
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{{ path('app_logout') }}">Deconnexion</a></li>
@@ -64,9 +64,9 @@
         <div class="container text-center">
             <p class="mb-1">&copy; {{ 'now'|date('Y') }} Vite & Gourmand — Traiteur a Bordeaux</p>
             <small>
-                <a class="text-light" href="{{ path('app_mentions_legales') }}">Mentions legales</a>
+                <a class="text-light" href="#">Mentions legales</a>
                 &bull;
-                <a class="text-light" href="{{ path('app_cgv') }}">CGV</a>
+                <a class="text-light" href="#">CGV</a>
             </small>
         </div>
     </footer>
