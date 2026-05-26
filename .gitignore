@@ -1,0 +1,28 @@
+# =============================================
+# Notes et fichiers de travail locaux
+# =============================================
+/*.md
+!README.md
+prompts/
+specs/
+notes/
+desktop.ini
+
+# =============================================
+# Symfony — complète le .gitignore de app/
+# =============================================
+app/.env.local
+app/.env.*.local
+app/var/
+app/vendor/
+app/public/uploads/
+
+# =============================================
+# OS / IDE
+# =============================================
+.DS_Store
+Thumbs.db
+*.swp
+/.*
+!/.gitignore
+!/.gitattributes
