@@ -24,6 +24,7 @@ security:
             logout:
                 path: app_logout
                 target: app_homepage
+                enable_csrf: true
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 604800
