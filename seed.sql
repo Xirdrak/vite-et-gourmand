@@ -1,4 +1,4 @@
--- Vite & Gourmand — données de test
+-- Vite & Gourmand - donnees de test
 -- Mots de passe : Admin@2026! / Employe@2026! / Client@2026!
 
 SET FOREIGN_KEY_CHECKS = 0;
