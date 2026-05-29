@@ -1,7 +1,7 @@
 # Vite & Gourmand
 
 Application web pour le traiteur événementiel "Vite & Gourmand" (Bordeaux).  
-Projet ECF — TP Développeur Web et Web Mobile (Studi).
+Projet ECF - TP Développeur Web et Web Mobile (Studi).
 
 ---
 
