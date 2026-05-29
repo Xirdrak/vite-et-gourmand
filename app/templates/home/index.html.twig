@@ -3,9 +3,95 @@
 {% block title %}Vite & Gourmand - Traiteur a Bordeaux{% endblock %}
 
 {% block body %}
-<div class="text-center py-5">
-    <h1>Vite & Gourmand</h1>
-    <p class="lead text-muted">Traiteur evenementiel a Bordeaux depuis 1999</p>
-    <a href="#" class="btn btn-dark mt-3">Decouvrir nos menus</a>
-</div>
+
+{# Hero #}
+<section class="bg-dark text-white text-center py-5">
+    <div class="container py-4">
+        <h1 class="display-4 fw-bold">Vite & Gourmand</h1>
+        <p class="lead mb-4">Traiteur événementiel à Bordeaux depuis 1999</p>
+        <a href="#" class="btn btn-warning btn-lg px-5">Découvrir nos menus</a>
+    </div>
+</section>
+
+{# Présentation #}
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-md-6">
+                <h2 class="mb-3">Notre histoire</h2>
+                <p>Depuis 1999, Vite & Gourmand accompagne les grandes occasions des familles et entreprises bordelaises. Noël, Pâques, mariages, séminaires : nous composons des menus sur mesure pour que chaque repas devienne un souvenir.</p>
+                <p>Forts de 25 ans d'expérience, nous travaillons avec des producteurs locaux et mettons un point d'honneur à livrer des plats de qualité, à temps, partout à Bordeaux et ses alentours.</p>
+            </div>
+            <div class="col-md-6 text-center">
+                <div class="bg-light rounded p-5">
+                    <p class="display-1">🍽️</p>
+                    <p class="text-muted fst-italic">"Un repas réussi, c'est un moment qui reste."</p>
+                    <p class="text-muted">- Julie & José, fondateurs</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# Équipe #}
+<section class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Notre équipe</h2>
+        <div class="row justify-content-center g-4">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm text-center h-100">
+                    <div class="card-body p-4">
+                        <div class="bg-secondary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width:80px;height:80px;font-size:2rem;">J</div>
+                        <h5 class="card-title mb-1">Julie Moreau</h5>
+                        <p class="text-muted small mb-3">Cofondatrice & responsable des menus</p>
+                        <p class="card-text">Julie imagine et compose les menus depuis 25 ans. C'est elle qui sélectionne les producteurs et garantit la qualité de chaque plat.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm text-center h-100">
+                    <div class="card-body p-4">
+                        <div class="bg-secondary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width:80px;height:80px;font-size:2rem;">J</div>
+                        <h5 class="card-title mb-1">José Moreau</h5>
+                        <p class="text-muted small mb-3">Cofondateur & responsable logistique</p>
+                        <p class="card-text">José gère les livraisons, le matériel et les équipes sur le terrain. Sa priorité : que tout arrive à l'heure et en parfait état.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# Avis clients #}
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Ce que disent nos clients</h2>
+
+        {% if avis_list is empty %}
+            <p class="text-center text-muted">Aucun avis pour le moment.</p>
+        {% else %}
+            <div class="row g-4">
+                {% for avis in avis_list %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <div class="mb-2 text-warning">
+                                    {% for i in 1..5 %}
+                                        {% if i <= avis.note %}★{% else %}☆{% endif %}
+                                    {% endfor %}
+                                </div>
+                                <p class="card-text fst-italic">"{{ avis.description }}"</p>
+                                <p class="text-muted small mb-0">
+                                    - {{ avis.utilisateur.prenom }} {{ avis.utilisateur.nom|slice(0, 1) }}.
+                                    <span class="ms-2">{{ avis.dateAvis|date('d/m/Y') }}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</section>
+
 {% endblock %}

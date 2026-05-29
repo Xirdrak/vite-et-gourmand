@@ -65,14 +65,35 @@
         {% block body %}{% endblock %}
     </main>
 
-    <footer class="bg-dark text-light py-4 mt-5">
-        <div class="container text-center">
-            <p class="mb-1">&copy; {{ 'now'|date('Y') }} Vite & Gourmand - Traiteur a Bordeaux</p>
-            <small>
-                <a class="text-light" href="#">Mentions legales</a>
-                &bull;
-                <a class="text-light" href="#">CGV</a>
-            </small>
+    <footer class="bg-dark text-light py-5 mt-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h6 class="text-uppercase fw-bold mb-3">Vite & Gourmand</h6>
+                    <p class="text-secondary small">Traiteur evenementiel a Bordeaux depuis 1999.</p>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="text-uppercase fw-bold mb-3">Nos horaires</h6>
+                    <ul class="list-unstyled small text-secondary">
+                        {% for horaire in get_horaires() %}
+                            <li class="d-flex justify-content-between">
+                                <span>{{ horaire.jour }}</span>
+                                <span>{{ horaire.heureOuverture|date('H:i') }} - {{ horaire.heureFermeture|date('H:i') }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="text-uppercase fw-bold mb-3">Informations</h6>
+                    <ul class="list-unstyled small">
+                        <li><a class="text-secondary text-decoration-none" href="#">Mentions legales</a></li>
+                        <li><a class="text-secondary text-decoration-none" href="#">CGV</a></li>
+                        <li><a class="text-secondary text-decoration-none" href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border-secondary mt-4">
+            <p class="text-center text-secondary small mb-0">&copy; {{ 'now'|date('Y') }} Vite & Gourmand - Tous droits reserves</p>
         </div>
     </footer>
 
