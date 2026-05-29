@@ -1,7 +1,7 @@
 # Normalise tous les fichiers texte en LF dans le dépôt
 * text=auto eol=lf
 
-# Fichiers binaires — pas de conversion
+# Fichiers binaires - pas de conversion
 *.png binary
 *.jpg binary
 *.jpeg binary

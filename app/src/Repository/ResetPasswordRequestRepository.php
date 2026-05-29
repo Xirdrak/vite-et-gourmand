@@ -12,4 +12,14 @@ class ResetPasswordRequestRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ResetPasswordRequest::class);
     }
+
+    public function deleteByUtilisateur(\App\Entity\Utilisateur $utilisateur): void
+    {
+        $this->createQueryBuilder('r')
+            ->delete()
+            ->where('r.utilisateur = :u')
+            ->setParameter('u', $utilisateur)
+            ->getQuery()
+            ->execute();
+    }
 }

@@ -6,7 +6,7 @@ specs/
 notes/
 desktop.ini
 
-# Symfony - complete le .gitignore de app/
+# Fichiers Symfony/
 app/.env.local
 app/.env.*.local
 app/var/
