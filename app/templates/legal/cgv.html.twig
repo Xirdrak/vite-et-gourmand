@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conditions Générales de Vente - Vite & Gourmand{% endblock %}
+
+{% block body %}
+
+<div class="container" style="padding-top: var(--space-lg); padding-bottom: var(--space-xl); max-width: 800px;">
+
+    <h1 class="text-headline-md" style="margin-bottom: var(--space-lg);">Conditions Générales de Vente</h1>
+
+    <div class="legal-content">
+
+        <section class="legal-section">
+            <h2>Article 1 - Objet</h2>
+            <p>Les présentes Conditions Générales de Vente régissent les relations contractuelles entre
+            Vite & Gourmand (ci-après "le prestataire") et tout client passant commande via le site.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>Article 2 - Commandes</h2>
+            <p>Toute commande est soumise à validation par le prestataire. Une commande est considérée
+            définitive après réception de la confirmation par e-mail.</p>
+            <p>Le client doit être connecté à son compte pour passer une commande. Les informations
+            fournies lors de la commande (date, lieu, nombre de personnes) engagent le client.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>Article 3 - Délai de commande</h2>
+            <p>Les commandes doivent être passées dans le respect des délais indiqués sur chaque menu.
+            Toute commande hors délai pourra être refusée par le prestataire.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>Article 4 - Prix et facturation</h2>
+            <p>Les prix affichés sont exprimés en euros TTC, par personne. Ils incluent la préparation
+            et la mise en place sur place.</p>
+            <p>Une réduction de 10 % est appliquée automatiquement lorsque le nombre de personnes
+            commandé est supérieur ou égal au minimum du menu augmenté de 5 personnes.</p>
+            <p>Les frais de livraison s'appliquent pour toute prestation hors Bordeaux :
+            5 € de base + 0,59 € par kilomètre supplémentaire.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>Article 5 - Modification et annulation</h2>
+            <p>Le client peut modifier ou annuler sa commande tant que son statut est "nouvelle".
+            Une fois la commande acceptée par le prestataire, aucune modification ni annulation
+            n'est possible sans prise de contact préalable.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>Article 6 - Matériel prêté</h2>
+            <p>Dans le cadre de certaines prestations, du matériel peut être prêté au client.
+            Ce matériel doit être restitué dans un délai de 10 jours ouvrés suivant la prestation.
+            Tout matériel non restitué dans ce délai sera facturé 600 € au client.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>Article 7 - Responsabilité</h2>
+            <p>Vite & Gourmand s'engage à respecter les règles d'hygiène et de sécurité alimentaire
+            en vigueur. La responsabilité du prestataire ne saurait être engagée en cas de
+            mauvaise conservation des produits après livraison.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>Article 8 - Litiges</h2>
+            <p>En cas de litige, les parties s'engagent à rechercher une solution amiable avant
+            tout recours judiciaire. Le tribunal compétent sera celui de Bordeaux.</p>
+        </section>
+
+    </div>
+
+    <p style="margin-top: var(--space-lg);">
+        <a href="{{ path('app_homepage') }}" class="btn-ghost">Retour à l'accueil</a>
+    </p>
+
+</div>
+
+{% endblock %}

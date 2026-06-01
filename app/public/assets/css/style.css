@@ -1297,3 +1297,19 @@ ul.form-error li {
   border-radius: 16px;
   padding: var(--space-md);
 }
+
+/* Pages légales */
+.legal-content { display: flex; flex-direction: column; gap: var(--space-md); }
+
+.legal-section h2 {
+  font-size: var(--fs-label-lg);
+  font-weight: 600;
+  color: var(--color-secondary);
+  margin-bottom: var(--space-xs);
+}
+.legal-section p {
+  font-size: var(--fs-body-md);
+  color: var(--color-on-surface-variant);
+  line-height: 1.7;
+  margin-bottom: var(--space-xs);
+}
