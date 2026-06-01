@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact - Vite & Gourmand{% endblock %}
+
+{% block body %}
+
+<div class="container" style="padding-top: var(--space-lg); padding-bottom: var(--space-xl);">
+
+    <div class="contact-layout">
+
+        <div class="contact-intro">
+            <h1 class="text-headline-md">Contactez-nous</h1>
+            <p style="color: var(--color-on-surface-variant); margin-top: var(--space-sm); line-height: 1.7;">
+                Une question sur nos menus, un projet d'evenement, ou simplement envie d'en savoir plus ?
+                Remplissez ce formulaire et nous vous repondrons dans les plus brefs delais.
+            </p>
+
+            <div class="contact-info">
+                <p class="contact-info__item">
+                    <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+                    Bordeaux, France
+                </p>
+                <p class="contact-info__item">
+                    <span class="material-symbols-outlined" aria-hidden="true">schedule</span>
+                    Du lundi au dimanche
+                </p>
+            </div>
+        </div>
+
+        <div class="contact-form-wrapper">
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert--success" role="alert">
+                    <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+
+                <div class="form-group">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email, {attr: {autocomplete: 'email'}}) }}
+                    {{ form_errors(form.email) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.sujet) }}
+                    {{ form_widget(form.sujet) }}
+                    {{ form_errors(form.sujet) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.message) }}
+                    {{ form_widget(form.message, {attr: {rows: 6, placeholder: 'Ecrivez votre message ici...'}}) }}
+                    {{ form_errors(form.message) }}
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%;">
+                    Envoyer le message
+                </button>
+
+            {{ form_end(form) }}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

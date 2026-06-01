@@ -9,7 +9,8 @@ use Twig\Environment;
 
 class MailerService
 {
-    private const FROM = 'contact@vite-et-gourmand.fr';
+    private const FROM      = 'contact@vite-et-gourmand.fr';
+    private const ENTREPRISE = 'contact@vite-et-gourmand.fr';
 
     public function __construct(
         private MailerInterface $mailer,
@@ -42,6 +43,24 @@ class MailerService
             ->from(self::FROM)
             ->to($utilisateur->getEmail())
             ->subject('Reinitialisation de votre mot de passe')
+            ->html($html);
+
+        $this->mailer->send($email);
+    }
+
+    public function sendContact(string $emailExpediteur, string $sujet, string $message): void
+    {
+        $html = $this->twig->render('email/contact.html.twig', [
+            'email_expediteur' => $emailExpediteur,
+            'sujet'            => $sujet,
+            'message'          => $message,
+        ]);
+
+        $email = (new Email())
+            ->from(self::FROM)
+            ->to(self::ENTREPRISE)
+            ->replyTo($emailExpediteur)
+            ->subject('[Contact] ' . $sujet)
             ->html($html);
 
         $this->mailer->send($email);

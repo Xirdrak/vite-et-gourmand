@@ -22,7 +22,8 @@
                href="{{ path('app_homepage') }}">Accueil</a>
             <a class="navbar__link{% if app.request.attributes.get('_route') starts with 'app_menus' %} navbar__link--active{% endif %}"
                href="{{ path('app_menus') }}">Nos menus</a>
-            <a class="navbar__link" href="#">Contact</a>
+            <a class="navbar__link{% if app.request.attributes.get('_route') == 'app_contact' %} navbar__link--active{% endif %}"
+               href="{{ path('app_contact') }}">Contact</a>
 
             {% if app.user %}
                 <div class="navbar__dropdown">
@@ -59,7 +60,7 @@
     <div class="navbar__mobile" id="nav-mobile">
         <a class="navbar__link" href="{{ path('app_homepage') }}">Accueil</a>
         <a class="navbar__link" href="{{ path('app_menus') }}">Nos menus</a>
-        <a class="navbar__link" href="#">Contact</a>
+        <a class="navbar__link" href="{{ path('app_contact') }}">Contact</a>
         {% if app.user %}
             <a class="navbar__link" href="#">Mon espace</a>
             <form method="post" action="{{ path('app_logout') }}">
@@ -108,7 +109,7 @@
             <p class="footer__section-title">Informations</p>
             <a class="footer__link" href="#">Mentions légales</a>
             <a class="footer__link" href="#">CGV</a>
-            <a class="footer__link" href="#">Contact</a>
+            <a class="footer__link" href="{{ path('app_contact') }}">Contact</a>
         </div>
     </div>
     <div class="footer__bottom">
