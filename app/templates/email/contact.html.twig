@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"></head>
+<body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+    <h2>Nouveau message depuis le formulaire de contact</h2>
+    <p><strong>De :</strong> {{ email_expediteur }}</p>
+    <p><strong>Sujet :</strong> {{ sujet }}</p>
+    <hr style="border: none; border-top: 1px solid #ddd; margin: 16px 0;">
+    <p style="white-space: pre-line;">{{ message }}</p>
+    <hr style="border: none; border-top: 1px solid #ddd; margin: 16px 0;">
+    <p style="color: #666; font-size: 0.9em;">
+        Ce message a ete envoye depuis le formulaire de contact de vite-et-gourmand.fr.<br>
+        Pour repondre, utilisez directement l'adresse : {{ email_expediteur }}
+    </p>
+</body>
+</html>

@@ -1262,4 +1262,38 @@ ul.form-error li {
   color: var(--color-on-surface);
   margin-bottom: var(--space-xs);
 }
-.gap-lg          { gap: var(--space-lg); }
+
+/* Page contact */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+@media (min-width: 900px) {
+  .contact-layout { grid-template-columns: 1fr 1fr; align-items: start; }
+}
+
+.contact-info {
+  margin-top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.contact-info__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--fs-body-md);
+  color: var(--color-on-surface-variant);
+}
+.contact-info__item .material-symbols-outlined {
+  font-size: 20px;
+  color: var(--color-secondary);
+}
+
+.contact-form-wrapper {
+  background-color: var(--color-surface-white);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: 16px;
+  padding: var(--space-md);
+}
