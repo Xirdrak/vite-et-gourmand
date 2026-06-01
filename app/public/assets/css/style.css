@@ -1104,3 +1104,162 @@ ul.form-error li {
 .gap-base        { gap: var(--space-base); }
 .gap-md          { gap: var(--space-md); }
 .gap-lg          { gap: var(--space-lg); }
+
+/* Page detail menu */
+.menu-detail__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-secondary);
+  font-size: var(--fs-label-md);
+  text-decoration: none;
+  margin-bottom: var(--space-md);
+}
+.menu-detail__back:hover { text-decoration: underline; }
+.menu-detail__back .material-symbols-outlined { font-size: 18px; }
+
+.menu-detail__hero {
+  width: 100%;
+  height: 300px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: var(--space-lg);
+  background-color: var(--color-surface-highest);
+}
+.menu-detail__hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.menu-detail__hero-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+}
+
+.menu-detail__layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+@media (min-width: 900px) {
+  .menu-detail__layout { grid-template-columns: 1fr 320px; }
+  .menu-detail__hero   { height: 420px; }
+}
+
+.menu-detail__header { margin-bottom: var(--space-md); }
+
+.menu-detail__description {
+  font-size: var(--fs-body-md);
+  color: var(--color-on-surface-variant);
+  line-height: 1.7;
+  margin-bottom: var(--space-lg);
+}
+
+.menu-detail__plats { display: flex; flex-direction: column; gap: var(--space-md); }
+
+.plat-group__title {
+  font-size: var(--fs-label-lg);
+  font-weight: 600;
+  color: var(--color-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--color-outline-variant);
+  margin-bottom: var(--space-sm);
+}
+
+.plat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.plat-item {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  padding: var(--space-xs) 0;
+}
+.plat-item__name {
+  font-size: var(--fs-body-md);
+  color: var(--color-on-surface);
+  flex-shrink: 0;
+}
+.plat-item__allergenes { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.allergene-tag {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background-color: var(--color-surface-container);
+  color: var(--color-on-surface-variant);
+  border: 1px solid var(--color-outline-variant);
+  white-space: nowrap;
+}
+
+.menu-detail__info-card {
+  background-color: var(--color-surface-white);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: 16px;
+  padding: var(--space-md);
+  position: sticky;
+  top: 80px;
+}
+
+.menu-detail__price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-secondary);
+  margin-bottom: var(--space-sm);
+}
+.menu-detail__price span {
+  font-size: var(--fs-body-md);
+  font-weight: 400;
+  color: var(--color-on-surface-variant);
+}
+
+.menu-detail__min-persons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--fs-body-sm);
+  color: var(--color-on-surface-variant);
+  margin-bottom: var(--space-sm);
+}
+.menu-detail__min-persons .material-symbols-outlined { font-size: 18px; }
+
+.menu-detail__stock {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--fs-body-sm);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: 8px;
+  margin-bottom: var(--space-sm);
+}
+.menu-detail__stock .material-symbols-outlined { font-size: 18px; }
+.menu-detail__stock--low  { background-color: var(--color-error-container); color: var(--color-on-error-container); }
+.menu-detail__stock--full { background-color: var(--color-surface-container); color: var(--color-on-surface-variant); }
+
+.menu-detail__conditions {
+  background-color: var(--color-surface-low);
+  border-radius: 8px;
+  padding: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  font-size: var(--fs-body-sm);
+  color: var(--color-on-surface-variant);
+}
+.menu-detail__conditions-title {
+  font-weight: 600;
+  color: var(--color-on-surface);
+  margin-bottom: var(--space-xs);
+}
+.gap-lg          { gap: var(--space-lg); }
