@@ -85,7 +85,7 @@
                                 <p class="card-menu__price">{{ menu.prixParPersonne }}€ / pers.</p>
                                 <p class="card-menu__persons">Min. {{ menu.nombrePersonneMinimum }} personnes</p>
                             </div>
-                            <a href="#" class="btn-ghost" style="padding: var(--space-xs) var(--space-sm); font-size: var(--fs-label-sm);">
+                            <a href="{{ path('app_menu_show', {id: menu.id}) }}" class="btn-ghost" style="padding: var(--space-xs) var(--space-sm); font-size: var(--fs-label-sm);">
                                 Voir le menu
                             </a>
                         </div>

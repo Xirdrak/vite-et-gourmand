@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ menu.titre }} - Vite & Gourmand{% endblock %}
+
+{% block body %}
+
+<div class="container" style="padding-top: var(--space-lg); padding-bottom: var(--space-xl);">
+
+    <a href="{{ path('app_menus') }}" class="menu-detail__back">
+        <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+        Retour aux menus
+    </a>
+
+    <div class="menu-detail__hero">
+        {% if menu.images is not empty %}
+            <img src="{{ menu.images.first.chemin }}"
+                 alt="{{ menu.titre }}"
+                 class="menu-detail__hero-img">
+        {% else %}
+            <div class="menu-detail__hero-placeholder">🍽️</div>
+        {% endif %}
+    </div>
+
+    <div class="menu-detail__layout">
+
+        <div class="menu-detail__main">
+            <div class="menu-detail__header">
+                <h1 class="text-headline-md">{{ menu.titre }}</h1>
+                <div style="display:flex; gap: var(--space-xs); flex-wrap: wrap; margin-top: var(--space-xs);">
+                    <span class="badge badge--{{ menu.theme.libelle|lower|replace({' ': '-', 'â': 'a', 'ô': 'o', 'é': 'e', 'è': 'e', 'ê': 'e', 'î': 'i', 'û': 'u', 'ï': 'i', 'ë': 'e', 'ü': 'u'}) }}">
+                        {{ menu.theme.libelle }}
+                    </span>
+                    <span class="badge badge--{{ menu.regime.libelle|lower|replace({' ': '-', 'â': 'a', 'ô': 'o', 'é': 'e', 'è': 'e', 'ê': 'e', 'î': 'i', 'û': 'u', 'ï': 'i', 'ë': 'e', 'ü': 'u'}) }}">
+                        {{ menu.regime.libelle }}
+                    </span>
+                </div>
+            </div>
+
+            <p class="menu-detail__description">{{ menu.description }}</p>
+
+            {% if plats_par_type is not empty %}
+                {% set type_labels = {'entree': 'Entrées', 'plat': 'Plats', 'dessert': 'Desserts'} %}
+                <div class="menu-detail__plats">
+                    {% for type, plats in plats_par_type %}
+                        <div class="plat-group">
+                            <h2 class="plat-group__title">{{ type_labels[type] }}</h2>
+                            <ul class="plat-list">
+                                {% for plat in plats %}
+                                    <li class="plat-item">
+                                        <span class="plat-item__name">{{ plat.titrePlat }}</span>
+                                        {% if plat.allergenes is not empty %}
+                                            <span class="plat-item__allergenes">
+                                                {% for allergene in plat.allergenes %}
+                                                    <span class="allergene-tag">{{ allergene.libelle }}</span>
+                                                {% endfor %}
+                                            </span>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <aside class="menu-detail__sidebar">
+            <div class="menu-detail__info-card">
+                <p class="menu-detail__price">{{ menu.prixParPersonne }}€ <span>/ pers.</span></p>
+                <p class="menu-detail__min-persons">
+                    <span class="material-symbols-outlined" aria-hidden="true">group</span>
+                    Minimum {{ menu.nombrePersonneMinimum }} personnes
+                </p>
+
+                {% if menu.quantiteRestante > 0 %}
+                    <p class="menu-detail__stock
+                        {% if menu.quantiteRestante <= 3 %} menu-detail__stock--low{% endif %}">
+                        <span class="material-symbols-outlined" aria-hidden="true">event_available</span>
+                        {% if menu.quantiteRestante <= 3 %}
+                            Plus que {{ menu.quantiteRestante }} disponible{{ menu.quantiteRestante > 1 ? 's' : '' }}
+                        {% else %}
+                            {{ menu.quantiteRestante }} dates disponibles
+                        {% endif %}
+                    </p>
+                {% else %}
+                    <p class="menu-detail__stock menu-detail__stock--full">
+                        <span class="material-symbols-outlined" aria-hidden="true">event_busy</span>
+                        Complet pour le moment
+                    </p>
+                {% endif %}
+
+                {% if menu.conditions %}
+                    <div class="menu-detail__conditions">
+                        <p class="menu-detail__conditions-title">Conditions</p>
+                        <p>{{ menu.conditions }}</p>
+                    </div>
+                {% endif %}
+
+                <div style="margin-top: var(--space-md);">
+                    {% if app.user %}
+                        {% if menu.quantiteRestante > 0 %}
+                            <a href="#" class="btn-primary" style="width:100%; text-align:center;">
+                                Commander ce menu
+                            </a>
+                        {% else %}
+                            <button class="btn-primary" disabled style="width:100%; opacity:0.5; cursor:not-allowed;">
+                                Indisponible
+                            </button>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="btn-primary" style="width:100%; text-align:center;">
+                            Se connecter pour commander
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+</div>
+
+{% endblock %}
