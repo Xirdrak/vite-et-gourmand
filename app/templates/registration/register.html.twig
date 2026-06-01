@@ -3,72 +3,72 @@
 {% block title %}Inscription - Vite & Gourmand{% endblock %}
 
 {% block body %}
-<div class="row justify-content-center">
-    <div class="col-md-7">
-        <h1 class="h3 mb-4">Creer un compte</h1>
+<div class="page-auth">
+    <div class="auth-card auth-card--wide">
+        <h1 class="auth-card__title">Créer un compte</h1>
 
         {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
+        <div class="grid-2">
+            <div class="form-group">
                 {{ form_label(form.prenom) }}
-                {{ form_widget(form.prenom, {'attr': {'class': 'form-control' ~ (form.prenom.vars.errors|length ? ' is-invalid' : '')}}) }}
+                {{ form_widget(form.prenom) }}
                 {{ form_errors(form.prenom) }}
             </div>
-            <div class="col-md-6 mb-3">
+            <div class="form-group">
                 {{ form_label(form.nom) }}
-                {{ form_widget(form.nom, {'attr': {'class': 'form-control' ~ (form.nom.vars.errors|length ? ' is-invalid' : '')}}) }}
+                {{ form_widget(form.nom) }}
                 {{ form_errors(form.nom) }}
             </div>
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
             {{ form_label(form.email) }}
-            {{ form_widget(form.email, {'attr': {'class': 'form-control' ~ (form.email.vars.errors|length ? ' is-invalid' : '')}}) }}
+            {{ form_widget(form.email) }}
             {{ form_errors(form.email) }}
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
             {{ form_label(form.telephone) }}
-            {{ form_widget(form.telephone, {'attr': {'class': 'form-control' ~ (form.telephone.vars.errors|length ? ' is-invalid' : '')}}) }}
+            {{ form_widget(form.telephone) }}
             {{ form_errors(form.telephone) }}
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
             {{ form_label(form.adressePostale) }}
-            {{ form_widget(form.adressePostale, {'attr': {'class': 'form-control' ~ (form.adressePostale.vars.errors|length ? ' is-invalid' : '')}}) }}
+            {{ form_widget(form.adressePostale) }}
             {{ form_errors(form.adressePostale) }}
         </div>
 
-        <div class="row">
-            <div class="col-md-8 mb-3">
+        <div class="grid-2">
+            <div class="form-group">
                 {{ form_label(form.ville) }}
-                {{ form_widget(form.ville, {'attr': {'class': 'form-control' ~ (form.ville.vars.errors|length ? ' is-invalid' : '')}}) }}
+                {{ form_widget(form.ville) }}
                 {{ form_errors(form.ville) }}
             </div>
-            <div class="col-md-4 mb-3">
+            <div class="form-group">
                 {{ form_label(form.pays) }}
-                {{ form_widget(form.pays, {'attr': {'class': 'form-control' ~ (form.pays.vars.errors|length ? ' is-invalid' : '')}}) }}
+                {{ form_widget(form.pays) }}
                 {{ form_errors(form.pays) }}
             </div>
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
             {{ form_label(form.plainPassword.first) }}
-            {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control' ~ (form.plainPassword.vars.errors|length ? ' is-invalid' : '')}}) }}
-            <small class="text-muted">10 caracteres minimum, 1 majuscule, 1 minuscule, 1 chiffre, 1 caractere special.</small>
+            {{ form_widget(form.plainPassword.first) }}
+            <span class="form-hint">10 caractères minimum, 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial.</span>
         </div>
-        <div class="mb-3">
+        <div class="form-group">
             {{ form_label(form.plainPassword.second) }}
-            {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control' ~ (form.plainPassword.vars.errors|length ? ' is-invalid' : '')}}) }}
+            {{ form_widget(form.plainPassword.second) }}
             {{ form_errors(form.plainPassword) }}
         </div>
 
-        <button type="submit" class="btn btn-dark w-100">Creer mon compte</button>
+        <button type="submit" class="btn-primary btn-full">Créer mon compte</button>
         {{ form_end(form) }}
 
-        <div class="mt-3 text-center">
-            Deja un compte ? <a href="{{ path('app_login') }}">Se connecter</a>
+        <div class="auth-card__footer">
+            Déjà un compte ? <a href="{{ path('app_login') }}">Se connecter</a>
         </div>
     </div>
 </div>
