@@ -29,4 +29,15 @@ class CommandeRepository extends ServiceEntityRepository
     {
         return $this->findBy(['statut' => $statut], ['datePrestation' => 'ASC']);
     }
+
+    public function trouverDerniereCommande(string $annee): ?Commande
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.numeroCommande LIKE :prefix')
+            ->setParameter('prefix', 'VG-' . $annee . '-%')
+            ->orderBy('c.numeroCommande', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
