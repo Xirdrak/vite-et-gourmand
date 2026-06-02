@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Avis;
+use App\Enum\CommandeStatut;
+use App\Form\AvisType;
 use App\Form\CommandeModificationType;
 use App\Form\ProfilType;
 use App\Repository\CommandeRepository;
@@ -134,6 +137,49 @@ class DashboardController extends AbstractController
 
         return $this->render('dashboard/profil.html.twig', [
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/commande/{id}/avis', name: 'app_dashboard_avis', methods: ['GET', 'POST'])]
+    public function avis(
+        int $id,
+        Request $request,
+        CommandeRepository $commandeRepository,
+        EntityManagerInterface $em,
+    ): Response {
+        $commande = $this->getCommandeOuRefuser($id, $commandeRepository);
+
+        if ($commande->getStatut() !== CommandeStatut::Terminee) {
+            $this->addFlash('error', 'Vous ne pouvez laisser un avis que sur une commande terminée.');
+            return $this->redirectToRoute('app_dashboard_commande', ['id' => $id]);
+        }
+
+        if ($commande->getAvis() !== null) {
+            $this->addFlash('info', 'Vous avez déjà laissé un avis sur cette commande.');
+            return $this->redirectToRoute('app_dashboard_commande', ['id' => $id]);
+        }
+
+        /** @var \App\Entity\Utilisateur $utilisateur */
+        $utilisateur = $this->getUser();
+
+        $avis = new Avis();
+        $form = $this->createForm(AvisType::class, $avis);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $avis->setUtilisateur($utilisateur);
+            $avis->setCommande($commande);
+
+            $em->persist($avis);
+            $em->flush();
+
+            $this->addFlash('success', 'Votre avis a bien été enregistré. Il sera visible après validation par notre équipe.');
+            return $this->redirectToRoute('app_dashboard_commande', ['id' => $id]);
+        }
+
+        return $this->render('dashboard/avis.html.twig', [
+            'form'     => $form,
+            'commande' => $commande,
         ]);
     }
 
