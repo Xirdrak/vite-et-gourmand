@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon espace - Vite & Gourmand{% endblock %}
+
+{% block body %}
+
+<div class="container" style="padding-top: var(--space-lg); padding-bottom: var(--space-xl);">
+
+    <div class="dashboard-header">
+        <div>
+            <h1 class="text-headline-md">Mon espace</h1>
+            <p style="color: var(--color-on-surface-variant); margin-top: var(--space-xs);">
+                Bonjour {{ app.user.prenom }}, bienvenue dans votre espace personnel.
+            </p>
+        </div>
+        <a href="{{ path('app_dashboard_profil') }}" class="btn-secondary">
+            <span class="material-symbols-outlined" aria-hidden="true">manage_accounts</span>
+            Mon profil
+        </a>
+    </div>
+
+    <section style="margin-top: var(--space-lg);">
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-md);">Mes commandes</h2>
+
+        {% if commandes is empty %}
+            <div class="dashboard-empty">
+                <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant);">receipt_long</span>
+                <p>Vous n'avez pas encore de commande.</p>
+                <a href="{{ path('app_menus') }}" class="btn-primary" style="margin-top: var(--space-sm);">Voir nos menus</a>
+            </div>
+        {% else %}
+            <div class="dashboard-commandes">
+                {% for commande in commandes %}
+                <div class="dashboard-commande-card">
+                    <div class="dashboard-commande-card__header">
+                        <span class="dashboard-commande-card__numero">{{ commande.numeroCommande }}</span>
+                        <span class="badge-statut badge-statut--{{ commande.statut.value }}">
+                            {{ commande.statut.label }}
+                        </span>
+                    </div>
+                    <div class="dashboard-commande-card__body">
+                        <div class="dashboard-commande-card__info">
+                            <span class="material-symbols-outlined" aria-hidden="true">restaurant_menu</span>
+                            <span>{{ commande.menu.titre }}</span>
+                        </div>
+                        <div class="dashboard-commande-card__info">
+                            <span class="material-symbols-outlined" aria-hidden="true">calendar_today</span>
+                            <span>Prestation le {{ commande.datePrestation|date('d/m/Y') }}</span>
+                        </div>
+                        <div class="dashboard-commande-card__info">
+                            <span class="material-symbols-outlined" aria-hidden="true">group</span>
+                            <span>{{ commande.nombrePersonne }} personnes</span>
+                        </div>
+                    </div>
+                    <div class="dashboard-commande-card__footer">
+                        <span class="dashboard-commande-card__total">{{ commande.prixTotal }} €</span>
+                        <a href="{{ path('app_dashboard_commande', {id: commande.id}) }}" class="btn-secondary" style="font-size: var(--fs-body-sm);">
+                            Voir le detail
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </section>
+
+</div>
+
+{% endblock %}

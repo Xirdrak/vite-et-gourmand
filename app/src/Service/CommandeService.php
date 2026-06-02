@@ -90,4 +90,42 @@ class CommandeService
 
         return $commande;
     }
+
+    public function modifierCommande(Commande $commande, array $data): void
+    {
+        $menu          = $commande->getMenu();
+        $horsBordeaux  = $data['hors_bordeaux'] ?? false;
+        $nombreKm      = $horsBordeaux ? (int) ($data['nombre_km'] ?? 0) : 0;
+        $nombrePersonnes = (int) $data['nombre_personne'];
+
+        $prixMenu      = $this->calculerPrixMenu($menu, $nombrePersonnes);
+        $prixLivraison = $this->calculerPrixLivraison($horsBordeaux, $nombreKm);
+
+        $commande->setDatePrestation($data['date_prestation']);
+        $commande->setHeureLivraison($data['heure_livraison']);
+        $commande->setAdresseLivraison($data['adresse_livraison']);
+        $commande->setVilleLivraison($data['ville_livraison']);
+        $commande->setNombrePersonne($nombrePersonnes);
+        $commande->setPrixMenu((string) $prixMenu);
+        $commande->setPrixLivraison((string) $prixLivraison);
+        $commande->setPrixTotal((string) round($prixMenu + $prixLivraison, 2));
+
+        $this->em->flush();
+    }
+
+    public function annulerCommande(Commande $commande): void
+    {
+        $commande->setStatut(CommandeStatut::Annulee);
+
+        $historique = new HistoriqueStatut();
+        $historique->setCommande($commande);
+        $historique->setStatut(CommandeStatut::Annulee->value);
+        $commande->getHistoriqueStatuts()->add($historique);
+
+        $menu = $commande->getMenu();
+        $menu->setQuantiteRestante($menu->getQuantiteRestante() + 1);
+
+        $this->em->persist($historique);
+        $this->em->flush();
+    }
 }
