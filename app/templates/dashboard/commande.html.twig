@@ -120,7 +120,7 @@
                 <p style="color: var(--color-on-surface-variant); font-size: var(--fs-body-sm);">
                     Votre prestation est terminee. Vous pouvez laisser un avis.
                 </p>
-                <a href="#" class="btn-primary" style="display:block; text-align:center; margin-top: var(--space-sm);">
+                <a href="{{ path('app_dashboard_avis', {id: commande.id}) }}" class="btn-primary" style="display:block; text-align:center; margin-top: var(--space-sm);">
                     Laisser un avis
                 </a>
             </section>

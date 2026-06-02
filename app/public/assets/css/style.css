@@ -1626,3 +1626,37 @@ ul.form-error li {
   .commande-detail-layout { grid-template-columns: 1fr; }
   .commande-detail-grid   { grid-template-columns: 1fr; }
 }
+
+/* Star picker (formulaire avis) */
+:root { --color-star: #f59e0b; }
+
+.star-picker {
+  display: flex;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+}
+.star-picker__btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  line-height: 1;
+}
+.star-picker__btn .material-symbols-outlined {
+  font-size: 36px;
+  color: var(--color-outline);
+  transition: color 0.1s;
+}
+
+/* Accessibilité : masquer visuellement sans cacher aux lecteurs d'écran */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

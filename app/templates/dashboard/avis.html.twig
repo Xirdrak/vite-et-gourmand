@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Laisser un avis - Vite & Gourmand{% endblock %}
+
+{% block body %}
+
+<div class="container" style="padding-top: var(--space-lg); padding-bottom: var(--space-xl); max-width: 640px;">
+
+    <a href="{{ path('app_dashboard_commande', {id: commande.id}) }}" class="back-link">
+        <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+        Retour a la commande
+    </a>
+
+    <h1 class="text-headline-md" style="margin-bottom: var(--space-xs);">Laisser un avis</h1>
+    <p style="color: var(--color-on-surface-variant); margin-bottom: var(--space-lg);">
+        Commande {{ commande.numeroCommande }} — {{ commande.menu.titre }}
+    </p>
+
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+
+    <section class="order-section">
+
+        <div class="form-group">
+            <label class="form-label">Note</label>
+            <div class="star-picker" id="star-picker" aria-label="Choisissez une note de 1 a 5">
+                {% for i in 1..5 %}
+                <button type="button" class="star-picker__btn" data-value="{{ i }}" aria-label="{{ i }} etoile{{ i > 1 ? 's' : '' }}">
+                    <span class="material-symbols-outlined">star_border</span>
+                </button>
+                {% endfor %}
+            </div>
+            {{ form_widget(form.note, {attr: {class: 'sr-only', id: 'note-input', tabindex: '-1'}}) }}
+            {{ form_errors(form.note) }}
+            <small id="note-hint" class="form-hint" style="display:none;"></small>
+        </div>
+
+        <div class="form-group" style="margin-top: var(--space-md);">
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description, {attr: {class: 'form-input'}}) }}
+            {{ form_errors(form.description) }}
+            <small class="form-hint">Entre 10 et 1000 caractères.</small>
+        </div>
+
+    </section>
+
+    <button type="submit" class="btn-primary" style="margin-top: var(--space-md);">
+        Publier mon avis
+    </button>
+
+    {{ form_end(form) }}
+
+    <p style="margin-top: var(--space-sm); font-size: var(--fs-body-sm); color: var(--color-on-surface-variant);">
+        Votre avis sera visible sur le site après validation par notre équipe.
+    </p>
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    const stars    = document.querySelectorAll('.star-picker__btn');
+    const input    = document.getElementById('note-input');
+    const hint     = document.getElementById('note-hint');
+    const labels   = ['', 'Mauvais', 'Passable', 'Bien', 'Très bien', 'Excellent'];
+    let current    = parseInt(input.value) || 0;
+
+    function paint(value) {
+        stars.forEach((btn, idx) => {
+            const icon = btn.querySelector('.material-symbols-outlined');
+            icon.textContent     = idx < value ? 'star' : 'star_border';
+            icon.style.color     = idx < value ? 'var(--color-star)' : 'var(--color-outline)';
+        });
+        if (value > 0) {
+            hint.textContent   = labels[value];
+            hint.style.display = 'block';
+        } else {
+            hint.style.display = 'none';
+        }
+    }
+
+    stars.forEach((btn, idx) => {
+        btn.addEventListener('mouseenter', () => paint(idx + 1));
+        btn.addEventListener('mouseleave', () => paint(current));
+        btn.addEventListener('click', () => {
+            current      = idx + 1;
+            input.value  = current;
+            paint(current);
+        });
+    });
+
+    paint(current);
+</script>
+{% endblock %}
