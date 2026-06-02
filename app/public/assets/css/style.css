@@ -1447,3 +1447,182 @@ ul.form-error li {
   color: var(--color-tertiary);
   display: block;
 }
+
+/* Dashboard */
+.dashboard-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+.dashboard-empty {
+  text-align: center;
+  padding: var(--space-xl);
+  background: var(--color-surface-white);
+  border-radius: 16px;
+  border: 1px dashed var(--color-outline-variant);
+  color: var(--color-on-surface-variant);
+}
+.dashboard-commandes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-md);
+}
+.dashboard-commande-card {
+  background: var(--color-surface-white);
+  border-radius: 16px;
+  border: 1px solid var(--color-outline-variant);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.dashboard-commande-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+.dashboard-commande-card__numero {
+  font-weight: 600;
+  font-size: var(--fs-body-md);
+  color: var(--color-primary);
+}
+.dashboard-commande-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.dashboard-commande-card__info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--fs-body-sm);
+  color: var(--color-on-surface-variant);
+}
+.dashboard-commande-card__info .material-symbols-outlined { font-size: 16px; }
+.dashboard-commande-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-outline-variant);
+}
+.dashboard-commande-card__total {
+  font-weight: 700;
+  font-size: var(--fs-body-lg);
+  color: var(--color-on-surface);
+}
+
+/* Badges statut */
+.badge-statut {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.badge-statut--lg { font-size: var(--fs-body-md); padding: 5px 14px; }
+.badge-statut--nouvelle                   { background: #dbeafe; color: #1d4ed8; }
+.badge-statut--acceptee                   { background: #dcfce7; color: #166534; }
+.badge-statut--en_preparation             { background: #fef9c3; color: #854d0e; }
+.badge-statut--en_cours_livraison         { background: #e0f2fe; color: #075985; }
+.badge-statut--livree                     { background: #d1fae5; color: #065f46; }
+.badge-statut--terminee                   { background: #f3f4f6; color: #374151; }
+.badge-statut--annulee                    { background: #fee2e2; color: #991b1b; }
+.badge-statut--en_attente_retour_materiel { background: #fef3c7; color: #92400e; }
+
+/* Detail commande */
+.commande-detail-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-lg);
+  margin-top: var(--space-sm);
+}
+.commande-detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: var(--space-lg);
+  align-items: start;
+}
+.commande-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm) var(--space-md);
+}
+.commande-detail-item { display: flex; flex-direction: column; gap: 2px; }
+.commande-detail-item__label { font-size: var(--fs-body-sm); color: var(--color-on-surface-variant); }
+.commande-detail-item__value { font-size: var(--fs-body-md); font-weight: 500; }
+
+/* Timeline suivi commande */
+.timeline { display: flex; flex-direction: column; }
+.timeline__item {
+  display: flex;
+  gap: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  position: relative;
+}
+.timeline__item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 16px;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-outline-variant);
+}
+.timeline__dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-outline-variant);
+  border: 2px solid var(--color-surface-white);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.timeline__item--actif .timeline__dot { background: var(--color-primary); }
+.timeline__content { display: flex; flex-direction: column; gap: 2px; }
+.timeline__label { font-size: var(--fs-body-sm); font-weight: 500; }
+.timeline__date  { font-size: var(--fs-body-sm); color: var(--color-on-surface-variant); }
+
+/* Bouton danger */
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+  font-size: var(--fs-body-md);
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.btn-danger:hover { background: #fecaca; }
+
+/* Lien retour */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-on-surface-variant);
+  font-size: var(--fs-body-sm);
+  text-decoration: none;
+  margin-bottom: var(--space-md);
+}
+.back-link:hover { color: var(--color-primary); }
+.back-link .material-symbols-outlined { font-size: 18px; }
+
+@media (max-width: 768px) {
+  .commande-detail-layout { grid-template-columns: 1fr; }
+  .commande-detail-grid   { grid-template-columns: 1fr; }
+}

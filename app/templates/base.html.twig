@@ -32,7 +32,7 @@
                         <span class="material-symbols-outlined" style="font-size:18px;">expand_more</span>
                     </button>
                     <div class="navbar__dropdown-menu" id="dropdown-menu">
-                        <a class="navbar__dropdown-item" href="#">Mon espace</a>
+                        <a class="navbar__dropdown-item" href="{{ path('app_dashboard') }}">Mon espace</a>
                         {% if is_granted('ROLE_EMPLOYE') %}
                             <a class="navbar__dropdown-item" href="#">Espace employé</a>
                         {% endif %}
@@ -62,7 +62,7 @@
         <a class="navbar__link" href="{{ path('app_menus') }}">Nos menus</a>
         <a class="navbar__link" href="{{ path('app_contact') }}">Contact</a>
         {% if app.user %}
-            <a class="navbar__link" href="#">Mon espace</a>
+            <a class="navbar__link" href="{{ path('app_dashboard') }}">Mon espace</a>
             <form method="post" action="{{ path('app_logout') }}">
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
                 <button type="submit" class="navbar__link" style="background:none;border:none;cursor:pointer;color:var(--color-error);">Déconnexion</button>

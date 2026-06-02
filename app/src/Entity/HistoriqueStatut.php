@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\CommandeStatut;
 use App\Repository\HistoriqueStatutRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -41,4 +42,10 @@ class HistoriqueStatut
     public function setDateHeure(\DateTimeInterface $d): static { $this->dateHeure = $d; return $this; }
     public function getCommentaire(): ?string { return $this->commentaire; }
     public function setCommentaire(?string $c): static { $this->commentaire = $c; return $this; }
+
+    public function getStatutLabel(): string
+    {
+        $enum = CommandeStatut::tryFrom($this->statut);
+        return $enum ? $enum->label() : $this->statut;
+    }
 }
