@@ -54,8 +54,8 @@ INSERT INTO allergene (allergene_id, libelle) VALUES
 (8,  'Fruits à coque'),
 (9,  'Céleri'),
 (10, 'Moutarde'),
-(11, 'Graines de sésame'),
-(12, 'Anhydride sulfureux et sulfites'),
+(11, 'Sésame'),
+(12, 'Sulfites'),
 (13, 'Lupin'),
 (14, 'Mollusques');
 
@@ -112,7 +112,7 @@ INSERT INTO image (menu_id, chemin, ordre) VALUES
 (4, 'uploads/menus/evenement-table.jpg', 0),
 (4, 'uploads/menus/evenement-plat.jpg',  1);
 
--- Plats (plat_id=9 partagé par les menus 3 et 4)
+-- Plats
 INSERT INTO plat (plat_id, titre_plat, type_plat, photo) VALUES
 (1,  'Velouté de potiron au foie gras',    'entree',  'uploads/plats/veloute-potiron.jpg'),
 (2,  'Chapon rôti aux marrons',            'plat',    'uploads/plats/chapon-marrons.jpg'),
@@ -125,12 +125,13 @@ INSERT INTO plat (plat_id, titre_plat, type_plat, photo) VALUES
 (9,  'Fondant au chocolat noir',           'dessert', 'uploads/plats/fondant-chocolat.jpg'),
 (10, 'Foie gras mi-cuit au torchon',       'entree',  'uploads/plats/foie-gras.jpg'),
 (11, 'Filet de bœuf Wellington',           'plat',    'uploads/plats/boeuf-wellington.jpg'),
-(12, 'Soufflé au Grand Marnier',           'dessert', 'uploads/plats/souffle-grand-marnier.jpg');
+(12, 'Soufflé au Grand Marnier',           'dessert', 'uploads/plats/souffle-grand-marnier.jpg'),
+(13, 'Sorbet mangue et fruits de la passion', 'dessert', 'uploads/plats/sorbet-mangue.jpg');
 
 INSERT INTO menu_plat (menu_id, plat_id) VALUES
 (1, 1),(1, 2),(1, 3),
 (2, 4),(2, 5),(2, 6),
-(3, 7),(3, 8),(3, 9),
+(3, 7),(3, 8),(3,13),
 (4,10),(4,11),(4,12),(4, 9);
 
 INSERT INTO plat_allergene (plat_id, allergene_id) VALUES
@@ -140,7 +141,8 @@ INSERT INTO plat_allergene (plat_id, allergene_id) VALUES
 (4,  7),(4, 3),
 (5,  7),
 (6,  1),(6, 3),(6, 7),
-(9,  7),(9, 3),
+(7, 12),
+(9,  1),(9, 7),(9, 3),
 (10,12),
 (11, 1),(11, 3),
 (12, 7),(12, 3);

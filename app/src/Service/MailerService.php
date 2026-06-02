@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Commande;
 use App\Entity\Utilisateur;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
@@ -43,6 +44,22 @@ class MailerService
             ->from(self::FROM)
             ->to($utilisateur->getEmail())
             ->subject('Reinitialisation de votre mot de passe')
+            ->html($html);
+
+        $this->mailer->send($email);
+    }
+
+    public function sendCommandeConfirmation(Utilisateur $utilisateur, Commande $commande): void
+    {
+        $html = $this->twig->render('email/commande_confirmation.html.twig', [
+            'utilisateur' => $utilisateur,
+            'commande'    => $commande,
+        ]);
+
+        $email = (new Email())
+            ->from(self::FROM)
+            ->to($utilisateur->getEmail())
+            ->subject('Confirmation de votre commande ' . $commande->getNumeroCommande())
             ->html($html);
 
         $this->mailer->send($email);

@@ -99,7 +99,7 @@
                 <div style="margin-top: var(--space-md);">
                     {% if app.user %}
                         {% if menu.quantiteRestante > 0 %}
-                            <a href="#" class="btn-primary" style="width:100%; text-align:center;">
+                            <a href="{{ path('app_order_new', {'menu': menu.id}) }}" class="btn-primary" style="width:100%; text-align:center;">
                                 Commander ce menu
                             </a>
                         {% else %}
