@@ -22,4 +22,15 @@ class UtilisateurRepository extends ServiceEntityRepository
     {
         return $this->findBy(['actif' => true]);
     }
+
+    public function findEmployes(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->join('u.role', 'r')
+            ->where('r.libelle = :libelle')
+            ->setParameter('libelle', 'employe')
+            ->orderBy('u.nom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

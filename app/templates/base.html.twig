@@ -37,7 +37,7 @@
                             <a class="navbar__dropdown-item" href="{{ path('app_employe_menus') }}">Espace employé</a>
                         {% endif %}
                         {% if is_granted('ROLE_ADMIN') %}
-                            <a class="navbar__dropdown-item" href="#">Administration</a>
+                            <a class="navbar__dropdown-item" href="{{ path('app_admin_employes') }}">Administration</a>
                         {% endif %}
                         <div class="navbar__dropdown-divider"></div>
                         <form method="post" action="{{ path('app_logout') }}">

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container" style="padding-top: var(--space-lg); padding-bottom: var(--space-xl);">
+
+    <div class="dashboard-header">
+        <div>
+            <h1 class="text-headline-md">{% block admin_title %}Administration{% endblock %}</h1>
+            <p style="color: var(--color-on-surface-variant); margin-top: var(--space-xs);">
+                {% block admin_subtitle %}{% endblock %}
+            </p>
+        </div>
+        {% block admin_action %}{% endblock %}
+    </div>
+
+    <nav style="margin-top: var(--space-md); margin-bottom: var(--space-lg); display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+        <a href="{{ path('app_admin_employes') }}"
+           class="{{ app.request.attributes.get('_route') starts with 'app_admin_employe' ? 'btn-primary' : 'btn-secondary' }}"
+           style="font-size: var(--fs-label-md);">
+            <span class="material-symbols-outlined" aria-hidden="true">manage_accounts</span>
+            Comptes employés
+        </a>
+        <a href="{{ path('app_employe_commandes') }}"
+           class="btn-secondary"
+           style="font-size: var(--fs-label-md);">
+            <span class="material-symbols-outlined" aria-hidden="true">receipt_long</span>
+            Commandes
+        </a>
+        <a href="{{ path('app_employe_menus') }}"
+           class="btn-secondary"
+           style="font-size: var(--fs-label-md);">
+            <span class="material-symbols-outlined" aria-hidden="true">restaurant_menu</span>
+            Menus
+        </a>
+    </nav>
+
+    {% block admin_content %}{% endblock %}
+
+</div>
+{% endblock %}

@@ -65,6 +65,21 @@ class MailerService
         $this->mailer->send($email);
     }
 
+    public function sendNouveauCompteEmploye(Utilisateur $employe): void
+    {
+        $html = $this->twig->render('email/nouveau_compte_employe.html.twig', [
+            'employe' => $employe,
+        ]);
+
+        $email = (new Email())
+            ->from(self::FROM)
+            ->to($employe->getEmail())
+            ->subject('Votre compte employé Vite & Gourmand')
+            ->html($html);
+
+        $this->mailer->send($email);
+    }
+
     public function sendRetourMateriel(Utilisateur $utilisateur, Commande $commande): void
     {
         $html = $this->twig->render('email/retour_materiel.html.twig', [
