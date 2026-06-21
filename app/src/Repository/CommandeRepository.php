@@ -30,6 +30,26 @@ class CommandeRepository extends ServiceEntityRepository
         return $this->findBy(['statut' => $statut], ['datePrestation' => 'ASC']);
     }
 
+    public function findWithFilters(?CommandeStatut $statut, ?string $client): array
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->join('c.utilisateur', 'u')->addSelect('u')
+            ->join('c.menu', 'm')->addSelect('m')
+            ->orderBy('c.datePrestation', 'ASC');
+
+        if ($statut !== null) {
+            $qb->andWhere('c.statut = :statut')
+               ->setParameter('statut', $statut);
+        }
+
+        if ($client !== null && $client !== '') {
+            $qb->andWhere('u.nom LIKE :client OR u.prenom LIKE :client OR u.email LIKE :client')
+               ->setParameter('client', '%' . $client . '%');
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function trouverDerniereCommande(string $annee): ?Commande
     {
         return $this->createQueryBuilder('c')

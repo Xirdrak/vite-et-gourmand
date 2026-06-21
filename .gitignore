@@ -4,7 +4,13 @@
 prompts/
 specs/
 notes/
+wip/
 desktop.ini
+
+# Screenshots et fichiers temporaires
+/*.png
+/*.jpg
+/*.jpeg
 
 # Fichiers Symfony/
 app/.env.local

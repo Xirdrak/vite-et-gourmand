@@ -357,6 +357,11 @@ ul { list-style: none; }
 
 .btn-secondary:hover { opacity: 0.85; }
 
+/* Variante pour aligner un bouton avec les inputs d'un formulaire inline */
+.btn-input-height {
+  height: calc(2 * var(--space-sm) + var(--lh-body-md) + 2px);
+}
+
 .btn-ghost {
   display: inline-flex;
   align-items: center;

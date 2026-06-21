@@ -65,6 +65,38 @@ class MailerService
         $this->mailer->send($email);
     }
 
+    public function sendRetourMateriel(Utilisateur $utilisateur, Commande $commande): void
+    {
+        $html = $this->twig->render('email/retour_materiel.html.twig', [
+            'utilisateur' => $utilisateur,
+            'commande'    => $commande,
+        ]);
+
+        $email = (new Email())
+            ->from(self::FROM)
+            ->to($utilisateur->getEmail())
+            ->subject('Retour de matériel - Commande ' . $commande->getNumeroCommande())
+            ->html($html);
+
+        $this->mailer->send($email);
+    }
+
+    public function sendCommandeTerminee(Utilisateur $utilisateur, Commande $commande): void
+    {
+        $html = $this->twig->render('email/commande_terminee.html.twig', [
+            'utilisateur' => $utilisateur,
+            'commande'    => $commande,
+        ]);
+
+        $email = (new Email())
+            ->from(self::FROM)
+            ->to($utilisateur->getEmail())
+            ->subject('Votre commande est terminée - Donnez votre avis !')
+            ->html($html);
+
+        $this->mailer->send($email);
+    }
+
     public function sendContact(string $emailExpediteur, string $sujet, string $message): void
     {
         $html = $this->twig->render('email/contact.html.twig', [

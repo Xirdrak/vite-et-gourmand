@@ -1,0 +1,75 @@
+{% extends 'employe/layout.html.twig' %}
+
+{% block title %}Annuler la commande {{ commande.numeroCommande }} - Vite & Gourmand{% endblock %}
+
+{% block employe_title %}Annuler la commande{% endblock %}
+{% block employe_subtitle %}{{ commande.numeroCommande }} — {{ commande.utilisateur.nomComplet }}{% endblock %}
+
+{% block employe_action %}
+    <a href="{{ path('app_employe_commande_show', {id: commande.id}) }}" class="back-link">
+        <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+        Retour à la commande
+    </a>
+{% endblock %}
+
+{% block employe_content %}
+
+<div style="max-width: 640px;">
+
+    <div class="alert alert--error" style="margin-bottom: var(--space-md);">
+        <strong>Attention</strong> — Cette action est irréversible. La commande sera annulée et le stock du menu sera restauré.
+    </div>
+
+    <section class="order-section" style="margin-bottom: var(--space-md);">
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-sm);">Rappel de la commande</h2>
+        <div class="dashboard-commande-card__info">
+            <span class="material-symbols-outlined" aria-hidden="true">restaurant_menu</span>
+            <span>{{ commande.menu.titre }}</span>
+        </div>
+        <div class="dashboard-commande-card__info" style="margin-top: var(--space-xs);">
+            <span class="material-symbols-outlined" aria-hidden="true">calendar_today</span>
+            <span>Prestation le {{ commande.datePrestation|date('d/m/Y') }}</span>
+        </div>
+        <div class="dashboard-commande-card__info" style="margin-top: var(--space-xs);">
+            <span class="material-symbols-outlined" aria-hidden="true">phone</span>
+            <span>{{ commande.utilisateur.telephone }}</span>
+        </div>
+        <div class="dashboard-commande-card__info" style="margin-top: var(--space-xs);">
+            <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+            <span>{{ commande.utilisateur.email }}</span>
+        </div>
+    </section>
+
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+
+    <section class="order-section">
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-md);">Contact et motif</h2>
+
+        <div class="form-group">
+            {{ form_label(form.modeContact, null, {label_attr: {class: 'form-label'}}) }}
+            {{ form_widget(form.modeContact, {attr: {class: 'form-input'}}) }}
+            {{ form_errors(form.modeContact) }}
+        </div>
+
+        <div class="form-group" style="margin-top: var(--space-md);">
+            {{ form_label(form.motif, null, {label_attr: {class: 'form-label'}}) }}
+            {{ form_widget(form.motif, {attr: {class: 'form-input'}}) }}
+            {{ form_errors(form.motif) }}
+        </div>
+    </section>
+
+    <div style="margin-top: var(--space-lg); display: flex; gap: var(--space-sm);">
+        <button type="submit" class="btn-primary" style="background: var(--color-error);">
+            <span class="material-symbols-outlined" aria-hidden="true">cancel</span>
+            Confirmer l'annulation
+        </button>
+        <a href="{{ path('app_employe_commande_show', {id: commande.id}) }}" class="btn-secondary">
+            Ne pas annuler
+        </a>
+    </div>
+
+    {{ form_end(form) }}
+
+</div>
+
+{% endblock %}

@@ -14,6 +14,12 @@
     </div>
 
     <nav style="margin-top: var(--space-md); margin-bottom: var(--space-lg); display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+        <a href="{{ path('app_employe_commandes') }}"
+           class="{{ app.request.attributes.get('_route') starts with 'app_employe_commande' ? 'btn-primary' : 'btn-secondary' }}"
+           style="font-size: var(--fs-label-md);">
+            <span class="material-symbols-outlined" aria-hidden="true">receipt_long</span>
+            Commandes
+        </a>
         <a href="{{ path('app_employe_menus') }}"
            class="{{ app.request.attributes.get('_route') starts with 'app_employe_menu' ? 'btn-primary' : 'btn-secondary' }}"
            style="font-size: var(--fs-label-md);">

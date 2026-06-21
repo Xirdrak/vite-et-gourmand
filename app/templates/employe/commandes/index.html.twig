@@ -1,0 +1,83 @@
+{% extends 'employe/layout.html.twig' %}
+
+{% block title %}Gestion des commandes - Vite & Gourmand{% endblock %}
+
+{% block employe_title %}Gestion des commandes{% endblock %}
+{% block employe_subtitle %}{{ commandes|length }} commande{{ commandes|length > 1 ? 's' : '' }} affichée{{ commandes|length > 1 ? 's' : '' }}{% endblock %}
+
+{% block employe_content %}
+
+<form method="get" style="display: flex; gap: var(--space-sm); flex-wrap: wrap; align-items: flex-end; margin-bottom: var(--space-lg);">
+    <div style="flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: var(--space-xs);">
+        <label class="form-label" for="statut">Statut</label>
+        <select name="statut" id="statut" class="form-input" style="margin-bottom: 0;">
+            <option value="">Tous les statuts</option>
+            {% for statut in statuts %}
+                <option value="{{ statut.value }}" {{ filtre_statut == statut.value ? 'selected' : '' }}>
+                    {{ statut.label() }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div style="flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: var(--space-xs);">
+        <label class="form-label" for="client">Client (nom, prénom ou email)</label>
+        <input type="text" name="client" id="client" class="form-input"
+               value="{{ filtre_client }}" placeholder="Rechercher un client...">
+    </div>
+    <div style="display: flex; gap: var(--space-sm);">
+        <button type="submit" class="btn-primary btn-input-height">
+            <span class="material-symbols-outlined" aria-hidden="true">search</span>
+            Filtrer
+        </button>
+        {% if filtre_statut or filtre_client %}
+            <a href="{{ path('app_employe_commandes') }}" class="btn-secondary btn-input-height">Réinitialiser</a>
+        {% endif %}
+    </div>
+</form>
+
+{% if commandes is empty %}
+    <div class="dashboard-empty">
+        <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant);">receipt_long</span>
+        <p>Aucune commande ne correspond à votre recherche.</p>
+    </div>
+{% else %}
+    <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+        {% for commande in commandes %}
+        <div class="dashboard-commande-card">
+            <div class="dashboard-commande-card__header">
+                <div>
+                    <span class="text-title-md">{{ commande.numeroCommande }}</span>
+                    <br>
+                    <span style="font-size: var(--fs-label-md); color: var(--color-on-surface-variant);">
+                        {{ commande.utilisateur.nomComplet }} — {{ commande.menu.titre }}
+                    </span>
+                </div>
+                <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                    <span class="badge-statut badge-statut--{{ commande.statut.value }}">
+                        {{ commande.statut.label() }}
+                    </span>
+                    <a href="{{ path('app_employe_commande_show', {id: commande.id}) }}" class="btn-secondary" style="font-size: var(--fs-label-md);">
+                        Voir
+                    </a>
+                </div>
+            </div>
+            <div class="dashboard-commande-card__body">
+                <div class="dashboard-commande-card__info">
+                    <span class="material-symbols-outlined" aria-hidden="true">calendar_today</span>
+                    <span>Prestation le {{ commande.datePrestation|date('d/m/Y') }}</span>
+                </div>
+                <div class="dashboard-commande-card__info">
+                    <span class="material-symbols-outlined" aria-hidden="true">group</span>
+                    <span>{{ commande.nombrePersonne }} personnes</span>
+                </div>
+                <div class="dashboard-commande-card__info">
+                    <span class="material-symbols-outlined" aria-hidden="true">euro</span>
+                    <span>{{ commande.prixTotal }} €</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}

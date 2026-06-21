@@ -31,4 +31,17 @@ enum CommandeStatut: string
     {
         return $this === self::Nouvelle;
     }
+
+    public function transitions(): array
+    {
+        return match($this) {
+            self::Nouvelle                => [self::Acceptee],
+            self::Acceptee                => [self::EnPreparation],
+            self::EnPreparation           => [self::EnCoursLivraison],
+            self::EnCoursLivraison        => [self::Livree],
+            self::Livree                  => [self::Terminee, self::EnAttenteRetourMateriel],
+            self::EnAttenteRetourMateriel => [self::Terminee],
+            self::Terminee, self::Annulee => [],
+        };
+    }
 }

@@ -11,33 +11,29 @@
 
     {% for horaire in horaires %}
     <section class="order-section">
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-md);">
+        {{ form_start(forms[horaire.id]) }}
+        <div style="display: flex; align-items: flex-end; gap: var(--space-md);">
 
-            <span class="text-title-md" style="min-width: 100px;">{{ horaire.jour }}</span>
+            <span class="text-title-md" style="min-width: 100px; padding-bottom: 10px;">{{ horaire.jour }}</span>
 
-            {{ form_start(forms[horaire.id], {attr: {style: 'display:flex; align-items:flex-end; gap: var(--space-sm); flex:1;'}}) }}
+            <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-xs);">
+                {{ form_label(forms[horaire.id].heureOuverture, null, {label_attr: {class: 'form-label', style: 'font-size: var(--fs-label-sm);'}}) }}
+                {{ form_widget(forms[horaire.id].heureOuverture, {attr: {class: 'form-input'}}) }}
+                {{ form_errors(forms[horaire.id].heureOuverture) }}
+            </div>
 
-                <div class="form-group" style="flex: 1;">
-                    {{ form_label(forms[horaire.id].heureOuverture, null, {label_attr: {class: 'form-label', style: 'font-size: var(--fs-label-sm);'}}) }}
-                    {{ form_widget(forms[horaire.id].heureOuverture, {attr: {class: 'form-input'}}) }}
-                    {{ form_errors(forms[horaire.id].heureOuverture) }}
-                </div>
+            <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-xs);">
+                {{ form_label(forms[horaire.id].heureFermeture, null, {label_attr: {class: 'form-label', style: 'font-size: var(--fs-label-sm);'}}) }}
+                {{ form_widget(forms[horaire.id].heureFermeture, {attr: {class: 'form-input'}}) }}
+                {{ form_errors(forms[horaire.id].heureFermeture) }}
+            </div>
 
-                <div class="form-group" style="flex: 1;">
-                    {{ form_label(forms[horaire.id].heureFermeture, null, {label_attr: {class: 'form-label', style: 'font-size: var(--fs-label-sm);'}}) }}
-                    {{ form_widget(forms[horaire.id].heureFermeture, {attr: {class: 'form-input'}}) }}
-                    {{ form_errors(forms[horaire.id].heureFermeture) }}
-                </div>
-
-                <div>
-                    <button type="submit" class="btn-primary" style="font-size: var(--fs-label-md);">
-                        <span class="material-symbols-outlined" aria-hidden="true">save</span>
-                    </button>
-                </div>
-
-            {{ form_end(forms[horaire.id]) }}
+            <button type="submit" class="btn-primary btn-input-height">
+                <span class="material-symbols-outlined" aria-hidden="true">save</span>
+            </button>
 
         </div>
+        {{ form_end(forms[horaire.id]) }}
     </section>
     {% endfor %}
 
