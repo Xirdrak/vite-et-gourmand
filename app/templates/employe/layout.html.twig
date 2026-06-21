@@ -38,6 +38,12 @@
             <span class="material-symbols-outlined" aria-hidden="true">schedule</span>
             Horaires
         </a>
+        <a href="{{ path('app_employe_avis') }}"
+           class="{{ app.request.attributes.get('_route') starts with 'app_employe_avis' ? 'btn-primary' : 'btn-secondary' }}"
+           style="font-size: var(--fs-label-md);">
+            <span class="material-symbols-outlined" aria-hidden="true">reviews</span>
+            Avis
+        </a>
     </nav>
 
     {% block employe_content %}{% endblock %}
