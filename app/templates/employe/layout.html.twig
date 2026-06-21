@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container" style="padding-top: var(--space-lg); padding-bottom: var(--space-xl);">
+
+    <div class="dashboard-header">
+        <div>
+            <h1 class="text-headline-md">{% block employe_title %}Espace employe{% endblock %}</h1>
+            <p style="color: var(--color-on-surface-variant); margin-top: var(--space-xs);">
+                {% block employe_subtitle %}{% endblock %}
+            </p>
+        </div>
+        {% block employe_action %}{% endblock %}
+    </div>
+
+    <nav style="margin-top: var(--space-md); margin-bottom: var(--space-lg); display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+        <a href="{{ path('app_employe_menus') }}"
+           class="{{ app.request.attributes.get('_route') starts with 'app_employe_menu' ? 'btn-primary' : 'btn-secondary' }}"
+           style="font-size: var(--fs-label-md);">
+            <span class="material-symbols-outlined" aria-hidden="true">restaurant_menu</span>
+            Menus
+        </a>
+        <a href="{{ path('app_employe_plats') }}"
+           class="{{ app.request.attributes.get('_route') starts with 'app_employe_plat' ? 'btn-primary' : 'btn-secondary' }}"
+           style="font-size: var(--fs-label-md);">
+            <span class="material-symbols-outlined" aria-hidden="true">lunch_dining</span>
+            Plats
+        </a>
+        <a href="{{ path('app_employe_horaires') }}"
+           class="{{ app.request.attributes.get('_route') starts with 'app_employe_horaire' ? 'btn-primary' : 'btn-secondary' }}"
+           style="font-size: var(--fs-label-md);">
+            <span class="material-symbols-outlined" aria-hidden="true">schedule</span>
+            Horaires
+        </a>
+    </nav>
+
+    {% block employe_content %}{% endblock %}
+
+</div>
+{% endblock %}

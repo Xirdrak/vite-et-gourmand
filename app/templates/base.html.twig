@@ -34,7 +34,7 @@
                     <div class="navbar__dropdown-menu" id="dropdown-menu">
                         <a class="navbar__dropdown-item" href="{{ path('app_dashboard') }}">Mon espace</a>
                         {% if is_granted('ROLE_EMPLOYE') %}
-                            <a class="navbar__dropdown-item" href="#">Espace employé</a>
+                            <a class="navbar__dropdown-item" href="{{ path('app_employe_menus') }}">Espace employé</a>
                         {% endif %}
                         {% if is_granted('ROLE_ADMIN') %}
                             <a class="navbar__dropdown-item" href="#">Administration</a>

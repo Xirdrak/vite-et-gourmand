@@ -1,0 +1,86 @@
+{% extends 'employe/layout.html.twig' %}
+
+{% block title %}{{ titre }} - Vite & Gourmand{% endblock %}
+
+{% block employe_title %}{{ titre }}{% endblock %}
+{% block employe_subtitle %}{% endblock %}
+
+{% block employe_action %}
+    <a href="{{ path('app_employe_plats') }}" class="back-link">
+        <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+        Retour aux plats
+    </a>
+{% endblock %}
+
+{% block employe_content %}
+
+{{ form_start(form, {
+    attr: {novalidate: 'novalidate'},
+    enctype: 'multipart/form-data'
+}) }}
+
+<div style="max-width: 640px;">
+
+    <section class="order-section">
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-md);">Informations du plat</h2>
+
+        <div class="form-group">
+            {{ form_label(form.titrePlat, null, {label_attr: {class: 'form-label'}}) }}
+            {{ form_widget(form.titrePlat, {attr: {class: 'form-input'}}) }}
+            {{ form_errors(form.titrePlat) }}
+        </div>
+
+        <div class="form-group" style="margin-top: var(--space-md);">
+            {{ form_label(form.typePlat, null, {label_attr: {class: 'form-label'}}) }}
+            {{ form_widget(form.typePlat, {attr: {class: 'form-input'}}) }}
+            {{ form_errors(form.typePlat) }}
+        </div>
+    </section>
+
+    <section class="order-section" style="margin-top: var(--space-md);">
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-md);">Photo</h2>
+
+        {% if plat.photo %}
+            <div style="margin-bottom: var(--space-md);">
+                <img src="{{ plat.photo }}" alt="{{ plat.titrePlat }}"
+                     style="width: 160px; height: 120px; object-fit: cover; border-radius: 8px; border: 2px solid var(--color-outline-variant);">
+                <p class="form-hint" style="margin-top: var(--space-xs);">Photo actuelle. Uploader une nouvelle photo la remplacera.</p>
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            {{ form_label(form.photo, null, {label_attr: {class: 'form-label'}}) }}
+            {{ form_widget(form.photo, {attr: {class: 'form-input'}}) }}
+            {{ form_errors(form.photo) }}
+            <small class="form-hint">JPG, PNG ou WebP. 5 Mo max.</small>
+        </div>
+    </section>
+
+    <section class="order-section" style="margin-top: var(--space-md);">
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-md);">Allergènes</h2>
+        <p class="form-hint" style="margin-bottom: var(--space-md);">Cochez les allergènes présents dans ce plat.</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm);">
+            {% for allergene in form.allergenes %}
+                <label style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer;">
+                    {{ form_widget(allergene) }}
+                    {{ form_label(allergene) }}
+                </label>
+            {% endfor %}
+        </div>
+        {{ form_errors(form.allergenes) }}
+    </section>
+
+    <div style="margin-top: var(--space-lg); display: flex; gap: var(--space-sm);">
+        <button type="submit" class="btn-primary">
+            <span class="material-symbols-outlined" aria-hidden="true">save</span>
+            Enregistrer
+        </button>
+        <a href="{{ path('app_employe_plats') }}" class="btn-secondary">Annuler</a>
+    </div>
+
+</div>
+
+{{ form_end(form) }}
+
+{% endblock %}
