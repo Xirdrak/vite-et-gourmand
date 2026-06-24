@@ -32,6 +32,12 @@
             <span class="material-symbols-outlined" aria-hidden="true">restaurant_menu</span>
             Menus
         </a>
+        <a href="{{ path('app_admin_statistiques') }}"
+           class="{{ app.request.attributes.get('_route') starts with 'app_admin_statistiques' ? 'btn-primary' : 'btn-secondary' }}"
+           style="font-size: var(--fs-label-md);">
+            <span class="material-symbols-outlined" aria-hidden="true">bar_chart</span>
+            Statistiques
+        </a>
     </nav>
 
     {% block admin_content %}{% endblock %}

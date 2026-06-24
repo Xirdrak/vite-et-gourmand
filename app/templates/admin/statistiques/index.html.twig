@@ -1,0 +1,131 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Statistiques - Vite & Gourmand{% endblock %}
+
+{% block admin_title %}Statistiques{% endblock %}
+{% block admin_subtitle %}Commandes et chiffre d'affaires par menu (donnees MongoDB){% endblock %}
+
+{% block admin_action %}
+    <form method="post" action="{{ path('app_admin_statistiques_sync') }}">
+        <input type="hidden" name="_token" value="{{ csrf_token('sync_stats') }}">
+        <button type="submit" class="btn-primary">
+            <span class="material-symbols-outlined" aria-hidden="true">sync</span>
+            Resynchroniser
+        </button>
+    </form>
+{% endblock %}
+
+{% block admin_content %}
+
+{% if mongo_indispo %}
+    <div class="dashboard-empty">
+        <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-error);">cloud_off</span>
+        <p>La base de statistiques (MongoDB) est injoignable.</p>
+    </div>
+{% else %}
+
+    <form method="get" style="display: flex; gap: var(--space-sm); flex-wrap: wrap; align-items: flex-end; margin-bottom: var(--space-lg);">
+        <div>
+            <label for="periode" style="display: block; font-size: var(--fs-label-md); margin-bottom: var(--space-xs);">Periode</label>
+            <select name="periode" id="periode" class="form-select">
+                <option value="tout"{{ periode == 'tout' ? ' selected' : '' }}>Tout</option>
+                <option value="7"{{ periode == '7' ? ' selected' : '' }}>7 derniers jours</option>
+                <option value="30"{{ periode == '30' ? ' selected' : '' }}>30 derniers jours</option>
+                <option value="90"{{ periode == '90' ? ' selected' : '' }}>90 derniers jours</option>
+                <option value="annee"{{ periode == 'annee' ? ' selected' : '' }}>Annee en cours</option>
+            </select>
+        </div>
+        <div>
+            <label for="menu" style="display: block; font-size: var(--fs-label-md); margin-bottom: var(--space-xs);">Menu</label>
+            <select name="menu" id="menu" class="form-select">
+                <option value="">Tous les menus</option>
+                {% for menu in menus %}
+                    <option value="{{ menu.id }}"{{ menu_filtre == menu.id ? ' selected' : '' }}>{{ menu.titre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn-secondary">
+            <span class="material-symbols-outlined" aria-hidden="true">filter_alt</span>
+            Filtrer
+        </button>
+    </form>
+
+    <div style="display: flex; gap: var(--space-md); flex-wrap: wrap; margin-bottom: var(--space-lg);">
+        <div class="dashboard-commande-card" style="flex: 1; min-width: 200px;">
+            <span style="font-size: var(--fs-label-md); color: var(--color-on-surface-variant);">Total commandes</span>
+            <div class="text-headline-md">{{ total_nb }}</div>
+        </div>
+        <div class="dashboard-commande-card" style="flex: 1; min-width: 200px;">
+            <span style="font-size: var(--fs-label-md); color: var(--color-on-surface-variant);">Chiffre d'affaires</span>
+            <div class="text-headline-md">{{ total_ca|number_format(2, ',', ' ') }} &euro;</div>
+        </div>
+    </div>
+
+    {% if lignes is empty %}
+        <div class="dashboard-empty">
+            <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant);">query_stats</span>
+            <p>Aucune donnee pour ce filtre. Pensez a resynchroniser si des commandes ont ete passees.</p>
+        </div>
+    {% else %}
+
+        <div class="dashboard-commande-card" style="margin-bottom: var(--space-lg);">
+            <h2 class="text-title-md" style="margin-bottom: var(--space-md);">Nombre de commandes par menu</h2>
+            <canvas id="chart-commandes" height="120"></canvas>
+        </div>
+
+        <div class="dashboard-commande-card">
+            <h2 class="text-title-md" style="margin-bottom: var(--space-md);">Detail par menu</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="text-align: left; border-bottom: 1px solid var(--color-outline-variant);">
+                        <th style="padding: var(--space-sm);">Menu</th>
+                        <th style="padding: var(--space-sm); text-align: right;">Commandes</th>
+                        <th style="padding: var(--space-sm); text-align: right;">Chiffre d'affaires</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ligne in lignes %}
+                    <tr style="border-bottom: 1px solid var(--color-outline-variant);">
+                        <td style="padding: var(--space-sm);">{{ ligne.menu_titre }}</td>
+                        <td style="padding: var(--space-sm); text-align: right;">{{ ligne.nb }}</td>
+                        <td style="padding: var(--space-sm); text-align: right;">{{ ligne.ca|number_format(2, ',', ' ') }} &euro;</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% endif %}
+
+{% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+{% if not mongo_indispo and lignes is not empty %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+    const statsData = {{ lignes|json_encode|raw }};
+    const labels = statsData.map(l => l.menu_titre);
+    const valeurs = statsData.map(l => l.nb);
+
+    new Chart(document.getElementById('chart-commandes'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Nombre de commandes',
+                data: valeurs,
+                backgroundColor: '#7d570e',
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+        }
+    });
+</script>
+{% endif %}
+{% endblock %}
