@@ -50,6 +50,15 @@ class CommandeRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findAllWithMenu(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.menu', 'm')->addSelect('m')
+            ->orderBy('c.dateCommande', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function trouverDerniereCommande(string $annee): ?Commande
     {
         return $this->createQueryBuilder('c')

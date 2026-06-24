@@ -21,3 +21,12 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # Client MongoDB pour les statistiques admin (NoSQL)
+    MongoDB\Client:
+        arguments:
+            $uri: '%env(MONGODB_URI)%'
+
+    App\Service\StatistiquesService:
+        arguments:
+            $dbName: '%env(MONGODB_DB)%'
