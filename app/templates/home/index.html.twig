@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vite & Gourmand - Traiteur à Bordeaux{% endblock %}
+
+{% block body %}
+
+<section class="hero">
+    <div class="container">
+        <div class="hero__inner">
+            <div class="hero__content">
+                <span class="hero__subtitle">Traiteur événementiel depuis 1999</span>
+                <h1 class="text-display">Vite & Gourmand</h1>
+                <p style="font-size: var(--fs-body-lg); color: var(--color-on-surface-variant); line-height: var(--lh-body-lg);">
+                    Des menus sur mesure pour vos événements à Bordeaux. Noël, Pâques, mariages, séminaires - nous composons chaque repas avec soin.
+                </p>
+                <div class="hero__cta-group">
+                    <a href="{{ path('app_menus') }}" class="btn-primary">
+                        <span class="material-symbols-outlined">restaurant_menu</span>
+                        Découvrir nos menus
+                    </a>
+                    <a href="{{ path('app_contact') }}" class="btn-ghost">Nous contacter</a>
+                </div>
+            </div>
+            <div class="hero__image-wrapper">
+                <div style="height:500px; background: linear-gradient(135deg, var(--color-surface-container), var(--color-secondary-container)); border-radius: 32px; display:flex; align-items:center; justify-content:center; font-size:80px;">
+                    🍽️
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section__header reveal">
+            <h2 class="text-headline-md">Notre histoire</h2>
+            <p>Depuis 1999, Vite & Gourmand accompagne les grandes occasions des familles et entreprises bordelaises.</p>
+        </div>
+        <div class="grid-2">
+            <div class="reveal" style="display:flex; flex-direction:column; gap: var(--space-md);">
+                <p style="color: var(--color-on-surface-variant); line-height: var(--lh-body-lg);">
+                    Noël, Pâques, mariages, séminaires : nous composons des menus sur mesure pour que chaque repas devienne un souvenir. Forts de 25 ans d'expérience, nous travaillons avec des producteurs locaux et mettons un point d'honneur à livrer des plats de qualité, à temps, partout à Bordeaux et ses alentours.
+                </p>
+                <a href="{{ path('app_menus') }}" class="btn-secondary" style="align-self: flex-start;">Voir nos menus</a>
+            </div>
+            <div class="reveal" style="background-color: var(--color-primary-container); border-radius: var(--radius-xl); padding: var(--space-lg); display:flex; flex-direction:column; gap: var(--space-md); align-items:center; text-align:center;">
+                <p style="font-size: var(--fs-body-lg); font-style: italic; color: var(--color-on-surface);">
+                    "Un repas réussi, c'est un moment qui reste."
+                </p>
+                <p style="font-size: var(--fs-label-md); color: var(--color-secondary); font-weight: 600;">- Julie & José, fondateurs</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section--alt">
+    <div class="container">
+        <div class="section__header reveal">
+            <h2 class="text-headline-md">Notre équipe</h2>
+            <p>Deux passionnés au service de votre événement depuis 25 ans.</p>
+        </div>
+        <div class="grid-2">
+            <div class="feature-card reveal">
+                <div class="feature-card__icon" style="background-color: var(--color-secondary-container);">
+                    <span style="font-size: 28px; font-family: var(--font-heading); font-weight:700; color: var(--color-secondary);">J</span>
+                </div>
+                <div>
+                    <h3 class="text-headline-sm">Julie Moreau</h3>
+                    <p style="font-size: var(--fs-label-md); color: var(--color-secondary); font-weight:600; margin: var(--space-xs) 0 var(--space-base);">Cofondatrice & responsable des menus</p>
+                    <p style="color: var(--color-on-surface-variant);">Julie imagine et compose les menus depuis 25 ans. C'est elle qui sélectionne les producteurs et garantit la qualité de chaque plat.</p>
+                </div>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-card__icon" style="background-color: var(--color-primary-container);">
+                    <span style="font-size: 28px; font-family: var(--font-heading); font-weight:700; color: var(--color-primary);">J</span>
+                </div>
+                <div>
+                    <h3 class="text-headline-sm">José Moreau</h3>
+                    <p style="font-size: var(--fs-label-md); color: var(--color-secondary); font-weight:600; margin: var(--space-xs) 0 var(--space-base);">Cofondateur & responsable logistique</p>
+                    <p style="color: var(--color-on-surface-variant);">José gère les livraisons, le matériel et les équipes sur le terrain. Sa priorité : que tout arrive à l'heure et en parfait état.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section__header reveal">
+            <h2 class="text-headline-md">Ce que disent nos clients</h2>
+        </div>
+
+        {% if avis_list is empty %}
+            <p class="text-center text-muted">Aucun avis pour le moment.</p>
+        {% else %}
+            <div class="grid-3">
+                {% for avis in avis_list %}
+                    <div class="testimonial-card reveal">
+                        <div class="testimonial-card__stars">
+                            {% for i in 1..5 %}
+                                {% if i <= avis.note %}★{% else %}☆{% endif %}
+                            {% endfor %}
+                        </div>
+                        <p class="testimonial-card__text">"{{ avis.description }}"</p>
+                        <div class="testimonial-card__author">
+                            <p class="testimonial-card__name">{{ avis.utilisateur.prenom }} {{ avis.utilisateur.nom|slice(0,1) }}.</p>
+                            <p class="testimonial-card__date">{{ avis.dateAvis|date('d/m/Y') }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

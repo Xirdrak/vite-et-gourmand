@@ -1,0 +1,228 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Passer une commande - Vite & Gourmand{% endblock %}
+
+{% block body %}
+
+<div class="container" style="padding-top: var(--space-lg); padding-bottom: var(--space-xl);">
+
+    <h1 class="text-headline-md" style="margin-bottom: var(--space-md);">Passer une commande</h1>
+
+    <div class="order-layout">
+
+        <div class="order-form-wrapper">
+
+            {{ form_start(form, {attr: {novalidate: 'novalidate', id: 'commande-form'}}) }}
+
+            <section class="order-section">
+                <h2 class="order-section__title">Vos informations</h2>
+                <div class="order-info-grid">
+                    <div class="form-group">
+                        <label class="form-label">Nom</label>
+                        <input type="text" class="form-input" value="{{ app.user.nom }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Prenom</label>
+                        <input type="text" class="form-input" value="{{ app.user.prenom }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" value="{{ app.user.email }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Telephone</label>
+                        <input type="text" class="form-input" value="{{ app.user.telephone }}" readonly>
+                    </div>
+                </div>
+            </section>
+
+            <section class="order-section">
+                <h2 class="order-section__title">Le menu</h2>
+
+                <div class="form-group">
+                    {{ form_label(form.menu) }}
+                    {{ form_widget(form.menu, {attr: {id: 'menu_select', class: 'form-select'}}) }}
+                    {{ form_errors(form.menu) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.nombre_personne) }}
+                    {{ form_widget(form.nombre_personne, {attr: {class: 'form-input', id: 'nombre_personne'}}) }}
+                    {{ form_errors(form.nombre_personne) }}
+                    <small id="min-personnes-hint" class="form-hint" style="display:none;"></small>
+                </div>
+            </section>
+
+            <section class="order-section">
+                <h2 class="order-section__title">La prestation</h2>
+
+                <div class="order-info-grid">
+                    <div class="form-group">
+                        {{ form_label(form.date_prestation) }}
+                        {{ form_widget(form.date_prestation, {attr: {class: 'form-input'}}) }}
+                        {{ form_errors(form.date_prestation) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.heure_livraison) }}
+                        {{ form_widget(form.heure_livraison, {attr: {class: 'form-input'}}) }}
+                        {{ form_errors(form.heure_livraison) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.adresse_livraison) }}
+                    {{ form_widget(form.adresse_livraison, {attr: {class: 'form-input'}}) }}
+                    {{ form_errors(form.adresse_livraison) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.ville_livraison) }}
+                    {{ form_widget(form.ville_livraison, {attr: {class: 'form-input'}}) }}
+                    {{ form_errors(form.ville_livraison) }}
+                </div>
+
+                <div class="form-group" style="display:flex; align-items:center; gap: var(--space-sm);">
+                    {{ form_widget(form.hors_bordeaux) }}
+                    {{ form_label(form.hors_bordeaux) }}
+                </div>
+
+                <div class="form-group" id="km-field" style="display:none;">
+                    {{ form_label(form.nombre_km) }}
+                    {{ form_widget(form.nombre_km, {attr: {class: 'form-input'}}) }}
+                    {{ form_errors(form.nombre_km) }}
+                    <small class="form-hint">Supplement : 5 € + 0,59 € par km</small>
+                </div>
+            </section>
+
+            <button type="submit" class="btn-primary" style="width:100%; margin-top: var(--space-md);">
+                Valider la commande
+            </button>
+
+            {{ form_end(form) }}
+
+        </div>
+
+        <aside class="order-summary" id="order-summary">
+            <div class="order-summary__card">
+                <h2 class="order-section__title">Recapitulatif</h2>
+
+                <div id="summary-menu-name" class="order-summary__menu" style="display:none;">
+                    <span class="material-symbols-outlined" aria-hidden="true">restaurant_menu</span>
+                    <span id="summary-menu-text">-</span>
+                </div>
+
+                <div class="order-summary__lines">
+                    <div class="order-summary__line">
+                        <span>Prix menu</span>
+                        <span id="summary-prix-menu">-</span>
+                    </div>
+                    <div class="order-summary__line" id="summary-livraison-line" style="display:none;">
+                        <span>Livraison</span>
+                        <span id="summary-prix-livraison">-</span>
+                    </div>
+                    <div class="order-summary__line order-summary__line--reduction" id="summary-reduction-line" style="display:none;">
+                        <span>Reduction 10% (groupe)</span>
+                        <span id="summary-reduction">-</span>
+                    </div>
+                    <div class="order-summary__total">
+                        <span>Total</span>
+                        <span id="summary-total">-</span>
+                    </div>
+                </div>
+
+                <p class="order-summary__note">
+                    <span class="material-symbols-outlined" aria-hidden="true">info</span>
+                    Reduction de 10% applicable a partir de {{ menu_preselectionne ? menu_preselectionne.nombrePersonneMinimum + 5 : 'N' }} personnes.
+                </p>
+            </div>
+        </aside>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    const menusData = {{ menus_data|json_encode|raw }};
+
+    const menuSelect      = document.getElementById('menu_select');
+    const nbPersonnes     = document.getElementById('nombre_personne');
+    const horsBoCheckbox  = document.getElementById('hors_bordeaux');
+    const kmField         = document.getElementById('km-field');
+    const nbKmInput       = document.getElementById('nombre_km');
+    const minHint         = document.getElementById('min-personnes-hint');
+
+    function fmt(n) {
+        return n.toFixed(2).replace('.', ',') + ' €';
+    }
+
+    function recalculer() {
+        const menuId = menuSelect ? menuSelect.value : null;
+        const nb     = parseInt(nbPersonnes ? nbPersonnes.value : 0) || 0;
+        const hors   = horsBoCheckbox ? horsBoCheckbox.checked : false;
+        const km     = parseInt(nbKmInput ? nbKmInput.value : 0) || 0;
+
+        if (!menuId || !menusData[menuId] || nb <= 0) {
+            document.getElementById('summary-prix-menu').textContent   = '-';
+            document.getElementById('summary-total').textContent        = '-';
+            document.getElementById('summary-livraison-line').style.display  = 'none';
+            document.getElementById('summary-reduction-line').style.display  = 'none';
+            document.getElementById('summary-menu-name').style.display  = 'none';
+            return;
+        }
+
+        const data   = menusData[menuId];
+        const min    = data.minimum;
+        const prix   = data.prix_par_personne;
+
+        if (minHint) {
+            minHint.textContent = 'Minimum requis : ' + min + ' personnes.';
+            minHint.style.display = nb < min ? 'block' : 'none';
+        }
+
+        let prixMenu = prix * nb;
+        let reduction = 0;
+
+        if (nb >= min + 5) {
+            reduction = prixMenu * 0.1;
+            prixMenu  = prixMenu * 0.9;
+            document.getElementById('summary-reduction-line').style.display = 'flex';
+            document.getElementById('summary-reduction').textContent = '-' + fmt(reduction);
+        } else {
+            document.getElementById('summary-reduction-line').style.display = 'none';
+        }
+
+        let prixLivraison = 0;
+        if (hors) {
+            prixLivraison = 5 + (0.59 * km);
+            document.getElementById('summary-livraison-line').style.display = 'flex';
+            document.getElementById('summary-prix-livraison').textContent = fmt(prixLivraison);
+        } else {
+            document.getElementById('summary-livraison-line').style.display = 'none';
+        }
+
+        const total = prixMenu + prixLivraison;
+
+        document.getElementById('summary-prix-menu').textContent = fmt(prixMenu);
+        document.getElementById('summary-total').textContent     = fmt(total);
+
+        const selectedOption = menuSelect.options[menuSelect.selectedIndex];
+        document.getElementById('summary-menu-name').style.display = 'flex';
+        document.getElementById('summary-menu-text').textContent   = selectedOption.text;
+    }
+
+    if (menuSelect)    menuSelect.addEventListener('change', recalculer);
+    if (nbPersonnes)   nbPersonnes.addEventListener('input', recalculer);
+    if (horsBoCheckbox) {
+        horsBoCheckbox.addEventListener('change', function () {
+            kmField.style.display = this.checked ? 'block' : 'none';
+            recalculer();
+        });
+    }
+    if (nbKmInput) nbKmInput.addEventListener('input', recalculer);
+
+    recalculer();
+</script>
+{% endblock %}

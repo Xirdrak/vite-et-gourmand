@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Vite & Gourmand{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="navbar__inner">
+        <a class="navbar__logo" href="{{ path('app_homepage') }}">Vite & Gourmand</a>
+
+        <div class="navbar__links">
+            <a class="navbar__link{% if app.request.attributes.get('_route') == 'app_homepage' %} navbar__link--active{% endif %}"
+               href="{{ path('app_homepage') }}">Accueil</a>
+            <a class="navbar__link{% if app.request.attributes.get('_route') starts with 'app_menus' %} navbar__link--active{% endif %}"
+               href="{{ path('app_menus') }}">Nos menus</a>
+            <a class="navbar__link{% if app.request.attributes.get('_route') == 'app_contact' %} navbar__link--active{% endif %}"
+               href="{{ path('app_contact') }}">Contact</a>
+
+            {% if app.user %}
+                <div class="navbar__dropdown">
+                    <button class="navbar__dropdown-toggle" id="dropdown-toggle" type="button">
+                        {{ app.user.nomComplet }}
+                        <span class="material-symbols-outlined" style="font-size:18px;">expand_more</span>
+                    </button>
+                    <div class="navbar__dropdown-menu" id="dropdown-menu">
+                        <a class="navbar__dropdown-item" href="{{ path('app_dashboard') }}">Mon espace</a>
+                        {% if is_granted('ROLE_EMPLOYE') %}
+                            <a class="navbar__dropdown-item" href="{{ path('app_employe_menus') }}">Espace employé</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a class="navbar__dropdown-item" href="{{ path('app_admin_employes') }}">Administration</a>
+                        {% endif %}
+                        <div class="navbar__dropdown-divider"></div>
+                        <form method="post" action="{{ path('app_logout') }}">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
+                            <button type="submit" class="navbar__dropdown-item--logout">Déconnexion</button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <a class="navbar__link" href="{{ path('app_login') }}">Connexion</a>
+                <a class="btn-connexion" href="{{ path('app_register') }}">Inscription</a>
+            {% endif %}
+        </div>
+
+        <button class="navbar__toggle" id="nav-toggle" aria-label="Ouvrir le menu">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+    </div>
+
+    <div class="navbar__mobile" id="nav-mobile">
+        <a class="navbar__link" href="{{ path('app_homepage') }}">Accueil</a>
+        <a class="navbar__link" href="{{ path('app_menus') }}">Nos menus</a>
+        <a class="navbar__link" href="{{ path('app_contact') }}">Contact</a>
+        {% if app.user %}
+            <a class="navbar__link" href="{{ path('app_dashboard') }}">Mon espace</a>
+            <form method="post" action="{{ path('app_logout') }}">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
+                <button type="submit" class="navbar__link" style="background:none;border:none;cursor:pointer;color:var(--color-error);">Déconnexion</button>
+            </form>
+        {% else %}
+            <a class="navbar__link" href="{{ path('app_login') }}">Connexion</a>
+            <a class="navbar__link" href="{{ path('app_register') }}">Inscription</a>
+        {% endif %}
+    </div>
+</nav>
+
+<main>
+    {% if app.flashes|length > 0 %}
+        <div class="container" style="padding-top: var(--space-md);">
+            {% for type, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert--{{ type == 'error' ? 'error' : type }}">{{ message }}</div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% block body %}{% endblock %}
+</main>
+
+<footer class="footer">
+    <div class="footer__inner">
+        <div>
+            <span class="footer__logo">Vite & Gourmand</span>
+            <p style="font-size: var(--fs-body-md); color: var(--color-on-surface-variant);">Traiteur événementiel à Bordeaux depuis 1999.</p>
+        </div>
+        <div>
+            <p class="footer__section-title">Nos horaires</p>
+            <ul class="footer__hours">
+                {% for horaire in get_horaires() %}
+                    <li>
+                        <span>{{ horaire.jour }}</span>
+                        <span>{{ horaire.heureOuverture|date('H:i') }} - {{ horaire.heureFermeture|date('H:i') }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <p class="footer__section-title">Informations</p>
+            <a class="footer__link" href="{{ path('app_mentions_legales') }}">Mentions légales</a>
+            <a class="footer__link" href="{{ path('app_cgv') }}">CGV</a>
+            <a class="footer__link" href="{{ path('app_contact') }}">Contact</a>
+        </div>
+    </div>
+    <div class="footer__bottom">
+        &copy; {{ 'now'|date('Y') }} Vite & Gourmand - Tous droits réservés
+    </div>
+</footer>
+
+<script src="{{ asset('assets/js/main.js') }}"></script>
+{% block javascripts %}{% endblock %}
+
+</body>
+</html>

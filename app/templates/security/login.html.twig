@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion - Vite & Gourmand{% endblock %}
+
+{% block body %}
+<div class="page-auth">
+    <div class="auth-card">
+        <h1 class="auth-card__title">Connexion</h1>
+
+        {% if error %}
+            <div class="alert alert--error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <form method="post">
+            <div class="form-group">
+                <label for="email">Adresse e-mail</label>
+                <input type="email" id="email" name="_username"
+                       value="{{ last_username }}" autocomplete="email" required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="_password"
+                       autocomplete="current-password" required>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" id="remember_me" name="_remember_me">
+                <label for="remember_me">Se souvenir de moi</label>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <button type="submit" class="btn-primary btn-full">Se connecter</button>
+        </form>
+
+        <div class="auth-card__footer" style="margin-top: var(--space-sm);">
+            <a href="{{ path('app_forgot_password') }}">Mot de passe oublié ?</a>
+        </div>
+        <div class="auth-card__footer">
+            Pas encore de compte ? <a href="{{ path('app_register') }}">S'inscrire</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

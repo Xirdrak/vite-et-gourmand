@@ -1,0 +1,146 @@
+{% extends 'employe/layout.html.twig' %}
+
+{% block title %}{{ titre }} - Vite & Gourmand{% endblock %}
+
+{% block employe_title %}{{ titre }}{% endblock %}
+{% block employe_subtitle %}{% endblock %}
+
+{% block employe_action %}
+    <a href="{{ path('app_employe_menus') }}" class="back-link">
+        <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+        Retour aux menus
+    </a>
+{% endblock %}
+
+{% block employe_content %}
+
+{{ form_start(form, {
+    attr: {novalidate: 'novalidate'},
+    enctype: 'multipart/form-data'
+}) }}
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md);">
+
+    <section class="order-section" style="grid-column: 1 / -1;">
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-md);">Informations générales</h2>
+
+        <div class="form-group">
+            {{ form_label(form.titre, null, {label_attr: {class: 'form-label'}}) }}
+            {{ form_widget(form.titre, {attr: {class: 'form-input'}}) }}
+            {{ form_errors(form.titre) }}
+        </div>
+
+        <div class="form-group" style="margin-top: var(--space-md);">
+            {{ form_label(form.description, null, {label_attr: {class: 'form-label'}}) }}
+            {{ form_widget(form.description, {attr: {class: 'form-input'}}) }}
+            {{ form_errors(form.description) }}
+        </div>
+
+        <div class="form-group" style="margin-top: var(--space-md);">
+            {{ form_label(form.conditions, null, {label_attr: {class: 'form-label'}}) }}
+            {{ form_widget(form.conditions, {attr: {class: 'form-input'}}) }}
+            {{ form_errors(form.conditions) }}
+            <small class="form-hint">Delai de commande, precautions de stockage, etc.</small>
+        </div>
+    </section>
+
+    <section class="order-section">
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-md);">Classification</h2>
+
+        <div class="form-group">
+            {{ form_label(form.theme, null, {label_attr: {class: 'form-label'}}) }}
+            {{ form_widget(form.theme, {attr: {class: 'form-input'}}) }}
+            {{ form_errors(form.theme) }}
+        </div>
+
+        <div class="form-group" style="margin-top: var(--space-md);">
+            {{ form_label(form.regime, null, {label_attr: {class: 'form-label'}}) }}
+            {{ form_widget(form.regime, {attr: {class: 'form-input'}}) }}
+            {{ form_errors(form.regime) }}
+        </div>
+    </section>
+
+    <section class="order-section">
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-md);">Tarification & stock</h2>
+
+        <div class="form-group">
+            {{ form_label(form.nombrePersonneMinimum, null, {label_attr: {class: 'form-label'}}) }}
+            {{ form_widget(form.nombrePersonneMinimum, {attr: {class: 'form-input'}}) }}
+            {{ form_errors(form.nombrePersonneMinimum) }}
+        </div>
+
+        <div class="form-group" style="margin-top: var(--space-md);">
+            {{ form_label(form.prixParPersonne, null, {label_attr: {class: 'form-label'}}) }}
+            {{ form_widget(form.prixParPersonne, {attr: {class: 'form-input'}}) }}
+            {{ form_errors(form.prixParPersonne) }}
+        </div>
+
+        <div class="form-group" style="margin-top: var(--space-md);">
+            {{ form_label(form.quantiteRestante, null, {label_attr: {class: 'form-label'}}) }}
+            {{ form_widget(form.quantiteRestante, {attr: {class: 'form-input'}}) }}
+            {{ form_errors(form.quantiteRestante) }}
+        </div>
+
+        <div class="form-group" style="margin-top: var(--space-md);">
+            <label class="form-label" style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer;">
+                {{ form_widget(form.actif) }}
+                {{ form.actif.vars.label }}
+            </label>
+            {{ form_errors(form.actif) }}
+        </div>
+    </section>
+
+    <section class="order-section" style="grid-column: 1 / -1;">
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-md);">Images du menu</h2>
+
+        {% if menu.id and menu.images|length > 0 %}
+            <p class="form-hint" style="margin-bottom: var(--space-md);">Images actuelles — cochez pour supprimer :</p>
+            <div style="display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-bottom: var(--space-md);">
+                {% for image in menu.images %}
+                <div style="position: relative; text-align: center;">
+                    <img src="{{ image.chemin }}" alt="Image du menu" style="width: 120px; height: 90px; object-fit: cover; border-radius: 8px; border: 2px solid var(--color-outline-variant);">
+                    <label style="display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 4px; font-size: var(--fs-label-sm); cursor: pointer; color: var(--color-error);">
+                        <input type="checkbox" name="images_supprimer[]" value="{{ image.id }}">
+                        Supprimer
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            {{ form_label(form.images, null, {label_attr: {class: 'form-label'}}) }}
+            {{ form_widget(form.images, {attr: {class: 'form-input'}}) }}
+            {{ form_errors(form.images) }}
+            <small class="form-hint">JPG, PNG ou WebP. 5 Mo max par image.</small>
+        </div>
+    </section>
+
+    <section class="order-section" style="grid-column: 1 / -1;">
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-md);">Plats du menu</h2>
+        <p class="form-hint" style="margin-bottom: var(--space-md);">Sélectionnez les plats à inclure dans ce menu.</p>
+
+        <div style="columns: 2; gap: var(--space-md);">
+            {% for plat in form.plats %}
+                <label style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-sm); cursor: pointer; break-inside: avoid;">
+                    {{ form_widget(plat) }}
+                    {{ form_label(plat) }}
+                </label>
+            {% endfor %}
+        </div>
+        {{ form_errors(form.plats) }}
+    </section>
+
+</div>
+
+<div style="margin-top: var(--space-lg); display: flex; gap: var(--space-sm);">
+    <button type="submit" class="btn-primary">
+        <span class="material-symbols-outlined" aria-hidden="true">save</span>
+        Enregistrer
+    </button>
+    <a href="{{ path('app_employe_menus') }}" class="btn-secondary">Annuler</a>
+</div>
+
+{{ form_end(form) }}
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'employe/layout.html.twig' %}
+
+{% block title %}Gestion des plats - Vite & Gourmand{% endblock %}
+
+{% block employe_title %}Gestion des plats{% endblock %}
+{% block employe_subtitle %}{{ plats|length }} plat{{ plats|length > 1 ? 's' : '' }} au total{% endblock %}
+
+{% block employe_action %}
+    <a href="{{ path('app_employe_plat_nouveau') }}" class="btn-primary">
+        <span class="material-symbols-outlined" aria-hidden="true">add</span>
+        Nouveau plat
+    </a>
+{% endblock %}
+
+{% block employe_content %}
+
+{% if plats is empty %}
+    <div class="dashboard-empty">
+        <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant);">lunch_dining</span>
+        <p>Aucun plat pour l'instant.</p>
+        <a href="{{ path('app_employe_plat_nouveau') }}" class="btn-primary" style="margin-top: var(--space-sm);">
+            Créer le premier plat
+        </a>
+    </div>
+{% else %}
+    <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+        {% for plat in plats %}
+        <div class="dashboard-commande-card">
+            <div class="dashboard-commande-card__header">
+                <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                    {% if plat.photo %}
+                        <img src="{{ plat.photo }}" alt="{{ plat.titrePlat }}"
+                             style="width: 48px; height: 48px; object-fit: cover; border-radius: 8px;">
+                    {% endif %}
+                    <div>
+                        <span class="text-title-md">{{ plat.titrePlat }}</span>
+                        <br>
+                        <span style="font-size: var(--fs-label-md); color: var(--color-on-surface-variant);">
+                            {{ plat.typePlat.label() }}
+                        </span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: var(--space-sm);">
+                    <a href="{{ path('app_employe_plat_modifier', {id: plat.id}) }}" class="btn-secondary" style="font-size: var(--fs-label-md);">
+                        <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+                        Modifier
+                    </a>
+                    <form method="post" action="{{ path('app_employe_plat_supprimer', {id: plat.id}) }}"
+                          onsubmit="return confirm('Supprimer ce plat ?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('supprimer_plat_' ~ plat.id) }}">
+                        <button type="submit" class="btn-secondary" style="font-size: var(--fs-label-md); color: var(--color-error); border-color: var(--color-error);">
+                            <span class="material-symbols-outlined" aria-hidden="true">delete</span>
+                            Supprimer
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% if plat.allergenes|length > 0 %}
+            <div class="dashboard-commande-card__body">
+                <div class="dashboard-commande-card__info">
+                    <span class="material-symbols-outlined" aria-hidden="true">warning</span>
+                    <span>Allergènes : {{ plat.allergenes|map(a => a.libelle)|join(', ') }}</span>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends 'employe/layout.html.twig' %}
+
+{% block title %}Modération des avis - Vite & Gourmand{% endblock %}
+
+{% block employe_title %}Modération des avis{% endblock %}
+{% block employe_subtitle %}{{ avis_en_attente|length }} avis en attente de modération{% endblock %}
+
+{% block employe_content %}
+
+{% if avis_en_attente is empty %}
+    <div class="dashboard-empty" style="margin-bottom: var(--space-lg);">
+        <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant);">reviews</span>
+        <p>Aucun avis en attente de modération.</p>
+    </div>
+{% else %}
+    <section style="margin-bottom: var(--space-lg);">
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-md);">En attente</h2>
+        <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+            {% for avis in avis_en_attente %}
+            <div class="dashboard-commande-card">
+                <div class="dashboard-commande-card__header">
+                    <div>
+                        <span class="text-title-md">{{ avis.utilisateur.nomComplet }}</span>
+                        <br>
+                        <span style="font-size: var(--fs-label-md); color: var(--color-on-surface-variant);">
+                            {{ avis.commande.menu.titre }} — {{ avis.dateAvis|date('d/m/Y') }}
+                        </span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                        {% for i in 1..5 %}
+                            <span class="material-symbols-outlined" style="font-size: 18px; color: {{ i <= avis.note ? 'var(--color-secondary)' : 'var(--color-outline-variant)' }};">
+                                star
+                            </span>
+                        {% endfor %}
+                        <span style="font-weight: 600;">{{ avis.note }}/5</span>
+                    </div>
+                </div>
+                <div class="dashboard-commande-card__body">
+                    <p style="font-size: var(--fs-body-md); color: var(--color-on-surface); font-style: italic; padding: var(--space-sm) 0;">
+                        "{{ avis.description }}"
+                    </p>
+                </div>
+                <div class="dashboard-commande-card__footer">
+                    <form method="post" action="{{ path('app_employe_avis_valider', {id: avis.id}) }}" style="display: inline;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('avis_' ~ avis.id) }}">
+                        <button type="submit" class="btn-primary" style="font-size: var(--fs-label-md);">
+                            <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                            Valider
+                        </button>
+                    </form>
+                    <form method="post" action="{{ path('app_employe_avis_refuser', {id: avis.id}) }}" style="display: inline; margin-left: var(--space-sm);"
+                          onsubmit="return confirm('Refuser cet avis ?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('avis_' ~ avis.id) }}">
+                        <button type="submit" class="btn-secondary" style="font-size: var(--fs-label-md); color: var(--color-error); border-color: var(--color-error);">
+                            <span class="material-symbols-outlined" aria-hidden="true">cancel</span>
+                            Refuser
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endif %}
+
+{% if avis_traites is not empty %}
+    <section>
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-md);">Derniers avis traités</h2>
+        <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+            {% for avis in avis_traites %}
+            <div class="dashboard-commande-card" style="opacity: 0.8;">
+                <div class="dashboard-commande-card__header">
+                    <div>
+                        <span class="text-title-md">{{ avis.utilisateur.nomComplet }}</span>
+                        <br>
+                        <span style="font-size: var(--fs-label-md); color: var(--color-on-surface-variant);">
+                            {{ avis.commande.menu.titre }} — {{ avis.dateAvis|date('d/m/Y') }}
+                        </span>
+                    </div>
+                    <span class="badge-statut badge-statut--{{ avis.statut.value }}">
+                        {{ avis.statut.label() }}
+                    </span>
+                </div>
+                <div class="dashboard-commande-card__body">
+                    <p style="font-size: var(--fs-body-md); color: var(--color-on-surface-variant); font-style: italic; padding: var(--space-sm) 0;">
+                        "{{ avis.description }}"
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endif %}
+
+{% endblock %}

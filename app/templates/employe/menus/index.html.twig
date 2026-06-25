@@ -1,0 +1,82 @@
+{% extends 'employe/layout.html.twig' %}
+
+{% block title %}Gestion des menus - Vite & Gourmand{% endblock %}
+
+{% block employe_title %}Gestion des menus{% endblock %}
+{% block employe_subtitle %}{{ menus|length }} menu{{ menus|length > 1 ? 's' : '' }} au total{% endblock %}
+
+{% block employe_action %}
+    <a href="{{ path('app_employe_menu_nouveau') }}" class="btn-primary">
+        <span class="material-symbols-outlined" aria-hidden="true">add</span>
+        Nouveau menu
+    </a>
+{% endblock %}
+
+{% block employe_content %}
+
+{% if menus is empty %}
+    <div class="dashboard-empty">
+        <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant);">restaurant_menu</span>
+        <p>Aucun menu pour l'instant.</p>
+        <a href="{{ path('app_employe_menu_nouveau') }}" class="btn-primary" style="margin-top: var(--space-sm);">
+            Créer le premier menu
+        </a>
+    </div>
+{% else %}
+    <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+        {% for menu in menus %}
+        <div class="dashboard-commande-card">
+            <div class="dashboard-commande-card__header">
+                <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                    <span class="text-title-md">{{ menu.titre }}</span>
+                    {% if not menu.actif %}
+                        <span class="badge-statut" style="background: var(--color-surface-container); color: var(--color-on-surface-variant);">Inactif</span>
+                    {% endif %}
+                </div>
+                <div style="display: flex; gap: var(--space-sm);">
+                    <a href="{{ path('app_employe_menu_modifier', {id: menu.id}) }}" class="btn-secondary" style="font-size: var(--fs-label-md);">
+                        <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+                        Modifier
+                    </a>
+                    <form method="post" action="{{ path('app_employe_menu_supprimer', {id: menu.id}) }}"
+                          onsubmit="return confirm('Supprimer ce menu ? Cette action est irreversible.');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('supprimer_menu_' ~ menu.id) }}">
+                        <button type="submit" class="btn-secondary" style="font-size: var(--fs-label-md); color: var(--color-error); border-color: var(--color-error);">
+                            <span class="material-symbols-outlined" aria-hidden="true">delete</span>
+                            Supprimer
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="dashboard-commande-card__body">
+                <div class="dashboard-commande-card__info">
+                    <span class="material-symbols-outlined" aria-hidden="true">category</span>
+                    <span>{{ menu.theme.libelle }} - {{ menu.regime.libelle }}</span>
+                </div>
+                <div class="dashboard-commande-card__info">
+                    <span class="material-symbols-outlined" aria-hidden="true">group</span>
+                    <span>{{ menu.nombrePersonneMinimum }} personnes minimum</span>
+                </div>
+                <div class="dashboard-commande-card__info">
+                    <span class="material-symbols-outlined" aria-hidden="true">euro</span>
+                    <span>{{ menu.prixParPersonne }} €/pers.</span>
+                </div>
+                <div class="dashboard-commande-card__info">
+                    <span class="material-symbols-outlined" aria-hidden="true">inventory_2</span>
+                    <span>Stock : {{ menu.quantiteRestante }} commande{{ menu.quantiteRestante > 1 ? 's' : '' }}</span>
+                </div>
+                <div class="dashboard-commande-card__info">
+                    <span class="material-symbols-outlined" aria-hidden="true">image</span>
+                    <span>{{ menu.images|length }} image{{ menu.images|length > 1 ? 's' : '' }}</span>
+                </div>
+                <div class="dashboard-commande-card__info">
+                    <span class="material-symbols-outlined" aria-hidden="true">lunch_dining</span>
+                    <span>{{ menu.plats|length }} plat{{ menu.plats|length > 1 ? 's' : '' }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}

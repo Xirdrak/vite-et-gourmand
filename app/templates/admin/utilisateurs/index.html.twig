@@ -1,0 +1,65 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Comptes employés - Vite & Gourmand{% endblock %}
+
+{% block admin_title %}Comptes employés{% endblock %}
+{% block admin_subtitle %}{{ employes|length }} employé{{ employes|length > 1 ? 's' : '' }}{% endblock %}
+
+{% block admin_action %}
+    <a href="{{ path('app_admin_employe_nouveau') }}" class="btn-primary">
+        <span class="material-symbols-outlined" aria-hidden="true">person_add</span>
+        Créer un compte
+    </a>
+{% endblock %}
+
+{% block admin_content %}
+
+{% if employes is empty %}
+    <div class="dashboard-empty">
+        <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant);">manage_accounts</span>
+        <p>Aucun compte employé pour l'instant.</p>
+    </div>
+{% else %}
+    <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+        {% for employe in employes %}
+        <div class="dashboard-commande-card" style="{{ not employe.actif ? 'opacity: 0.6;' : '' }}">
+            <div class="dashboard-commande-card__header">
+                <div>
+                    <span class="text-title-md">{{ employe.nomComplet }}</span>
+                    {% if not employe.actif %}
+                        <span class="badge-statut" style="margin-left: var(--space-sm); background: var(--color-error-container); color: var(--color-on-error-container);">
+                            Désactivé
+                        </span>
+                    {% endif %}
+                    <br>
+                    <span style="font-size: var(--fs-label-md); color: var(--color-on-surface-variant);">
+                        {{ employe.email }}
+                    </span>
+                </div>
+                <div>
+                    {% if employe.actif %}
+                        <form method="post" action="{{ path('app_admin_employe_desactiver', {id: employe.id}) }}"
+                              onsubmit="return confirm('Désactiver le compte de {{ employe.nomComplet }} ? Il ne pourra plus se connecter.');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('toggle_' ~ employe.id) }}">
+                            <button type="submit" class="btn-secondary" style="font-size: var(--fs-label-md); color: var(--color-error); border-color: var(--color-error);">
+                                <span class="material-symbols-outlined" aria-hidden="true">person_off</span>
+                                Désactiver
+                            </button>
+                        </form>
+                    {% else %}
+                        <form method="post" action="{{ path('app_admin_employe_activer', {id: employe.id}) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('toggle_' ~ employe.id) }}">
+                            <button type="submit" class="btn-secondary" style="font-size: var(--fs-label-md);">
+                                <span class="material-symbols-outlined" aria-hidden="true">person</span>
+                                Réactiver
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}

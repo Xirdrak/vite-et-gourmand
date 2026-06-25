@@ -1,0 +1,42 @@
+{% extends 'employe/layout.html.twig' %}
+
+{% block title %}Gestion des horaires - Vite & Gourmand{% endblock %}
+
+{% block employe_title %}Gestion des horaires{% endblock %}
+{% block employe_subtitle %}Horaires affichés dans le pied de page du site{% endblock %}
+
+{% block employe_content %}
+
+<div style="max-width: 640px; display: flex; flex-direction: column; gap: var(--space-sm);">
+
+    {% for horaire in horaires %}
+    <section class="order-section">
+        {{ form_start(forms[horaire.id]) }}
+        <div style="display: flex; align-items: flex-end; gap: var(--space-md);">
+
+            <span class="text-title-md" style="min-width: 100px; padding-bottom: 10px;">{{ horaire.jour }}</span>
+
+            <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-xs);">
+                {{ form_label(forms[horaire.id].heureOuverture, null, {label_attr: {class: 'form-label', style: 'font-size: var(--fs-label-sm);'}}) }}
+                {{ form_widget(forms[horaire.id].heureOuverture, {attr: {class: 'form-input'}}) }}
+                {{ form_errors(forms[horaire.id].heureOuverture) }}
+            </div>
+
+            <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-xs);">
+                {{ form_label(forms[horaire.id].heureFermeture, null, {label_attr: {class: 'form-label', style: 'font-size: var(--fs-label-sm);'}}) }}
+                {{ form_widget(forms[horaire.id].heureFermeture, {attr: {class: 'form-input'}}) }}
+                {{ form_errors(forms[horaire.id].heureFermeture) }}
+            </div>
+
+            <button type="submit" class="btn-primary btn-input-height">
+                <span class="material-symbols-outlined" aria-hidden="true">save</span>
+            </button>
+
+        </div>
+        {{ form_end(forms[horaire.id]) }}
+    </section>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande {{ commande.numeroCommande }} - Vite & Gourmand{% endblock %}
+
+{% block body %}
+
+<div class="container" style="padding-top: var(--space-lg); padding-bottom: var(--space-xl);">
+
+    <a href="{{ path('app_dashboard') }}" class="back-link">
+        <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+        Retour a mes commandes
+    </a>
+
+    <div class="commande-detail-header">
+        <div>
+            <h1 class="text-headline-md">{{ commande.numeroCommande }}</h1>
+            <p style="color: var(--color-on-surface-variant); margin-top: var(--space-xs);">
+                Commandée le {{ commande.dateCommande|date('d/m/Y à H:i') }}
+            </p>
+        </div>
+        <span class="badge-statut badge-statut--{{ commande.statut.value }} badge-statut--lg">
+            {{ commande.statut.label }}
+        </span>
+    </div>
+
+    <div class="commande-detail-layout">
+
+        <div class="commande-detail-main">
+
+            <section class="order-section">
+                <h2 class="order-section__title">La prestation</h2>
+                <div class="commande-detail-grid">
+                    <div class="commande-detail-item">
+                        <span class="commande-detail-item__label">Menu</span>
+                        <span class="commande-detail-item__value">{{ commande.menu.titre }}</span>
+                    </div>
+                    <div class="commande-detail-item">
+                        <span class="commande-detail-item__label">Nombre de personnes</span>
+                        <span class="commande-detail-item__value">{{ commande.nombrePersonne }}</span>
+                    </div>
+                    <div class="commande-detail-item">
+                        <span class="commande-detail-item__label">Date de la prestation</span>
+                        <span class="commande-detail-item__value">{{ commande.datePrestation|date('d/m/Y') }}</span>
+                    </div>
+                    <div class="commande-detail-item">
+                        <span class="commande-detail-item__label">Heure de livraison</span>
+                        <span class="commande-detail-item__value">{{ commande.heureLivraison|date('H:i') }}</span>
+                    </div>
+                    <div class="commande-detail-item">
+                        <span class="commande-detail-item__label">Adresse</span>
+                        <span class="commande-detail-item__value">{{ commande.adresseLivraison }}, {{ commande.villeLivraison }}</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="order-section" style="margin-top: var(--space-md);">
+                <h2 class="order-section__title">Recapitulatif financier</h2>
+                <div class="order-summary__lines">
+                    <div class="order-summary__line">
+                        <span>Prix menu</span>
+                        <span>{{ commande.prixMenu }} €</span>
+                    </div>
+                    {% if commande.prixLivraison > 0 %}
+                    <div class="order-summary__line">
+                        <span>Livraison</span>
+                        <span>{{ commande.prixLivraison }} €</span>
+                    </div>
+                    {% endif %}
+                    <div class="order-summary__total">
+                        <span>Total</span>
+                        <span>{{ commande.prixTotal }} €</span>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <aside>
+
+            <section class="order-section">
+                <h2 class="order-section__title">Suivi de la commande</h2>
+                <div class="timeline">
+                    {% for historique in commande.historiqueStatuts %}
+                    <div class="timeline__item {% if loop.last %}timeline__item--actif{% endif %}">
+                        <div class="timeline__dot"></div>
+                        <div class="timeline__content">
+                            <span class="timeline__label">{{ historique.statutLabel }}</span>
+                            <span class="timeline__date">{{ historique.dateHeure|date('d/m/Y à H:i') }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            {% if commande.isModifiableParClient %}
+            <section class="order-section" style="margin-top: var(--space-md);">
+                <h2 class="order-section__title">Actions</h2>
+                <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+                    <a href="{{ path('app_dashboard_commande_modifier', {id: commande.id}) }}" class="btn-secondary" style="text-align:center;">
+                        <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+                        Modifier la commande
+                    </a>
+                    <form method="post" action="{{ path('app_dashboard_commande_annuler', {id: commande.id}) }}"
+                          onsubmit="return confirm('Confirmer l\'annulation de cette commande ?')">
+                        <input type="hidden" name="_token" value="{{ csrf_token('annuler_' ~ commande.id) }}">
+                        <button type="submit" class="btn-danger" style="width:100%;">
+                            <span class="material-symbols-outlined" aria-hidden="true">cancel</span>
+                            Annuler la commande
+                        </button>
+                    </form>
+                </div>
+                <p style="color: var(--color-on-surface-variant); font-size: var(--fs-body-sm); margin-top: var(--space-sm);">
+                    La modification ou l'annulation n'est possible que tant que votre commande est a l'etat "Nouvelle".
+                </p>
+            </section>
+            {% endif %}
+
+            {% if commande.statut.value == 'terminee' and commande.avis is null %}
+            <section class="order-section" style="margin-top: var(--space-md);">
+                <p style="color: var(--color-on-surface-variant); font-size: var(--fs-body-sm);">
+                    Votre prestation est terminee. Vous pouvez laisser un avis.
+                </p>
+                <a href="{{ path('app_dashboard_avis', {id: commande.id}) }}" class="btn-primary" style="display:block; text-align:center; margin-top: var(--space-sm);">
+                    Laisser un avis
+                </a>
+            </section>
+            {% endif %}
+
+        </aside>
+
+    </div>
+
+</div>
+
+{% endblock %}

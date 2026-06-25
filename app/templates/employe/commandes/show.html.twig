@@ -1,0 +1,126 @@
+{% extends 'employe/layout.html.twig' %}
+
+{% block title %}Commande {{ commande.numeroCommande }} - Vite & Gourmand{% endblock %}
+
+{% block employe_title %}Commande {{ commande.numeroCommande }}{% endblock %}
+{% block employe_subtitle %}{{ commande.utilisateur.nomComplet }} — {{ commande.menu.titre }}{% endblock %}
+
+{% block employe_action %}
+    <a href="{{ path('app_employe_commandes') }}" class="back-link">
+        <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+        Retour aux commandes
+    </a>
+{% endblock %}
+
+{% block employe_content %}
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md);">
+
+    <section class="order-section">
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-md);">Informations client</h2>
+        <div class="dashboard-commande-card__info">
+            <span class="material-symbols-outlined" aria-hidden="true">person</span>
+            <span>{{ commande.utilisateur.nomComplet }}</span>
+        </div>
+        <div class="dashboard-commande-card__info" style="margin-top: var(--space-sm);">
+            <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+            <a href="mailto:{{ commande.utilisateur.email }}">{{ commande.utilisateur.email }}</a>
+        </div>
+        <div class="dashboard-commande-card__info" style="margin-top: var(--space-sm);">
+            <span class="material-symbols-outlined" aria-hidden="true">phone</span>
+            <a href="tel:{{ commande.utilisateur.telephone }}">{{ commande.utilisateur.telephone }}</a>
+        </div>
+    </section>
+
+    <section class="order-section">
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-md);">Prestation</h2>
+        <div class="dashboard-commande-card__info">
+            <span class="material-symbols-outlined" aria-hidden="true">restaurant_menu</span>
+            <span>{{ commande.menu.titre }}</span>
+        </div>
+        <div class="dashboard-commande-card__info" style="margin-top: var(--space-sm);">
+            <span class="material-symbols-outlined" aria-hidden="true">calendar_today</span>
+            <span>{{ commande.datePrestation|date('d/m/Y') }} à {{ commande.heureLivraison|date('H:i') }}</span>
+        </div>
+        <div class="dashboard-commande-card__info" style="margin-top: var(--space-sm);">
+            <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+            <span>{{ commande.adresseLivraison }}, {{ commande.villeLivraison }}</span>
+        </div>
+        <div class="dashboard-commande-card__info" style="margin-top: var(--space-sm);">
+            <span class="material-symbols-outlined" aria-hidden="true">group</span>
+            <span>{{ commande.nombrePersonne }} personnes</span>
+        </div>
+        <div class="dashboard-commande-card__info" style="margin-top: var(--space-sm);">
+            <span class="material-symbols-outlined" aria-hidden="true">euro</span>
+            <span>Menu {{ commande.prixMenu }} € + Livraison {{ commande.prixLivraison }} € = <strong>{{ commande.prixTotal }} €</strong></span>
+        </div>
+    </section>
+
+    <section class="order-section" style="grid-column: 1 / -1;">
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-md);">Suivi de la commande</h2>
+        <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md);">
+            <span class="badge-statut badge-statut--{{ commande.statut.value }}" style="font-size: var(--fs-body-md);">
+                {{ commande.statut.label() }}
+            </span>
+        </div>
+
+        <div class="timeline">
+            {% for historique in commande.historiqueStatuts %}
+            <div class="timeline__item">
+                <div class="timeline__dot"></div>
+                <div class="timeline__content">
+                    <span class="timeline__label">{{ historique.statutLabel }}</span>
+                    <span class="timeline__date">{{ historique.dateHeure|date('d/m/Y à H:i') }}</span>
+                    {% if historique.commentaire %}
+                        <p style="font-size: var(--fs-label-md); color: var(--color-on-surface-variant); margin-top: var(--space-xs);">
+                            {{ historique.commentaire }}
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    {% if transitions is not empty %}
+    <section class="order-section" style="grid-column: 1 / -1;">
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-md);">Changer le statut</h2>
+        <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+            {% for statut in transitions %}
+            <form method="post" action="{{ path('app_employe_commande_statut', {id: commande.id}) }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('statut_' ~ commande.id) }}">
+                <input type="hidden" name="statut" value="{{ statut.value }}">
+                <button type="submit" class="btn-primary">
+                    {{ statut.label() }}
+                </button>
+            </form>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    {% if commande.statut.value not in ['annulee', 'terminee'] %}
+    <section class="order-section" style="grid-column: 1 / -1; border: 1px solid var(--color-error); border-radius: 8px;">
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-sm); color: var(--color-error);">Annuler la commande</h2>
+        <p class="form-hint" style="margin-bottom: var(--space-md);">
+            Vous devez avoir contacté le client avant d'annuler. Un motif et le mode de contact seront demandés.
+        </p>
+        <a href="{{ path('app_employe_commande_annuler', {id: commande.id}) }}"
+           class="btn-secondary" style="color: var(--color-error); border-color: var(--color-error);">
+            <span class="material-symbols-outlined" aria-hidden="true">cancel</span>
+            Annuler cette commande
+        </a>
+    </section>
+    {% endif %}
+
+    {% if commande.motifModification %}
+    <section class="order-section" style="grid-column: 1 / -1;">
+        <h2 class="text-title-lg" style="margin-bottom: var(--space-sm);">Motif d'annulation</h2>
+        <p class="form-hint">Contact : {{ commande.modeContact ? commande.modeContact.label() : '-' }}</p>
+        <p style="margin-top: var(--space-sm);">{{ commande.motifModification }}</p>
+    </section>
+    {% endif %}
+
+</div>
+
+{% endblock %}

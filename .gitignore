@@ -4,9 +4,15 @@
 prompts/
 specs/
 notes/
+wip/
 desktop.ini
 
-# Symfony - complete le .gitignore de app/
+# Screenshots et fichiers temporaires
+/*.png
+/*.jpg
+/*.jpeg
+
+# Fichiers Symfony - complete le .gitignore de app/
 app/.env.local
 app/.env.*.local
 app/var/

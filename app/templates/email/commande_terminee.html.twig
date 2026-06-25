@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"></head>
+<body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+    <h2>Votre commande est terminée !</h2>
+    <p>Bonjour {{ utilisateur.prenom }},</p>
+    <p>
+        Votre commande <strong>{{ commande.numeroCommande }}</strong> ({{ commande.menu.titre }}) est désormais terminée.
+        Nous espérons que tout s'est déroulé à votre satisfaction.
+    </p>
+    <p>
+        Votre avis compte beaucoup pour nous et pour nos futurs clients.
+        Connectez-vous à votre espace personnel pour laisser un avis sur cette commande.
+    </p>
+    <p>
+        Merci de nous avoir fait confiance et à bientôt chez Vite & Gourmand !
+    </p>
+    <p style="color: #666; font-size: 0.9em;">
+        L'équipe Vite & Gourmand<br>
+        Bordeaux
+    </p>
+</body>
+</html>
