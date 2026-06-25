@@ -29,6 +29,11 @@ when@test:
 
 when@prod:
     doctrine:
+        dbal:
+            # Connexion chiffree a la base manageee Aiven (SSL obligatoire).
+            # Le certificat CA est telecharge depuis la console Aiven.
+            options:
+                !php/const PDO::MYSQL_ATTR_SSL_CA: '%kernel.project_dir%/config/certs/aiven-ca.pem'
         orm:
             query_cache_driver:
                 type: pool

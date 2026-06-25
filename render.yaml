@@ -1,0 +1,32 @@
+# Configuration de deploiement Render pour "Vite & Gourmand"
+# Les secrets (DATABASE_URL, MONGODB_URI, MAILER_DSN, APP_SECRET, DEFAULT_URI)
+# ne sont PAS ici : ils sont definis dans le dashboard Render (sync: false).
+services:
+  - type: web
+    name: vite-et-gourmand
+    runtime: docker
+    plan: free
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /
+    envVars:
+      - key: APP_ENV
+        value: prod
+      - key: APP_DEBUG
+        value: "0"
+      # nginx ecoute sur 8080, on aligne le PORT attendu par Render (defaut 10000)
+      - key: PORT
+        value: "8080"
+      - key: APP_SECRET
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: MONGODB_DB
+        sync: false
+      - key: MAILER_DSN
+        sync: false
+      - key: DEFAULT_URI
+        sync: false
