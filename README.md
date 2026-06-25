@@ -3,6 +3,8 @@
 Application web pour le traiteur événementiel "Vite & Gourmand" (Bordeaux).  
 Projet ECF - TP Développeur Web et Web Mobile (Studi).
 
+Application en ligne : https://vite-et-gourmand-bxiy.onrender.com
+
 ---
 
 ## Prérequis
@@ -39,13 +41,18 @@ L'application est accessible sur `https://localhost:8000`.
 
 ## Comptes de test
 
-Voir `seed.sql` pour la liste complète.
+Comptes créés par `seed.sql` (les mots de passe sont communs par rôle).
 
 | Rôle | Email | Mot de passe |
 |------|-------|-------------|
-| Administrateur | admin@vite-et-gourmand.fr | _voir seed.sql_ |
-| Employé | employe@vite-et-gourmand.fr | _voir seed.sql_ |
-| Utilisateur | client@example.com | _voir seed.sql_ |
+| Administrateur | admin@vite-et-gourmand.fr | Admin@2026! |
+| Employé | marie.dupont@vite-et-gourmand.fr | Employe@2026! |
+| Employé | thomas.leroy@vite-et-gourmand.fr | Employe@2026! |
+| Utilisateur | alice.martin@example.com | Client@2026! |
+| Utilisateur | bob.durand@example.com | Client@2026! |
+| Utilisateur | claire.petit@example.com | Client@2026! |
+
+Le compte administrateur est inséré directement en base via `seed.sql` : il n'est pas créable depuis l'application (exigence du sujet).
 
 ## Structure du dépôt
 
@@ -60,4 +67,38 @@ Voir `seed.sql` pour la liste complète.
 
 ## Déploiement
 
-Voir la documentation technique dans `livrables/doc-technique.pdf`.
+L'application est déployée sur Render à partir d'un conteneur Docker, avec les
+bases de données hébergées séparément :
+
+- Application : Render (web service Docker, build du `Dockerfile` à la racine)
+- Base MySQL : Aiven (service managé, connexion SSL via le certificat CA dans `app/config/certs/`)
+- Base MongoDB : MongoDB Atlas (cluster M0, pour le dashboard statistiques)
+- Envoi des mails : Mailtrap (SMTP de test)
+
+### Principe
+
+Le fichier `render.yaml` à la racine décrit le service (runtime Docker, port,
+health check). À chaque push sur la branche suivie, Render reconstruit l'image à
+partir du `Dockerfile` (PHP 8.4-fpm + nginx pilotés par supervisor) et redéploie.
+
+Les secrets de production ne sont pas dans le dépôt : ils sont déclarés
+`sync: false` dans `render.yaml` et leurs valeurs sont saisies dans le dashboard
+Render (variables d'environnement) :
+
+- `APP_SECRET`
+- `DATABASE_URL` (base Aiven)
+- `MONGODB_URI`, `MONGODB_DB` (cluster Atlas)
+- `MAILER_DSN` (Mailtrap)
+- `DEFAULT_URI` (URL publique de l'application)
+
+### Préparation des bases
+
+Le schéma et les données sont chargés une fois sur la base Aiven, comme en local :
+
+```bash
+mysql --host=<host-aiven> --port=<port-aiven> --user=avnadmin -p --ssl-mode=REQUIRED defaultdb < schema.sql
+mysql --host=<host-aiven> --port=<port-aiven> --user=avnadmin -p --ssl-mode=REQUIRED defaultdb < seed.sql
+```
+
+La démarche complète figure aussi dans la documentation technique
+(`livrables/doc-technique.pdf`).
