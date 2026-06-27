@@ -13,7 +13,7 @@
 
     <div class="menu-detail__hero">
         {% if menu.images is not empty %}
-            <img src="{{ menu.images.first.chemin }}"
+            <img src="{{ asset(menu.images.first.chemin) }}"
                  alt="{{ menu.titre }}"
                  class="menu-detail__hero-img">
         {% else %}
@@ -47,14 +47,19 @@
                             <ul class="plat-list">
                                 {% for plat in plats %}
                                     <li class="plat-item">
-                                        <span class="plat-item__name">{{ plat.titrePlat }}</span>
-                                        {% if plat.allergenes is not empty %}
-                                            <span class="plat-item__allergenes">
-                                                {% for allergene in plat.allergenes %}
-                                                    <span class="allergene-tag">{{ allergene.libelle }}</span>
-                                                {% endfor %}
-                                            </span>
+                                        {% if plat.photo %}
+                                            <img class="plat-item__thumb" src="{{ asset(plat.photo) }}" alt="{{ plat.titrePlat }}" loading="lazy">
                                         {% endif %}
+                                        <div class="plat-item__body">
+                                            <span class="plat-item__name">{{ plat.titrePlat }}</span>
+                                            {% if plat.allergenes is not empty %}
+                                                <span class="plat-item__allergenes">
+                                                    {% for allergene in plat.allergenes %}
+                                                        <span class="allergene-tag">{{ allergene.libelle }}</span>
+                                                    {% endfor %}
+                                                </span>
+                                            {% endif %}
+                                        </div>
                                     </li>
                                 {% endfor %}
                             </ul>

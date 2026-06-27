@@ -103,30 +103,30 @@ INSERT INTO menu (menu_id, theme_id, regime_id, titre, description, nombre_perso
 
 -- Images des menus
 INSERT INTO image (menu_id, chemin, ordre) VALUES
-(1, 'uploads/menus/noel-entree.jpg',     0),
-(1, 'uploads/menus/noel-plat.jpg',       1),
-(1, 'uploads/menus/noel-dessert.jpg',    2),
-(2, 'uploads/menus/paques-entree.jpg',   0),
-(2, 'uploads/menus/paques-plat.jpg',     1),
-(3, 'uploads/menus/vegan-plat.jpg',      0),
-(4, 'uploads/menus/evenement-table.jpg', 0),
-(4, 'uploads/menus/evenement-plat.jpg',  1);
+(1, 'images/menus/noel-entree.webp',     0),
+(1, 'images/menus/noel-plat.webp',       1),
+(1, 'images/menus/noel-dessert.webp',    2),
+(2, 'images/menus/paques-entree.webp',   0),
+(2, 'images/menus/paques-plat.webp',     1),
+(3, 'images/menus/vegan-plat.webp',      0),
+(4, 'images/menus/evenement-table.webp', 0),
+(4, 'images/menus/evenement-plat.webp',  1);
 
 -- Plats
 INSERT INTO plat (plat_id, titre_plat, type_plat, photo) VALUES
-(1,  'Velouté de potiron au foie gras',    'entree',  'uploads/plats/veloute-potiron.jpg'),
-(2,  'Chapon rôti aux marrons',            'plat',    'uploads/plats/chapon-marrons.jpg'),
-(3,  'Bûche de Noël aux agrumes',          'dessert', 'uploads/plats/buche-noel.jpg'),
-(4,  'Salade d''asperges et burrata',      'entree',  'uploads/plats/asperges-burrata.jpg'),
-(5,  'Risotto aux champignons et parmesan','plat',    'uploads/plats/risotto-champignons.jpg'),
-(6,  'Tarte au citron meringuée',          'dessert', 'uploads/plats/tarte-citron.jpg'),
-(7,  'Gaspacho de tomates et basilic',     'entree',  'uploads/plats/gaspacho-tomates.jpg'),
-(8,  'Tajine de légumes aux épices douces','plat',    'uploads/plats/tajine-legumes.jpg'),
-(9,  'Fondant au chocolat noir',           'dessert', 'uploads/plats/fondant-chocolat.jpg'),
-(10, 'Foie gras mi-cuit au torchon',       'entree',  'uploads/plats/foie-gras.jpg'),
-(11, 'Filet de bœuf Wellington',           'plat',    'uploads/plats/boeuf-wellington.jpg'),
-(12, 'Soufflé au Grand Marnier',           'dessert', 'uploads/plats/souffle-grand-marnier.jpg'),
-(13, 'Sorbet mangue et fruits de la passion', 'dessert', 'uploads/plats/sorbet-mangue.jpg');
+(1,  'Velouté de potiron au foie gras',    'entree',  'images/plats/veloute-potiron.webp'),
+(2,  'Chapon rôti aux marrons',            'plat',    'images/plats/chapon-marrons.webp'),
+(3,  'Bûche de Noël aux agrumes',          'dessert', 'images/plats/buche-noel.webp'),
+(4,  'Salade d''asperges et burrata',      'entree',  'images/plats/asperges-burrata.webp'),
+(5,  'Risotto aux champignons et parmesan','plat',    'images/plats/risotto-champignons.webp'),
+(6,  'Tarte au citron meringuée',          'dessert', 'images/plats/tarte-citron.webp'),
+(7,  'Gaspacho de tomates et basilic',     'entree',  'images/plats/gaspacho-tomates.webp'),
+(8,  'Tajine de légumes aux épices douces','plat',    'images/plats/tajine-legumes.webp'),
+(9,  'Fondant au chocolat noir',           'dessert', 'images/plats/fondant-chocolat.webp'),
+(10, 'Foie gras mi-cuit au torchon',       'entree',  'images/plats/foie-gras.webp'),
+(11, 'Filet de bœuf Wellington',           'plat',    'images/plats/boeuf-wellington.webp'),
+(12, 'Soufflé au Grand Marnier',           'dessert', 'images/plats/souffle-grand-marnier.webp'),
+(13, 'Sorbet mangue et fruits de la passion', 'dessert', 'images/plats/sorbet-mangue.webp');
 
 INSERT INTO menu_plat (menu_id, plat_id) VALUES
 (1, 1),(1, 2),(1, 3),
