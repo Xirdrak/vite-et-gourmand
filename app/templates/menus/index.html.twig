@@ -63,7 +63,7 @@
                     <div class="card-menu__image-wrapper">
                         {% if menu.images is not empty %}
                             <img class="card-menu__image"
-                                 src="{{ menu.images.first.chemin }}"
+                                 src="{{ asset(menu.images.first.chemin) }}"
                                  alt="{{ menu.titre }}">
                         {% else %}
                             <div class="card-menu__placeholder">🍽️</div>
