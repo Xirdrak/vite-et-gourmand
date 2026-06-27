@@ -18,6 +18,9 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 
 # Installation des dependances PHP (couche cache : copie composer.* d'abord)
+# Limite les telechargements paralleles : evite des erreurs 400 intermittentes
+# de codeload.github.com pendant composer install au build
+ENV COMPOSER_MAX_PARALLEL_HTTP=1
 COPY app/composer.json app/composer.lock ./
 RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist --no-progress
 
