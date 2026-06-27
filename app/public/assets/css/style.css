@@ -1188,15 +1188,25 @@ ul.form-error li {
 
 .plat-item {
   display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
+  align-items: center;
+  gap: var(--space-sm);
   padding: var(--space-xs) 0;
+}
+.plat-item__thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.plat-item__body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 .plat-item__name {
   font-size: var(--fs-body-md);
   color: var(--color-on-surface);
-  flex-shrink: 0;
 }
 .plat-item__allergenes { display: flex; flex-wrap: wrap; gap: 4px; }
 

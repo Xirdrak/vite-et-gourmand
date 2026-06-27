@@ -19,6 +19,9 @@ app/var/
 app/vendor/
 app/public/uploads/
 
+# Images sources brutes (avant optimisation WebP), non versionnees
+/images-seed/
+
 # OS / IDE
 .DS_Store
 Thumbs.db
