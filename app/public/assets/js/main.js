@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (toggle && mobileMenu) {
         toggle.addEventListener('click', function () {
-            mobileMenu.classList.toggle('is-open');
+            var open = mobileMenu.classList.toggle('is-open');
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         });
     }
 
@@ -30,11 +31,22 @@ document.addEventListener('DOMContentLoaded', function () {
     if (dropdownToggle && dropdownMenu) {
         dropdownToggle.addEventListener('click', function (e) {
             e.stopPropagation();
-            dropdownMenu.classList.toggle('is-open');
+            var open = dropdownMenu.classList.toggle('is-open');
+            dropdownToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         });
 
         document.addEventListener('click', function () {
             dropdownMenu.classList.remove('is-open');
+            dropdownToggle.setAttribute('aria-expanded', 'false');
+        });
+
+        // Fermeture au clavier (touche Echap)
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && dropdownMenu.classList.contains('is-open')) {
+                dropdownMenu.classList.remove('is-open');
+                dropdownToggle.setAttribute('aria-expanded', 'false');
+                dropdownToggle.focus();
+            }
         });
     }
 

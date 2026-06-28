@@ -13,6 +13,8 @@
 </head>
 <body>
 
+<a class="skip-link" href="#contenu">Aller au contenu principal</a>
+
 <nav class="navbar">
     <div class="navbar__inner">
         <a class="navbar__logo" href="{{ path('app_homepage') }}">Vite & Gourmand</a>
@@ -27,9 +29,10 @@
 
             {% if app.user %}
                 <div class="navbar__dropdown">
-                    <button class="navbar__dropdown-toggle" id="dropdown-toggle" type="button">
+                    <button class="navbar__dropdown-toggle" id="dropdown-toggle" type="button"
+                            aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-menu">
                         {{ app.user.nomComplet }}
-                        <span class="material-symbols-outlined" style="font-size:18px;">expand_more</span>
+                        <span class="material-symbols-outlined" style="font-size:18px;" aria-hidden="true">expand_more</span>
                     </button>
                     <div class="navbar__dropdown-menu" id="dropdown-menu">
                         <a class="navbar__dropdown-item" href="{{ path('app_dashboard') }}">Mon espace</a>
@@ -52,8 +55,9 @@
             {% endif %}
         </div>
 
-        <button class="navbar__toggle" id="nav-toggle" aria-label="Ouvrir le menu">
-            <span class="material-symbols-outlined">menu</span>
+        <button class="navbar__toggle" id="nav-toggle" aria-label="Ouvrir le menu"
+                aria-expanded="false" aria-controls="nav-mobile">
+            <span class="material-symbols-outlined" aria-hidden="true">menu</span>
         </button>
     </div>
 
@@ -74,12 +78,12 @@
     </div>
 </nav>
 
-<main>
+<main id="contenu">
     {% if app.flashes|length > 0 %}
         <div class="container" style="padding-top: var(--space-md);">
             {% for type, messages in app.flashes %}
                 {% for message in messages %}
-                    <div class="alert alert--{{ type == 'error' ? 'error' : type }}">{{ message }}</div>
+                    <div class="alert alert--{{ type == 'error' ? 'error' : type }}" role="alert">{{ message }}</div>
                 {% endfor %}
             {% endfor %}
         </div>

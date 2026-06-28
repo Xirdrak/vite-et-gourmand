@@ -9,7 +9,7 @@
 
 {% if avis_en_attente is empty %}
     <div class="dashboard-empty" style="margin-bottom: var(--space-lg);">
-        <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant);">reviews</span>
+        <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant);" aria-hidden="true">reviews</span>
         <p>Aucun avis en attente de modération.</p>
     </div>
 {% else %}
@@ -28,7 +28,7 @@
                     </div>
                     <div style="display: flex; align-items: center; gap: var(--space-sm);">
                         {% for i in 1..5 %}
-                            <span class="material-symbols-outlined" style="font-size: 18px; color: {{ i <= avis.note ? 'var(--color-secondary)' : 'var(--color-outline-variant)' }};">
+                            <span class="material-symbols-outlined" style="font-size: 18px; color: {{ i <= avis.note ? 'var(--color-secondary)' : 'var(--color-outline-variant)' }};" aria-hidden="true">
                                 star
                             </span>
                         {% endfor %}

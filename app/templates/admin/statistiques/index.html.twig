@@ -19,7 +19,7 @@
 
 {% if mongo_indispo %}
     <div class="dashboard-empty">
-        <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-error);">cloud_off</span>
+        <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-error);" aria-hidden="true">cloud_off</span>
         <p>La base de statistiques (MongoDB) est injoignable.</p>
     </div>
 {% else %}
@@ -63,7 +63,7 @@
 
     {% if lignes is empty %}
         <div class="dashboard-empty">
-            <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant);">query_stats</span>
+            <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant);" aria-hidden="true">query_stats</span>
             <p>Aucune donnee pour ce filtre. Pensez a resynchroniser si des commandes ont ete passees.</p>
         </div>
     {% else %}

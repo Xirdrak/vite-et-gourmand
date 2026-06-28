@@ -24,7 +24,7 @@
 
         {% if commandes is empty %}
             <div class="dashboard-empty">
-                <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant);">receipt_long</span>
+                <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant);" aria-hidden="true">receipt_long</span>
                 <p>Vous n'avez pas encore de commande.</p>
                 <a href="{{ path('app_menus') }}" class="btn-primary" style="margin-top: var(--space-sm);">Voir nos menus</a>
             </div>

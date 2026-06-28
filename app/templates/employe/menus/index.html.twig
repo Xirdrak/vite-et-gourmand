@@ -16,7 +16,7 @@
 
 {% if menus is empty %}
     <div class="dashboard-empty">
-        <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant);">restaurant_menu</span>
+        <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant);" aria-hidden="true">restaurant_menu</span>
         <p>Aucun menu pour l'instant.</p>
         <a href="{{ path('app_employe_menu_nouveau') }}" class="btn-primary" style="margin-top: var(--space-sm);">
             Créer le premier menu
