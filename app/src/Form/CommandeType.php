@@ -40,7 +40,7 @@ class CommandeType extends AbstractType
                 'attr'  => ['min' => 1],
                 'constraints' => [
                     new Assert\NotBlank(message: 'Indiquez le nombre de personnes.'),
-                    new Assert\Positive(message: 'Le nombre doit etre positif.'),
+                    new Assert\Positive(message: 'Le nombre doit être positif.'),
                 ],
             ])
             ->add('date_prestation', DateType::class, [
@@ -49,7 +49,7 @@ class CommandeType extends AbstractType
                 'html5'  => true,
                 'constraints' => [
                     new Assert\NotBlank(message: 'La date de prestation est requise.'),
-                    new Assert\GreaterThan('today', message: 'La date doit etre dans le futur.'),
+                    new Assert\GreaterThan('today', message: 'La date doit être dans le futur.'),
                 ],
             ])
             ->add('heure_livraison', TimeType::class, [

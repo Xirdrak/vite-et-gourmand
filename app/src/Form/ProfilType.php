@@ -16,7 +16,7 @@ class ProfilType extends AbstractType
     {
         $builder
             ->add('prenom', TextType::class, [
-                'label' => 'Prenom',
+                'label' => 'Prénom',
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length(max: 100),
@@ -37,7 +37,7 @@ class ProfilType extends AbstractType
                 ],
             ])
             ->add('telephone', TextType::class, [
-                'label' => 'Telephone',
+                'label' => 'Téléphone',
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length(max: 20),

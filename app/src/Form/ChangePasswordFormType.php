@@ -21,11 +21,11 @@ class ChangePasswordFormType extends AbstractType
             'invalid_message' => 'Les mots de passe ne correspondent pas.',
             'constraints'     => [
                 new Assert\NotBlank(),
-                new Assert\Length(min: 10, minMessage: 'Le mot de passe doit contenir au moins {{ limit }} caracteres.'),
+                new Assert\Length(min: 10, minMessage: 'Le mot de passe doit contenir au moins {{ limit }} caractères.'),
                 new Assert\Regex(pattern: '/[A-Z]/', message: 'Le mot de passe doit contenir au moins une majuscule.'),
                 new Assert\Regex(pattern: '/[a-z]/', message: 'Le mot de passe doit contenir au moins une minuscule.'),
                 new Assert\Regex(pattern: '/[0-9]/', message: 'Le mot de passe doit contenir au moins un chiffre.'),
-                new Assert\Regex(pattern: '/[^a-zA-Z0-9]/', message: 'Le mot de passe doit contenir au moins un caractere special.'),
+                new Assert\Regex(pattern: '/[^a-zA-Z0-9]/', message: 'Le mot de passe doit contenir au moins un caractère spécial.'),
             ],
         ]);
     }

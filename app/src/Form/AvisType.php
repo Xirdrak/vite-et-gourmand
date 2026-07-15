@@ -23,13 +23,13 @@ class AvisType extends AbstractType
                     new Assert\Range(
                         min: 1,
                         max: 5,
-                        notInRangeMessage: 'La note doit etre comprise entre 1 et 5.',
+                        notInRangeMessage: 'La note doit être comprise entre 1 et 5.',
                     ),
                 ],
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Votre commentaire',
-                'attr'  => ['rows' => 5, 'placeholder' => 'Partagez votre experience...'],
+                'attr'  => ['rows' => 5, 'placeholder' => 'Partagez votre expérience...'],
                 'constraints' => [
                     new Assert\NotBlank(message: 'Veuillez rédiger un commentaire.'),
                     new Assert\Length(

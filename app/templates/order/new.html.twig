@@ -22,7 +22,7 @@
                         <input type="text" class="form-input" value="{{ app.user.nom }}" readonly>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Prenom</label>
+                        <label class="form-label">Prénom</label>
                         <input type="text" class="form-input" value="{{ app.user.prenom }}" readonly>
                     </div>
                     <div class="form-group">
@@ -30,7 +30,7 @@
                         <input type="email" class="form-input" value="{{ app.user.email }}" readonly>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Telephone</label>
+                        <label class="form-label">Téléphone</label>
                         <input type="text" class="form-input" value="{{ app.user.telephone }}" readonly>
                     </div>
                 </div>
@@ -90,7 +90,7 @@
                     {{ form_label(form.nombre_km) }}
                     {{ form_widget(form.nombre_km, {attr: {class: 'form-input'}}) }}
                     {{ form_errors(form.nombre_km) }}
-                    <small class="form-hint">Supplement : 5 € + 0,59 € par km</small>
+                    <small class="form-hint">Supplément : 5 € + 0,59 € par km</small>
                 </div>
             </section>
 
@@ -104,7 +104,7 @@
 
         <aside class="order-summary" id="order-summary">
             <div class="order-summary__card">
-                <h2 class="order-section__title">Recapitulatif</h2>
+                <h2 class="order-section__title">Récapitulatif</h2>
 
                 <div id="summary-menu-name" class="order-summary__menu" style="display:none;">
                     <span class="material-symbols-outlined" aria-hidden="true">restaurant_menu</span>
@@ -121,7 +121,7 @@
                         <span id="summary-prix-livraison">-</span>
                     </div>
                     <div class="order-summary__line order-summary__line--reduction" id="summary-reduction-line" style="display:none;">
-                        <span>Reduction 10% (groupe)</span>
+                        <span>Réduction 10% (groupe)</span>
                         <span id="summary-reduction">-</span>
                     </div>
                     <div class="order-summary__total">
@@ -132,7 +132,7 @@
 
                 <p class="order-summary__note">
                     <span class="material-symbols-outlined" aria-hidden="true">info</span>
-                    Reduction de 10% applicable a partir de {{ menu_preselectionne ? menu_preselectionne.nombrePersonneMinimum + 5 : 'N' }} personnes.
+                    Réduction de 10% applicable à partir de {{ menu_preselectionne ? menu_preselectionne.nombrePersonneMinimum + 5 : 'N' }} personnes.
                 </p>
             </div>
         </aside>

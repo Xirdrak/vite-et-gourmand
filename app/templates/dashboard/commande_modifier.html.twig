@@ -24,9 +24,9 @@
             <section class="order-section">
                 <h2 class="order-section__title">Le menu</h2>
                 <div class="form-group">
-                    <label class="form-label">Menu selectionne</label>
+                    <label class="form-label">Menu sélectionné</label>
                     <input type="text" class="form-input" value="{{ commande.menu.titre }}" readonly>
-                    <small class="form-hint">Le menu ne peut pas etre modifie apres la commande.</small>
+                    <small class="form-hint">Le menu ne peut pas être modifié après la commande.</small>
                 </div>
 
                 <div class="form-group">
@@ -74,7 +74,7 @@
                     {{ form_label(form.nombre_km) }}
                     {{ form_widget(form.nombre_km, {attr: {class: 'form-input'}}) }}
                     {{ form_errors(form.nombre_km) }}
-                    <small class="form-hint">Supplement : 5 € + 0,59 € par km</small>
+                    <small class="form-hint">Supplément : 5 € + 0,59 € par km</small>
                 </div>
             </section>
 
@@ -88,7 +88,7 @@
 
         <aside class="order-summary" id="order-summary">
             <div class="order-summary__card">
-                <h2 class="order-section__title">Recapitulatif</h2>
+                <h2 class="order-section__title">Récapitulatif</h2>
 
                 <div class="order-summary__lines">
                     <div class="order-summary__line">
@@ -100,7 +100,7 @@
                         <span id="summary-prix-livraison">-</span>
                     </div>
                     <div class="order-summary__line order-summary__line--reduction" id="summary-reduction-line" style="display:none;">
-                        <span>Reduction 10% (groupe)</span>
+                        <span>Réduction 10% (groupe)</span>
                         <span id="summary-reduction">-</span>
                     </div>
                     <div class="order-summary__total">
@@ -111,7 +111,7 @@
 
                 <p class="order-summary__note">
                     <span class="material-symbols-outlined" aria-hidden="true">info</span>
-                    Reduction de 10% applicable a partir de {{ commande.menu.nombrePersonneMinimum + 5 }} personnes.
+                    Réduction de 10% applicable à partir de {{ commande.menu.nombrePersonneMinimum + 5 }} personnes.
                 </p>
             </div>
         </aside>

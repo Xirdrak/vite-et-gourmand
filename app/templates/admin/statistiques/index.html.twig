@@ -26,13 +26,13 @@
 
     <form method="get" style="display: flex; gap: var(--space-sm); flex-wrap: wrap; align-items: flex-end; margin-bottom: var(--space-lg);">
         <div>
-            <label for="periode" style="display: block; font-size: var(--fs-label-md); margin-bottom: var(--space-xs);">Periode</label>
+            <label for="periode" style="display: block; font-size: var(--fs-label-md); margin-bottom: var(--space-xs);">Période</label>
             <select name="periode" id="periode" class="form-select">
                 <option value="tout"{{ periode == 'tout' ? ' selected' : '' }}>Tout</option>
                 <option value="7"{{ periode == '7' ? ' selected' : '' }}>7 derniers jours</option>
                 <option value="30"{{ periode == '30' ? ' selected' : '' }}>30 derniers jours</option>
                 <option value="90"{{ periode == '90' ? ' selected' : '' }}>90 derniers jours</option>
-                <option value="annee"{{ periode == 'annee' ? ' selected' : '' }}>Annee en cours</option>
+                <option value="annee"{{ periode == 'annee' ? ' selected' : '' }}>Année en cours</option>
             </select>
         </div>
         <div>
@@ -64,7 +64,7 @@
     {% if lignes is empty %}
         <div class="dashboard-empty">
             <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-on-surface-variant);" aria-hidden="true">query_stats</span>
-            <p>Aucune donnee pour ce filtre. Pensez a resynchroniser si des commandes ont ete passees.</p>
+            <p>Aucune donnée pour ce filtre. Pensez à resynchroniser si des commandes ont été passées.</p>
         </div>
     {% else %}
 

@@ -8,7 +8,7 @@
 
     <a href="{{ path('app_dashboard_commande', {id: commande.id}) }}" class="back-link">
         <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
-        Retour a la commande
+        Retour à la commande
     </a>
 
     <h1 class="text-headline-md" style="margin-bottom: var(--space-xs);">Laisser un avis</h1>
@@ -22,9 +22,9 @@
 
         <div class="form-group">
             <label class="form-label">Note</label>
-            <div class="star-picker" id="star-picker" aria-label="Choisissez une note de 1 a 5">
+            <div class="star-picker" id="star-picker" aria-label="Choisissez une note de 1 à 5">
                 {% for i in 1..5 %}
-                <button type="button" class="star-picker__btn" data-value="{{ i }}" aria-label="{{ i }} etoile{{ i > 1 ? 's' : '' }}">
+                <button type="button" class="star-picker__btn" data-value="{{ i }}" aria-label="{{ i }} étoile{{ i > 1 ? 's' : '' }}">
                     <span class="material-symbols-outlined" aria-hidden="true">star_border</span>
                 </button>
                 {% endfor %}

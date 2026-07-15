@@ -12,7 +12,7 @@ desktop.ini
 /*.jpg
 /*.jpeg
 
-# Fichiers Symfony/
+# Fichiers Symfony - complete le .gitignore de app/
 app/.env.local
 app/.env.*.local
 app/var/
