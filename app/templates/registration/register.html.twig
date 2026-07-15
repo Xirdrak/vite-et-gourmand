@@ -9,6 +9,8 @@
 
         {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
+        {{ include('_form_errors_alert.html.twig', {form: form}) }}
+
         <div class="grid-2">
             <div class="form-group">
                 {{ form_label(form.prenom) }}

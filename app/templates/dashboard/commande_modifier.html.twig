@@ -21,6 +21,8 @@
 
             {{ form_start(form, {attr: {novalidate: 'novalidate', id: 'commande-form'}}) }}
 
+            {{ include('_form_errors_alert.html.twig', {form: form}) }}
+
             <section class="order-section">
                 <h2 class="order-section__title">Le menu</h2>
                 <div class="form-group">

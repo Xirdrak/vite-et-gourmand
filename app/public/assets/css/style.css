@@ -713,6 +713,11 @@ label,
   color: var(--color-on-surface);
 }
 
+label.required::after {
+  content: " *";
+  color: var(--color-error);
+}
+
 .form-input,
 .form-select,
 input[type="text"],
@@ -772,13 +777,15 @@ textarea:focus {
 
 /* Erreurs de formulaire Symfony */
 .form-error,
-ul.form-error {
+ul.form-error,
+.form-group > ul {
   list-style: none;
   margin-top: var(--space-xs);
 }
 
 .form-error li,
-ul.form-error li {
+ul.form-error li,
+.form-group > ul li {
   font-size: var(--fs-label-sm);
   color: var(--color-error);
   padding: 2px 0;
