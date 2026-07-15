@@ -323,6 +323,7 @@ ul { list-style: none; }
 .btn-primary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-base);
   padding: var(--space-base) var(--space-lg);
   background: linear-gradient(to bottom, #854F0B, #6d4109);
@@ -342,6 +343,7 @@ ul { list-style: none; }
 .btn-secondary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-base);
   padding: var(--space-base) var(--space-lg);
   background-color: var(--color-secondary-container);
@@ -365,6 +367,7 @@ ul { list-style: none; }
 .btn-ghost {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-base);
   padding: var(--space-base) var(--space-lg);
   background-color: transparent;
@@ -397,6 +400,13 @@ ul { list-style: none; }
 .btn-connexion:hover { opacity: 0.8; }
 
 .btn-full { width: 100%; justify-content: center; }
+
+/* Centre un bouton d'action a taille naturelle sous un formulaire */
+.form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-md);
+}
 
 /* Cartes menu */
 .card-menu {
