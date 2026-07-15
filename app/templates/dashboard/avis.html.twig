@@ -18,6 +18,8 @@
 
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
 
+    {{ include('_form_errors_alert.html.twig', {form: form}) }}
+
     <section class="order-section">
 
         <div class="form-group">
