@@ -43,7 +43,7 @@ class RegistrationController extends AbstractController
 
             $mailerService->sendWelcome($utilisateur);
 
-            $this->addFlash('success', 'Votre compte a ete cree. Vous pouvez maintenant vous connecter.');
+            $this->addFlash('success', 'Votre compte a été créé. Vous pouvez maintenant vous connecter.');
             return $this->redirectToRoute('app_login');
         }
 

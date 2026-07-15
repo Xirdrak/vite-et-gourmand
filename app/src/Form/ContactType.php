@@ -33,7 +33,7 @@ class ContactType extends AbstractType
             ->add('message', TextareaType::class, [
                 'label'       => 'Message',
                 'constraints' => [
-                    new Assert\NotBlank(message: 'Veuillez ecrire votre message.'),
+                    new Assert\NotBlank(message: 'Veuillez écrire votre message.'),
                     new Assert\Length(
                         min: 10,
                         max: 2000,

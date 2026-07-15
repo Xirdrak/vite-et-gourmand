@@ -54,7 +54,7 @@
             </section>
 
             <section class="order-section" style="margin-top: var(--space-md);">
-                <h2 class="order-section__title">Recapitulatif financier</h2>
+                <h2 class="order-section__title">Récapitulatif financier</h2>
                 <div class="order-summary__lines">
                     <div class="order-summary__line">
                         <span>Prix menu</span>
@@ -118,7 +118,7 @@
             {% if commande.statut.value == 'terminee' and commande.avis is null %}
             <section class="order-section" style="margin-top: var(--space-md);">
                 <p style="color: var(--color-on-surface-variant); font-size: var(--fs-body-sm);">
-                    Votre prestation est terminee. Vous pouvez laisser un avis.
+                    Votre prestation est terminée. Vous pouvez laisser un avis.
                 </p>
                 <a href="{{ path('app_dashboard_avis', {id: commande.id}) }}" class="btn-primary" style="display:block; text-align:center; margin-top: var(--space-sm);">
                     Laisser un avis

@@ -38,7 +38,7 @@ class ResetPasswordController extends AbstractController
                 $mailerService->sendResetPassword($utilisateur, $resetUrl);
             }
 
-            $this->addFlash('success', 'Si un compte existe avec cette adresse, un lien de reinitialisation vous a ete envoye.');
+            $this->addFlash('success', 'Si un compte existe avec cette adresse, un lien de réinitialisation vous a été envoyé.');
             return $this->redirectToRoute('app_forgot_password');
         }
 
@@ -58,7 +58,7 @@ class ResetPasswordController extends AbstractController
         $utilisateur = $resetService->validateToken($token);
 
         if (!$utilisateur) {
-            $this->addFlash('error', 'Ce lien est invalide ou a expire. Veuillez faire une nouvelle demande.');
+            $this->addFlash('error', 'Ce lien est invalide ou a expiré. Veuillez faire une nouvelle demande.');
             return $this->redirectToRoute('app_forgot_password');
         }
 
@@ -72,7 +72,7 @@ class ResetPasswordController extends AbstractController
             $utilisateur->setPassword($hashed);
             $em->flush();
 
-            $this->addFlash('success', 'Votre mot de passe a ete modifie. Vous pouvez vous connecter.');
+            $this->addFlash('success', 'Votre mot de passe a été modifié. Vous pouvez vous connecter.');
             return $this->redirectToRoute('app_login');
         }
 

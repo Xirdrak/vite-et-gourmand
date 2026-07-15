@@ -25,7 +25,7 @@ class MenuType extends AbstractType
         $builder
             ->add('titre', TextType::class, [
                 'label' => 'Titre du menu',
-                'attr'  => ['placeholder' => 'ex: Menu de Noel Tradition'],
+                'attr'  => ['placeholder' => 'ex: Menu de Noël Tradition'],
                 'constraints' => [
                     new Assert\NotBlank(message: 'Le titre est obligatoire.'),
                     new Assert\Length(max: 150),
@@ -33,7 +33,7 @@ class MenuType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
-                'attr'  => ['rows' => 5, 'placeholder' => 'Presentation du menu...'],
+                'attr'  => ['rows' => 5, 'placeholder' => 'Présentation du menu...'],
                 'constraints' => [
                     new Assert\NotBlank(message: 'La description est obligatoire.'),
                 ],
@@ -61,7 +61,7 @@ class MenuType extends AbstractType
                 'attr'  => ['min' => 1],
                 'constraints' => [
                     new Assert\NotBlank(message: 'Ce champ est obligatoire.'),
-                    new Assert\Positive(message: 'La valeur doit etre positive.'),
+                    new Assert\Positive(message: 'La valeur doit être positive.'),
                 ],
             ])
             ->add('prixParPersonne', NumberType::class, [
@@ -70,7 +70,7 @@ class MenuType extends AbstractType
                 'attr'   => ['min' => 0, 'step' => '0.01'],
                 'constraints' => [
                     new Assert\NotBlank(message: 'Le prix est obligatoire.'),
-                    new Assert\PositiveOrZero(message: 'Le prix ne peut pas etre negatif.'),
+                    new Assert\PositiveOrZero(message: 'Le prix ne peut pas être négatif.'),
                 ],
             ])
             ->add('quantiteRestante', IntegerType::class, [
