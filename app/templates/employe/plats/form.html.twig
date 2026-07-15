@@ -42,7 +42,7 @@
 
         {% if plat.photo %}
             <div style="margin-bottom: var(--space-md);">
-                <img src="{{ plat.photo }}" alt="{{ plat.titrePlat }}"
+                <img src="{{ asset(plat.photo) }}" alt="{{ plat.titrePlat }}"
                      style="width: 160px; height: 120px; object-fit: cover; border-radius: 8px; border: 2px solid var(--color-outline-variant);">
                 <p class="form-hint" style="margin-top: var(--space-xs);">Photo actuelle. Uploader une nouvelle photo la remplacera.</p>
             </div>

@@ -29,7 +29,7 @@
             <div class="dashboard-commande-card__header">
                 <div style="display: flex; align-items: center; gap: var(--space-sm);">
                     {% if plat.photo %}
-                        <img src="{{ plat.photo }}" alt="{{ plat.titrePlat }}"
+                        <img src="{{ asset(plat.photo) }}" alt="{{ plat.titrePlat }}"
                              style="width: 48px; height: 48px; object-fit: cover; border-radius: 8px;">
                     {% endif %}
                     <div>
