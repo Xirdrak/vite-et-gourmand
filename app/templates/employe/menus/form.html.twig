@@ -98,7 +98,7 @@
             <div style="display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-bottom: var(--space-md);">
                 {% for image in menu.images %}
                 <div style="position: relative; text-align: center;">
-                    <img src="{{ image.chemin }}" alt="Image du menu" style="width: 120px; height: 90px; object-fit: cover; border-radius: 8px; border: 2px solid var(--color-outline-variant);">
+                    <img src="{{ asset(image.chemin) }}" alt="Image du menu" style="width: 120px; height: 90px; object-fit: cover; border-radius: 8px; border: 2px solid var(--color-outline-variant);">
                     <label style="display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 4px; font-size: var(--fs-label-sm); cursor: pointer; color: var(--color-error);">
                         <input type="checkbox" name="images_supprimer[]" value="{{ image.id }}">
                         Supprimer
