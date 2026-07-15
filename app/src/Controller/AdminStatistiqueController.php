@@ -19,7 +19,7 @@ class AdminStatistiqueController extends AbstractController
     public function index(Request $request, StatistiquesService $statistiques, MenuRepository $menuRepo): Response
     {
         if (!$statistiques->estDisponible()) {
-            $this->addFlash('error', 'MongoDB est injoignable. Les statistiques ne peuvent pas etre affichees.');
+            $this->addFlash('error', 'MongoDB est injoignable. Les statistiques ne peuvent pas être affichées.');
             return $this->render('admin/statistiques/index.html.twig', [
                 'lignes'         => [],
                 'menus'          => $menuRepo->findBy([], ['titre' => 'ASC']),
@@ -57,7 +57,7 @@ class AdminStatistiqueController extends AbstractController
     public function sync(Request $request, StatistiquesService $statistiques, CommandeRepository $commandeRepo): Response
     {
         if (!$this->isCsrfTokenValid('sync_stats', $request->request->get('_token'))) {
-            $this->addFlash('error', 'Action non autorisee.');
+            $this->addFlash('error', 'Action non autorisée.');
             return $this->redirectToRoute('app_admin_statistiques');
         }
 
@@ -67,7 +67,7 @@ class AdminStatistiqueController extends AbstractController
         }
 
         $nombre = $statistiques->synchroniser($commandeRepo->findAllWithMenu());
-        $this->addFlash('success', $nombre . ' commande(s) synchronisee(s) vers MongoDB.');
+        $this->addFlash('success', $nombre . ' commande(s) synchronisée(s) vers MongoDB.');
 
         return $this->redirectToRoute('app_admin_statistiques');
     }

@@ -50,7 +50,7 @@ class CommandeController extends AbstractController
             }
 
             if ($menu->getQuantiteRestante() <= 0) {
-                $this->addFlash('error', 'Ce menu n\'est plus disponible a la commande.');
+                $this->addFlash('error', 'Ce menu n\'est plus disponible à la commande.');
                 return $this->redirectToRoute('app_order_new');
             }
 

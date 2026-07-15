@@ -26,6 +26,6 @@ class SecurityController extends AbstractController
     public function logout(): void
     {
         // Symfony Security intercepte cette route, le corps n'est jamais execute
-        throw new \LogicException('Cette methode ne doit pas etre appellee directement.');
+        throw new \LogicException('Cette méthode ne doit pas être appelée directement.');
     }
 }
