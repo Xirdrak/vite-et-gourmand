@@ -106,13 +106,11 @@ class MenuType extends AbstractType
                 'attr'     => ['accept' => 'image/*'],
                 'constraints' => [
                     new Assert\All([
-                        'constraints' => [
-                            new Assert\File([
-                                'maxSize'          => '5M',
-                                'mimeTypes'        => ['image/jpeg', 'image/png', 'image/webp'],
-                                'mimeTypesMessage' => 'Formats acceptés : JPG, PNG, WebP.',
-                            ]),
-                        ],
+                        new Assert\File(
+                            maxSize: '5M',
+                            mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
+                            mimeTypesMessage: 'Formats acceptés : JPG, PNG, WebP.',
+                        ),
                     ]),
                 ],
             ]);
