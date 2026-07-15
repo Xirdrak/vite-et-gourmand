@@ -37,7 +37,7 @@ class CommandeType extends AbstractType
             ])
             ->add('nombre_personne', IntegerType::class, [
                 'label' => 'Nombre de personnes',
-                'attr'  => ['min' => 1, 'id' => 'nombre_personne'],
+                'attr'  => ['min' => 1],
                 'constraints' => [
                     new Assert\NotBlank(message: 'Indiquez le nombre de personnes.'),
                     new Assert\Positive(message: 'Le nombre doit etre positif.'),
@@ -79,12 +79,11 @@ class CommandeType extends AbstractType
             ->add('hors_bordeaux', CheckboxType::class, [
                 'label'    => 'Livraison hors Bordeaux (supplement)',
                 'required' => false,
-                'attr'     => ['id' => 'hors_bordeaux'],
             ])
             ->add('nombre_km', IntegerType::class, [
                 'label'    => 'Distance estimee (en km)',
                 'required' => false,
-                'attr'     => ['min' => 1, 'id' => 'nombre_km'],
+                'attr'     => ['min' => 1],
             ]);
     }
 

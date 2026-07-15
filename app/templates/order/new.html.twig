@@ -41,13 +41,13 @@
 
                 <div class="form-group">
                     {{ form_label(form.menu) }}
-                    {{ form_widget(form.menu, {attr: {id: 'menu_select', class: 'form-select'}}) }}
+                    {{ form_widget(form.menu, {attr: {class: 'form-select'}}) }}
                     {{ form_errors(form.menu) }}
                 </div>
 
                 <div class="form-group">
                     {{ form_label(form.nombre_personne) }}
-                    {{ form_widget(form.nombre_personne, {attr: {class: 'form-input', id: 'nombre_personne'}}) }}
+                    {{ form_widget(form.nombre_personne, {attr: {class: 'form-input'}}) }}
                     {{ form_errors(form.nombre_personne) }}
                     <small id="min-personnes-hint" class="form-hint" style="display:none;"></small>
                 </div>
@@ -147,11 +147,11 @@
 <script>
     const menusData = {{ menus_data|json_encode|raw }};
 
-    const menuSelect      = document.getElementById('menu_select');
-    const nbPersonnes     = document.getElementById('nombre_personne');
-    const horsBoCheckbox  = document.getElementById('hors_bordeaux');
+    const menuSelect      = document.getElementById('commande_menu');
+    const nbPersonnes     = document.getElementById('commande_nombre_personne');
+    const horsBoCheckbox  = document.getElementById('commande_hors_bordeaux');
     const kmField         = document.getElementById('km-field');
-    const nbKmInput       = document.getElementById('nombre_km');
+    const nbKmInput       = document.getElementById('commande_nombre_km');
     const minHint         = document.getElementById('min-personnes-hint');
 
     function fmt(n) {
