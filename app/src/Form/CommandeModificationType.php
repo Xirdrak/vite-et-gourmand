@@ -22,7 +22,7 @@ class CommandeModificationType extends AbstractType
             ->add('nombre_personne', IntegerType::class, [
                 'label' => 'Nombre de personnes',
                 'data'  => $commande->getNombrePersonne(),
-                'attr'  => ['min' => 1, 'id' => 'nombre_personne'],
+                'attr'  => ['min' => 1],
                 'constraints' => [
                     new Assert\NotBlank(message: 'Indiquez le nombre de personnes.'),
                     new Assert\Positive(message: 'Le nombre doit etre positif.'),
@@ -67,13 +67,12 @@ class CommandeModificationType extends AbstractType
                 'label'    => 'Livraison hors Bordeaux (supplement)',
                 'required' => false,
                 'data'     => $options['hors_bordeaux_initial'],
-                'attr'     => ['id' => 'hors_bordeaux'],
             ])
             ->add('nombre_km', IntegerType::class, [
                 'label'    => 'Distance estimee (en km)',
                 'required' => false,
                 'data'     => $options['nombre_km_initial'] > 0 ? $options['nombre_km_initial'] : null,
-                'attr'     => ['min' => 1, 'id' => 'nombre_km'],
+                'attr'     => ['min' => 1],
             ]);
     }
 
