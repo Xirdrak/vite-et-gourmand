@@ -50,11 +50,11 @@ class PlatFormType extends AbstractType
                 'required' => false,
                 'attr'     => ['accept' => 'image/*'],
                 'constraints' => [
-                    new Assert\File([
-                        'maxSize'          => '5M',
-                        'mimeTypes'        => ['image/jpeg', 'image/png', 'image/webp'],
-                        'mimeTypesMessage' => 'Formats acceptés : JPG, PNG, WebP.',
-                    ]),
+                    new Assert\File(
+                        maxSize: '5M',
+                        mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
+                        mimeTypesMessage: 'Formats acceptés : JPG, PNG, WebP.',
+                    ),
                 ],
             ]);
     }
