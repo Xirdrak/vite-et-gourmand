@@ -22,6 +22,20 @@ app/public/uploads/
 # Images sources brutes (avant optimisation WebP), non versionnees
 /images-seed/
 
+# Livrables : ne versionner que les PDF finaux attendus par l'ECF,
+# pas les fichiers de travail (sources markdown, images, wireframes, brouillon copie)
+livrables/*
+!livrables/manuel-utilisation.pdf
+!livrables/charte-graphique.pdf
+!livrables/doc-gestion-projet.pdf
+!livrables/doc-technique.pdf
+
+# Retours de revue de code externe (prives, hors depot)
+/Feedbacks (.gitignore)/
+
+# Documents de l'organisme de formation, hors depot
+/Documents pour évaluation/
+
 # OS / IDE
 .DS_Store
 Thumbs.db
