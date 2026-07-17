@@ -149,13 +149,13 @@ INSERT INTO plat_allergene (plat_id, allergene_id) VALUES
 
 -- Commandes (une par statut du workflow)
 INSERT INTO commande (commande_id, numero_commande, utilisateur_id, menu_id, date_commande, date_prestation, heure_livraison, adresse_livraison, ville_livraison, nombre_personne, prix_menu, prix_livraison, prix_total, statut, pret_materiel, restitution_materiel) VALUES
-(1, 'VG-20260525-00001', 4, 3, '2026-05-25 14:30:00', '2026-06-15', '12:00:00', '25 avenue de la Paix',  'Bordeaux',  8,  280.00,    0.00,    280.00, 'nouvelle',                   0, 0),
-(2, 'VG-20260520-00002', 5, 1, '2026-05-20 10:00:00', '2026-07-04', '13:00:00', '15 rue des Pins',       'Mérignac', 15,  607.50,    0.00,    607.50, 'acceptee',                   0, 0),
-(3, 'VG-20260515-00003', 4, 2, '2026-05-15 16:00:00', '2026-06-20', '11:30:00', '8 chemin des Collines', 'Mérignac', 10,  380.00,   19.75,    399.75, 'en_preparation',             0, 0),
-(4, 'VG-20260510-00004', 6, 4, '2026-05-10 11:30:00', '2026-05-26', '12:00:00', '1 allée du Château',   'Pessac',   25, 1237.50,   13.85,   1251.35, 'en_cours_livraison',         1, 0),
-(5, 'VG-20260410-00005', 5, 3, '2026-04-10 09:00:00', '2026-04-20', '12:00:00', '7 rue des Vignes',     'Mérignac',  6,  210.00,   18.81,    228.81, 'terminee',                   0, 0),
-(6, 'VG-20260415-00006', 4, 4, '2026-04-15 10:00:00', '2026-05-05', '11:00:00', '25 avenue de la Paix', 'Bordeaux', 30, 1485.00,    0.00,   1485.00, 'en_attente_retour_materiel', 1, 0),
-(7, 'VG-20260301-00007', 6, 1, '2026-03-01 14:00:00', '2026-03-15', '12:00:00', '14 impasse des Roses', 'Pessac',   12,  486.00,   22.70,    508.70, 'terminee',                   0, 0);
+(1, 'VG-2026-00001', 4, 3, '2026-05-25 14:30:00', '2026-06-15', '12:00:00', '25 avenue de la Paix',  'Bordeaux',  8,  280.00,    0.00,    280.00, 'nouvelle',                   0, 0),
+(2, 'VG-2026-00002', 5, 1, '2026-05-20 10:00:00', '2026-07-04', '13:00:00', '15 rue des Pins',       'Mérignac', 15,  607.50,   12.08,    619.58, 'acceptee',                   0, 0),
+(3, 'VG-2026-00003', 4, 2, '2026-05-15 16:00:00', '2026-06-20', '11:30:00', '8 chemin des Collines', 'Mérignac', 10,  380.00,   19.75,    399.75, 'en_preparation',             0, 0),
+(4, 'VG-2026-00004', 6, 4, '2026-05-10 11:30:00', '2026-05-26', '12:00:00', '1 allée du Château',   'Pessac',   25, 1237.50,   13.85,   1251.35, 'en_cours_livraison',         1, 0),
+(5, 'VG-2026-00005', 5, 3, '2026-04-10 09:00:00', '2026-04-20', '12:00:00', '7 rue des Vignes',     'Mérignac',  6,  210.00,   18.57,    228.57, 'terminee',                   0, 0),
+(6, 'VG-2026-00006', 4, 4, '2026-04-15 10:00:00', '2026-05-05', '11:00:00', '25 avenue de la Paix', 'Bordeaux', 30, 1485.00,    0.00,   1485.00, 'en_attente_retour_materiel', 1, 0),
+(7, 'VG-2026-00007', 6, 1, '2026-03-01 14:00:00', '2026-03-15', '12:00:00', '14 impasse des Roses', 'Pessac',   12,  540.00,   22.70,    562.70, 'terminee',                   0, 0);
 
 -- Historique des statuts
 INSERT INTO historique_statut (commande_id, statut, date_heure) VALUES
