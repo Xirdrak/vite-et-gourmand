@@ -34,11 +34,19 @@
                 </select>
             </div>
             <div class="form-group" style="margin-bottom:0;">
-                <label for="filter-prix-max">
-                    Prix max par personne : <strong id="label-prix-max">sans limite</strong>
-                </label>
-                <input type="range" id="filter-prix-max" class="form-input-range"
-                       min="0" max="200" step="5" value="200">
+                <span id="label-prix-legende">
+                    Prix par personne : <strong id="label-prix-max">sans limite</strong>
+                </span>
+                <div class="range-double">
+                    <div class="range-double__track"></div>
+                    <div class="range-double__fill" id="range-fill"></div>
+                    <input type="range" id="filter-prix-min"
+                           min="0" max="200" step="5" value="0"
+                           aria-label="Prix minimum par personne">
+                    <input type="range" id="filter-prix-max"
+                           min="0" max="200" step="5" value="200"
+                           aria-label="Prix maximum par personne">
+                </div>
             </div>
             <div class="form-group" style="margin-bottom:0;">
                 <label for="filter-nb-personnes">Nombre de personnes</label>
@@ -113,29 +121,52 @@
     var cols      = document.querySelectorAll('.menu-col');
     var selTheme  = document.getElementById('filter-theme');
     var selRegime = document.getElementById('filter-regime');
+    var rangeMin  = document.getElementById('filter-prix-min');
     var rangePrix = document.getElementById('filter-prix-max');
+    var rangeFill = document.getElementById('range-fill');
     var inputNb   = document.getElementById('filter-nb-personnes');
     var labelPrix = document.getElementById('label-prix-max');
     var compteur  = document.getElementById('compteur-menus');
     var msgAucun  = document.getElementById('msg-aucun-resultat');
     var btnReset  = document.getElementById('btn-reset');
 
+    // les deux poignees ne doivent pas se croiser : celle qu'on bouge repousse l'autre
+    function empecherCroisement(source) {
+        var min = parseInt(rangeMin.value);
+        var max = parseInt(rangePrix.value);
+        if (min > max) {
+            if (source === 'min') {
+                rangeMin.value = max;
+            } else {
+                rangePrix.value = min;
+            }
+        }
+    }
+
     function updateLabelPrix() {
-        var val = parseInt(rangePrix.value);
-        labelPrix.textContent = val >= 200 ? 'sans limite' : val + '€';
+        var min = parseInt(rangeMin.value);
+        var max = parseInt(rangePrix.value);
+        var txtMax = max >= 200 ? 'sans limite' : max + '€';
+        labelPrix.textContent = min > 0 ? 'de ' + min + '€ à ' + txtMax : txtMax;
+
+        // la barre coloree suit les deux poignees
+        rangeFill.style.left  = (min / 200 * 100) + '%';
+        rangeFill.style.width = ((max - min) / 200 * 100) + '%';
     }
 
     function filtrer() {
         var themeId  = selTheme.value;
         var regimeId = selRegime.value;
+        var prixMin  = parseInt(rangeMin.value);
         var prixMax  = parseInt(rangePrix.value);
         var nbMin    = parseInt(inputNb.value) || 0;
         var visibles = 0;
 
         cols.forEach(function (col) {
+            var prix        = parseFloat(col.dataset.prix);
             var matchTheme  = !themeId  || col.dataset.themeId  === themeId;
             var matchRegime = !regimeId || col.dataset.regimeId === regimeId;
-            var matchPrix   = prixMax >= 200 || parseFloat(col.dataset.prix) <= prixMax;
+            var matchPrix   = prix >= prixMin && (prixMax >= 200 || prix <= prixMax);
             var matchNb     = nbMin === 0 || parseInt(col.dataset.nbMin) <= nbMin;
             var visible     = matchTheme && matchRegime && matchPrix && matchNb;
             col.style.display = visible ? '' : 'none';
@@ -149,13 +180,23 @@
     function reset() {
         selTheme.value  = '';
         selRegime.value = '';
+        rangeMin.value  = 0;
         rangePrix.value = 200;
         inputNb.value   = '';
         updateLabelPrix();
         filtrer();
     }
 
-    rangePrix.addEventListener('input', function () { updateLabelPrix(); filtrer(); });
+    rangeMin.addEventListener('input', function () {
+        empecherCroisement('min');
+        updateLabelPrix();
+        filtrer();
+    });
+    rangePrix.addEventListener('input', function () {
+        empecherCroisement('max');
+        updateLabelPrix();
+        filtrer();
+    });
     selTheme.addEventListener('change', filtrer);
     selRegime.addEventListener('change', filtrer);
     inputNb.addEventListener('input', filtrer);
