@@ -30,9 +30,32 @@ class ContactController extends AbstractController
                 $data['message'],
             );
 
-            $this->addFlash('success', 'Votre message a bien été envoyé. Nous vous répondrons dans les plus brefs délais.');
+            $confirmation = 'Votre message a bien été envoyé. Nous vous répondrons dans les plus brefs délais.';
+
+            // Requete AJAX : on renvoie du JSON, la page n'est pas rechargee
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => true,
+                    'message' => $confirmation,
+                ]);
+            }
+
+            $this->addFlash('success', $confirmation);
 
             return $this->redirectToRoute('app_contact');
+        }
+
+        // Formulaire invalide en AJAX : on renvoie les messages d'erreur en JSON
+        if ($request->isXmlHttpRequest() && $form->isSubmitted()) {
+            $erreurs = [];
+            foreach ($form->getErrors(true) as $erreur) {
+                $erreurs[] = $erreur->getMessage();
+            }
+
+            return $this->json([
+                'success' => false,
+                'errors'  => $erreurs,
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         return $this->render('contact/index.html.twig', [
