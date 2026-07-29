@@ -50,7 +50,65 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Formulaire de contact en AJAX (si present sur la page)
+    var contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        initContactForm(contactForm);
+    }
+
 });
+
+// Envoi du formulaire de contact sans rechargement de page
+function initContactForm(form) {
+    var feedback = document.getElementById('contact-feedback');
+    var bouton   = document.getElementById('contact-submit');
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        feedback.innerHTML = '';
+        bouton.classList.add('is-loading');
+        bouton.disabled = true;
+
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(function (reponse) {
+            return reponse.json().then(function (data) {
+                return { ok: reponse.ok, data: data };
+            });
+        })
+        .then(function (resultat) {
+            if (resultat.ok && resultat.data.success) {
+                form.reset();
+                afficherMessageContact('success', resultat.data.message);
+            } else {
+                var texte = (resultat.data.errors && resultat.data.errors.length)
+                    ? resultat.data.errors.join(' ')
+                    : 'Veuillez vérifier les champs du formulaire.';
+                afficherMessageContact('error', texte);
+            }
+        })
+        .catch(function () {
+            afficherMessageContact('error', "L'envoi a échoué. Merci de réessayer dans un instant.");
+        })
+        .then(function () {
+            bouton.classList.remove('is-loading');
+            bouton.disabled = false;
+        });
+    });
+}
+
+function afficherMessageContact(type, texte) {
+    var feedback = document.getElementById('contact-feedback');
+    var icone = type === 'success' ? 'check_circle' : 'error';
+    feedback.innerHTML =
+        '<div class="alert alert--' + type + '" role="alert">' +
+        '<span class="material-symbols-outlined" aria-hidden="true">' + icone + '</span> ' +
+        texte + '</div>';
+}
 
 // Compteur invites (page detail menu)
 function initGuestCounter(pricePerGuest, minGuests) {

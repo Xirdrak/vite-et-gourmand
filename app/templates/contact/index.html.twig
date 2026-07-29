@@ -36,7 +36,9 @@
                 </div>
             {% endfor %}
 
-            {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+            <div id="contact-feedback" aria-live="polite"></div>
+
+            {{ form_start(form, {attr: {id: 'contact-form', novalidate: 'novalidate'}}) }}
 
                 {{ include('_form_errors_alert.html.twig', {form: form}) }}
 
@@ -58,8 +60,9 @@
                     {{ form_errors(form.message) }}
                 </div>
 
-                <button type="submit" class="btn-primary" style="width: 100%;">
-                    Envoyer le message
+                <button type="submit" class="btn-primary" id="contact-submit" style="width: 100%;">
+                    <span class="spinner" aria-hidden="true"></span>
+                    <span class="btn-label">Envoyer le message</span>
                 </button>
 
             {{ form_end(form) }}
