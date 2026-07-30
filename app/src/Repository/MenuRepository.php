@@ -24,6 +24,37 @@ class MenuRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function filtrer(?int $themeId, ?int $regimeId, ?float $prixMin, ?float $prixMax, ?int $nbPersonnes): array
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->where('m.actif = true')
+            ->join('m.theme', 't')
+            ->addSelect('t')
+            ->join('m.regime', 'r')
+            ->addSelect('r')
+            ->leftJoin('m.images', 'i')
+            ->addSelect('i')
+            ->orderBy('t.libelle', 'ASC');
+
+        if ($themeId) {
+            $qb->andWhere('t.id = :theme')->setParameter('theme', $themeId);
+        }
+        if ($regimeId) {
+            $qb->andWhere('r.id = :regime')->setParameter('regime', $regimeId);
+        }
+        if ($prixMin !== null) {
+            $qb->andWhere('m.prixParPersonne >= :prixMin')->setParameter('prixMin', $prixMin);
+        }
+        if ($prixMax !== null) {
+            $qb->andWhere('m.prixParPersonne <= :prixMax')->setParameter('prixMax', $prixMax);
+        }
+        if ($nbPersonnes) {
+            $qb->andWhere('m.nombrePersonneMinimum <= :nb')->setParameter('nb', $nbPersonnes);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function findOneWithDetails(int $id): ?Menu
     {
         return $this->createQueryBuilder('m')

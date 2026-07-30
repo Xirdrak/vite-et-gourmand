@@ -60,13 +60,14 @@
         </div>
     </div>
 
+    <div id="menus-loading" class="grille-loading" role="status" style="display:none;">
+        <span class="spinner spinner--brand" aria-hidden="true"></span>
+        Chargement des menus...
+    </div>
+
     <div class="grid-3" id="grille-menus">
         {% for menu in menus %}
-            <div class="menu-col"
-                 data-theme-id="{{ menu.theme.id }}"
-                 data-regime-id="{{ menu.regime.id }}"
-                 data-prix="{{ menu.prixParPersonne }}"
-                 data-nb-min="{{ menu.nombrePersonneMinimum }}">
+            <div class="menu-col">
                 <div class="card-menu">
                     <div class="card-menu__image-wrapper">
                         {% if menu.images is not empty %}
@@ -118,7 +119,6 @@
 {% block javascripts %}
 <script>
 (function () {
-    var cols      = document.querySelectorAll('.menu-col');
     var selTheme  = document.getElementById('filter-theme');
     var selRegime = document.getElementById('filter-regime');
     var rangeMin  = document.getElementById('filter-prix-min');
@@ -127,8 +127,13 @@
     var inputNb   = document.getElementById('filter-nb-personnes');
     var labelPrix = document.getElementById('label-prix-max');
     var compteur  = document.getElementById('compteur-menus');
+    var grille    = document.getElementById('grille-menus');
     var msgAucun  = document.getElementById('msg-aucun-resultat');
+    var loading   = document.getElementById('menus-loading');
     var btnReset  = document.getElementById('btn-reset');
+    var urlFiltre = '{{ path('app_menus_filtrer') }}';
+    var txtAucun  = msgAucun.textContent;
+    var timer     = null;
 
     // les deux poignees ne doivent pas se croiser : celle qu'on bouge repousse l'autre
     function empecherCroisement(source) {
@@ -154,27 +159,82 @@
         rangeFill.style.width = ((max - min) / 200 * 100) + '%';
     }
 
+    // echappe le texte venant du serveur avant de l'injecter dans du HTML
+    function echapper(texte) {
+        var div = document.createElement('div');
+        div.textContent = texte;
+        return div.innerHTML;
+    }
+
+    function carteMenu(menu) {
+        var image = menu.image
+            ? '<img class="card-menu__image" src="' + menu.image + '" alt="' + echapper(menu.titre) + '">'
+            : '<div class="card-menu__placeholder">🍽️</div>';
+
+        return '' +
+        '<div class="menu-col">' +
+          '<div class="card-menu">' +
+            '<div class="card-menu__image-wrapper">' +
+              image +
+              '<div class="card-menu__badges">' +
+                '<span class="badge badge--' + menu.theme.slug + '">' + echapper(menu.theme.libelle) + '</span>' +
+                '<span class="badge badge--' + menu.regime.slug + '">' + echapper(menu.regime.libelle) + '</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="card-menu__body">' +
+              '<h2 class="card-menu__title">' + echapper(menu.titre) + '</h2>' +
+              '<p class="card-menu__description">' + echapper(menu.description) + '</p>' +
+              '<div class="card-menu__meta">' +
+                '<div>' +
+                  '<p class="card-menu__price">' + menu.prix + '€ / pers.</p>' +
+                  '<p class="card-menu__persons">Min. ' + menu.nbMin + ' personnes</p>' +
+                '</div>' +
+                '<a href="' + menu.url + '" class="btn-ghost" style="padding: var(--space-xs) var(--space-sm); font-size: var(--fs-label-sm);">Voir le menu</a>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+    }
+
+    function afficherMenus(menus) {
+        grille.innerHTML = menus.map(carteMenu).join('');
+        compteur.textContent = menus.length + ' menu' + (menus.length > 1 ? 's' : '');
+        msgAucun.textContent = txtAucun;
+        msgAucun.style.display = menus.length === 0 ? 'block' : 'none';
+    }
+
     function filtrer() {
-        var themeId  = selTheme.value;
-        var regimeId = selRegime.value;
-        var prixMin  = parseInt(rangeMin.value);
-        var prixMax  = parseInt(rangePrix.value);
-        var nbMin    = parseInt(inputNb.value) || 0;
-        var visibles = 0;
+        var params = new URLSearchParams();
+        if (selTheme.value)  { params.set('theme', selTheme.value); }
+        if (selRegime.value) { params.set('regime', selRegime.value); }
+        params.set('prixMin', rangeMin.value);
+        params.set('prixMax', rangePrix.value);
+        if (inputNb.value)   { params.set('nbPersonnes', inputNb.value); }
 
-        cols.forEach(function (col) {
-            var prix        = parseFloat(col.dataset.prix);
-            var matchTheme  = !themeId  || col.dataset.themeId  === themeId;
-            var matchRegime = !regimeId || col.dataset.regimeId === regimeId;
-            var matchPrix   = prix >= prixMin && (prixMax >= 200 || prix <= prixMax);
-            var matchNb     = nbMin === 0 || parseInt(col.dataset.nbMin) <= nbMin;
-            var visible     = matchTheme && matchRegime && matchPrix && matchNb;
-            col.style.display = visible ? '' : 'none';
-            if (visible) visibles++;
+        loading.style.display = 'flex';
+        grille.style.opacity = '0.4';
+
+        fetch(urlFiltre + '?' + params.toString(), {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(function (reponse) { return reponse.json(); })
+        .then(function (menus) { afficherMenus(menus); })
+        .catch(function () {
+            grille.innerHTML = '';
+            compteur.textContent = '';
+            msgAucun.textContent = 'Le chargement des menus a échoué. Merci de réessayer.';
+            msgAucun.style.display = 'block';
+        })
+        .then(function () {
+            loading.style.display = 'none';
+            grille.style.opacity = '1';
         });
+    }
 
-        compteur.textContent = visibles + ' menu' + (visibles > 1 ? 's' : '');
-        msgAucun.style.display = visibles === 0 ? 'block' : 'none';
+    // on attend que l'utilisateur arrete de bouger avant d'interroger le serveur
+    function filtrerBientot() {
+        clearTimeout(timer);
+        timer = setTimeout(filtrer, 300);
     }
 
     function reset() {
@@ -190,16 +250,16 @@
     rangeMin.addEventListener('input', function () {
         empecherCroisement('min');
         updateLabelPrix();
-        filtrer();
+        filtrerBientot();
     });
     rangePrix.addEventListener('input', function () {
         empecherCroisement('max');
         updateLabelPrix();
-        filtrer();
+        filtrerBientot();
     });
     selTheme.addEventListener('change', filtrer);
     selRegime.addEventListener('change', filtrer);
-    inputNb.addEventListener('input', filtrer);
+    inputNb.addEventListener('input', filtrerBientot);
     btnReset.addEventListener('click', reset);
 
     updateLabelPrix();
