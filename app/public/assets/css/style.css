@@ -363,6 +363,24 @@ ul { list-style: none; }
   to { transform: rotate(360deg); }
 }
 
+/* Spinner et bandeau de chargement de la grille des menus */
+.grille-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-xl) 0;
+  color: var(--color-on-surface-variant);
+}
+
+.grille-loading .spinner {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid rgba(133, 79, 11, 0.25);
+  border-top-color: #854F0B;
+}
+
 .btn-secondary {
   display: inline-flex;
   align-items: center;
