@@ -31,7 +31,7 @@
                 </button>
                 {% endfor %}
             </div>
-            {{ form_widget(form.note, {attr: {class: 'sr-only', id: 'note-input', tabindex: '-1'}}) }}
+            {{ form_widget(form.note, {attr: {class: 'sr-only', tabindex: '-1'}}) }}
             {{ form_errors(form.note) }}
             <small id="note-hint" class="form-hint" style="display:none;"></small>
         </div>
@@ -62,7 +62,7 @@
 {% block javascripts %}
 <script>
     const stars    = document.querySelectorAll('.star-picker__btn');
-    const input    = document.getElementById('note-input');
+    const input    = document.getElementById('{{ form.note.vars.id }}');
     const hint     = document.getElementById('note-hint');
     const labels   = ['', 'Mauvais', 'Passable', 'Bien', 'Très bien', 'Excellent'];
     let current    = parseInt(input.value) || 0;
