@@ -17,7 +17,7 @@ class AvisType extends AbstractType
         $builder
             ->add('note', IntegerType::class, [
                 'label' => 'Note',
-                'attr'  => ['min' => 1, 'max' => 5, 'id' => 'note-input'],
+                'attr'  => ['min' => 1, 'max' => 5],
                 'constraints' => [
                     new Assert\NotBlank(message: 'Veuillez attribuer une note.'),
                     new Assert\Range(
