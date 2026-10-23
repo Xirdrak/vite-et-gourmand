@@ -1,7 +1,8 @@
 # Image de production pour l'app Symfony "Vite & Gourmand"
 # PHP 8.4 FPM + nginx dans un seul conteneur (gere par supervisor).
 # Pas de Node : les assets sont geres par AssetMapper et compiles au build.
-FROM php:8.4-fpm-bookworm
+# Version exacte de PHP : 8.4.27 corrige les failles php2shell (octobre 2026)
+FROM php:8.4.27-fpm-bookworm
 
 # Extensions PHP via l'installeur de mlocati (gere les dependances systeme)
 ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
