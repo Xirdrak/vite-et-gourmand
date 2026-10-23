@@ -1,10 +1,11 @@
-# Notes et fichiers de travail locaux
+# Notes et fichiers de travail locaux (dossiers numerotes + prompts assistant)
 /*.md
 !README.md
-prompts/
-specs/
-notes/
-wip/
+/prompts/
+/01-enonce-et-consignes/
+/02-soutenance/
+/03-dossier-professionnel/
+/06-atelier/
 desktop.ini
 
 # Screenshots et fichiers temporaires
@@ -31,10 +32,10 @@ livrables/*
 !livrables/doc-technique.pdf
 
 # Retours de revue de code externe (prives, hors depot)
-/Feedbacks (.gitignore)/
+/05-retours-externes/
 
 # Documents de l'organisme de formation, hors depot
-/Documents pour évaluation/
+/04-administratif/
 
 # OS / IDE
 .DS_Store
