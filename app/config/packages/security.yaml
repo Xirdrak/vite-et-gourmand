@@ -39,7 +39,7 @@ security:
     access_control:
         - { path: ^/espace-admin, roles: ROLE_ADMIN }
         - { path: ^/espace-employe, roles: ROLE_EMPLOYE }
-        - { path: ^/espace-utilisateur, roles: ROLE_USER }
+        - { path: ^/mon-espace, roles: ROLE_USER }
         - { path: ^/commande, roles: ROLE_USER }
 
 when@test:
