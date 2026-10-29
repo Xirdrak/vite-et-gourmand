@@ -79,9 +79,10 @@
 </nav>
 
 <main id="contenu">
-    {% if app.flashes|length > 0 %}
+    {% set flashes = app.flashes %}
+    {% if flashes is not empty %}
         <div class="container" style="padding-top: var(--space-md);">
-            {% for type, messages in app.flashes %}
+            {% for type, messages in flashes %}
                 {% for message in messages %}
                     <div class="alert alert--{{ type == 'error' ? 'error' : type }}" role="alert">{{ message }}</div>
                 {% endfor %}
