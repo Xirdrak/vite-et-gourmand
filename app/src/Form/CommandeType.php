@@ -84,6 +84,9 @@ class CommandeType extends AbstractType
                 'label'    => 'Distance estimee (en km)',
                 'required' => false,
                 'attr'     => ['min' => 1],
+                'constraints' => [
+                    new Assert\Positive(message: 'La distance doit être supérieure à 0 km.'),
+                ],
             ]);
     }
 

@@ -73,6 +73,9 @@ class CommandeModificationType extends AbstractType
                 'required' => false,
                 'data'     => $options['nombre_km_initial'] > 0 ? $options['nombre_km_initial'] : null,
                 'attr'     => ['min' => 1],
+                'constraints' => [
+                    new Assert\Positive(message: 'La distance doit être supérieure à 0 km.'),
+                ],
             ]);
     }
 
