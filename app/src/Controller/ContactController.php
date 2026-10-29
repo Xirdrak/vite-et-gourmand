@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
 use App\Form\ContactType;
 use App\Service\MailerService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ContactController extends AbstractController
 {
     #[Route('/contact', name: 'app_contact')]
-    public function index(Request $request, MailerService $mailer): Response
+    public function index(Request $request, MailerService $mailer, EntityManagerInterface $em): Response
     {
         $defaultData = [
             'email' => $this->getUser()?->getEmail() ?? '',
@@ -24,15 +26,25 @@ class ContactController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            $mailer->sendContact(
-                $data['email'],
-                $data['sujet'],
-                $data['message'],
-            );
+            $contact = new Contact();
+            $contact->setEmail($data['email']);
+            $contact->setTitre($data['sujet']);
+            $contact->setDescription($data['message']);
+            $em->persist($contact);
+            $em->flush();
+
+            // Le message est déjà enregistré, une panne du mail ne doit pas bloquer le visiteur
+            try {
+                $mailer->sendContact(
+                    $data['email'],
+                    $data['sujet'],
+                    $data['message'],
+                );
+            } catch (\Exception) {}
 
             $confirmation = 'Votre message a bien été envoyé. Nous vous répondrons dans les plus brefs délais.';
 
-            // Requete AJAX : on renvoie du JSON, la page n'est pas rechargee
+            // Requête AJAX : on renvoie du JSON, la page n'est pas rechargée
             if ($request->isXmlHttpRequest()) {
                 return $this->json([
                     'success' => true,
