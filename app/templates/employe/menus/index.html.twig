@@ -39,7 +39,7 @@
                         Modifier
                     </a>
                     <form method="post" action="{{ path('app_employe_menu_supprimer', {id: menu.id}) }}"
-                          onsubmit="return confirm('Supprimer ce menu ? Cette action est irreversible.');">
+                          onsubmit="return confirm('Supprimer ce menu ? Cette action est irréversible.');">
                         <input type="hidden" name="_token" value="{{ csrf_token('supprimer_menu_' ~ menu.id) }}">
                         <button type="submit" class="btn-secondary" style="font-size: var(--fs-label-md); color: var(--color-error); border-color: var(--color-error);">
                             <span class="material-symbols-outlined" aria-hidden="true">delete</span>

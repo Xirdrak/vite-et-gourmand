@@ -23,7 +23,7 @@
                         <span class="text-title-md">{{ avis.utilisateur.nomComplet }}</span>
                         <br>
                         <span style="font-size: var(--fs-label-md); color: var(--color-on-surface-variant);">
-                            {{ avis.commande.menu.titre }} — {{ avis.dateAvis|date('d/m/Y') }}
+                            {{ avis.commande.menu.titre }} - {{ avis.dateAvis|date('d/m/Y') }}
                         </span>
                     </div>
                     <div style="display: flex; align-items: center; gap: var(--space-sm);">
@@ -74,7 +74,7 @@
                         <span class="text-title-md">{{ avis.utilisateur.nomComplet }}</span>
                         <br>
                         <span style="font-size: var(--fs-label-md); color: var(--color-on-surface-variant);">
-                            {{ avis.commande.menu.titre }} — {{ avis.dateAvis|date('d/m/Y') }}
+                            {{ avis.commande.menu.titre }} - {{ avis.dateAvis|date('d/m/Y') }}
                         </span>
                     </div>
                     <span class="badge-statut badge-statut--{{ avis.statut.value }}">

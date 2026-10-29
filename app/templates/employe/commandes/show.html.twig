@@ -3,7 +3,7 @@
 {% block title %}Commande {{ commande.numeroCommande }} - Vite & Gourmand{% endblock %}
 
 {% block employe_title %}Commande {{ commande.numeroCommande }}{% endblock %}
-{% block employe_subtitle %}{{ commande.utilisateur.nomComplet }} — {{ commande.menu.titre }}{% endblock %}
+{% block employe_subtitle %}{{ commande.utilisateur.nomComplet }} - {{ commande.menu.titre }}{% endblock %}
 
 {% block employe_action %}
     <a href="{{ path('app_employe_commandes') }}" class="back-link">
