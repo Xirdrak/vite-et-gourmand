@@ -41,6 +41,7 @@
         <div class="form-group" style="margin-top: var(--space-md);">
             {{ form_label(form.mot_de_passe.first, null, {label_attr: {class: 'form-label'}}) }}
             {{ form_widget(form.mot_de_passe.first, {attr: {class: 'form-input'}}) }}
+            <span class="form-hint">10 caractères minimum, 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial.</span>
             {{ form_errors(form.mot_de_passe.first) }}
         </div>
 
