@@ -27,7 +27,7 @@ class ContactType extends AbstractType
                 'label'       => 'Sujet',
                 'constraints' => [
                     new Assert\NotBlank(message: 'Veuillez indiquer un sujet.'),
-                    new Assert\Length(max: 150, maxMessage: 'Le sujet ne peut pas depasser {{ limit }} caracteres.'),
+                    new Assert\Length(max: 150, maxMessage: 'Le sujet ne peut pas dépasser {{ limit }} caractères.'),
                 ],
             ])
             ->add('message', TextareaType::class, [
@@ -37,8 +37,8 @@ class ContactType extends AbstractType
                     new Assert\Length(
                         min: 10,
                         max: 2000,
-                        minMessage: 'Le message doit contenir au moins {{ limit }} caracteres.',
-                        maxMessage: 'Le message ne peut pas depasser {{ limit }} caracteres.',
+                        minMessage: 'Le message doit contenir au moins {{ limit }} caractères.',
+                        maxMessage: 'Le message ne peut pas dépasser {{ limit }} caractères.',
                     ),
                 ],
             ]);

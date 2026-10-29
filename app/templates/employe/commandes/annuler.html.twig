@@ -3,7 +3,7 @@
 {% block title %}Annuler la commande {{ commande.numeroCommande }} - Vite & Gourmand{% endblock %}
 
 {% block employe_title %}Annuler la commande{% endblock %}
-{% block employe_subtitle %}{{ commande.numeroCommande }} — {{ commande.utilisateur.nomComplet }}{% endblock %}
+{% block employe_subtitle %}{{ commande.numeroCommande }} - {{ commande.utilisateur.nomComplet }}{% endblock %}
 
 {% block employe_action %}
     <a href="{{ path('app_employe_commande_show', {id: commande.id}) }}" class="back-link">
@@ -17,7 +17,7 @@
 <div style="max-width: 640px;">
 
     <div class="alert alert--error" style="margin-bottom: var(--space-md);">
-        <strong>Attention</strong> — Cette action est irréversible. La commande sera annulée et le stock du menu sera restauré.
+        <strong>Attention :</strong> cette action est irréversible. La commande sera annulée et le stock du menu sera restauré.
     </div>
 
     <section class="order-section" style="margin-bottom: var(--space-md);">

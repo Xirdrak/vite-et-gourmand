@@ -64,12 +64,12 @@ class CommandeModificationType extends AbstractType
                 ],
             ])
             ->add('hors_bordeaux', CheckboxType::class, [
-                'label'    => 'Livraison hors Bordeaux (supplement)',
+                'label'    => 'Livraison hors Bordeaux (supplément)',
                 'required' => false,
                 'data'     => $options['hors_bordeaux_initial'],
             ])
             ->add('nombre_km', IntegerType::class, [
-                'label'    => 'Distance estimee (en km)',
+                'label'    => 'Distance estimée (en km)',
                 'required' => false,
                 'data'     => $options['nombre_km_initial'] > 0 ? $options['nombre_km_initial'] : null,
                 'attr'     => ['min' => 1],
