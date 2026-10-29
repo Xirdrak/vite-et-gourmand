@@ -1,4 +1,4 @@
--- Vite & Gourmand - donnees de test
+-- Vite & Gourmand - données de test
 -- Mots de passe : Admin@2026! / Employe@2026! / Client@2026!
 
 SET NAMES utf8mb4;

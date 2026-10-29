@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
             dropdownToggle.setAttribute('aria-expanded', 'false');
         });
 
-        // Fermeture au clavier (touche Echap)
+        // Fermeture au clavier (touche Échap)
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && dropdownMenu.classList.contains('is-open')) {
                 dropdownMenu.classList.remove('is-open');
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Formulaire de contact en AJAX (si present sur la page)
+    // Formulaire de contact en AJAX (si présent sur la page)
     var contactForm = document.getElementById('contact-form');
     if (contactForm) {
         initContactForm(contactForm);
@@ -110,7 +110,7 @@ function afficherMessageContact(type, texte) {
         texte + '</div>';
 }
 
-// Compteur invites (page detail menu)
+// Compteur invités (page détail menu)
 function initGuestCounter(pricePerGuest, minGuests) {
     var guests = minGuests;
     var display = document.getElementById('guest-count');

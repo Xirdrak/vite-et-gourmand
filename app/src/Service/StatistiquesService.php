@@ -8,8 +8,8 @@ use MongoDB\BSON\UTCDateTime;
 use MongoDB\Client;
 use MongoDB\Collection;
 
-// Gere les statistiques admin stockees dans MongoDB.
-// MySQL reste la source de verite, on copie les commandes dans Mongo pour les stats.
+// Gère les statistiques admin stockées dans MongoDB.
+// MySQL reste la source de vérité, on copie les commandes dans Mongo pour les stats.
 class StatistiquesService
 {
     private const COLLECTION = 'commandes';
@@ -24,7 +24,7 @@ class StatistiquesService
         return $this->client->selectCollection($this->dbName, self::COLLECTION);
     }
 
-    // Recopie les commandes MySQL dans MongoDB (upsert sur le numero de commande).
+    // Recopie les commandes MySQL dans MongoDB (upsert sur le numéro de commande).
     public function synchroniser(array $commandes): int
     {
         if (count($commandes) === 0) {
@@ -61,8 +61,8 @@ class StatistiquesService
         return count($operations);
     }
 
-    // Nombre de commandes et CA par menu, avec filtres optionnels (periode + menu).
-    // Les commandes annulees sont exclues du CA car elles ne generent pas de revenu.
+    // Nombre de commandes et CA par menu, avec filtres optionnels (période + menu).
+    // Les commandes annulées sont exclues du CA car elles ne génèrent pas de revenu.
     public function statistiquesParMenu(?\DateTimeInterface $debut, ?\DateTimeInterface $fin, ?int $menuId): array
     {
         $match = ['statut' => ['$ne' => CommandeStatut::Annulee->value]];

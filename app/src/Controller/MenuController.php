@@ -68,7 +68,7 @@ class MenuController extends AbstractController
         return $this->json($donnees);
     }
 
-    // Reproduit le slug des badges cote serveur (meme table d'accents que le template)
+    // Reproduit le slug des badges côté serveur (même table d'accents que le template)
     private function slugBadge(string $libelle): string
     {
         return strtr(mb_strtolower($libelle), [

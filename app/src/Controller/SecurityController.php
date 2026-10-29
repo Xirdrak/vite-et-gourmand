@@ -25,7 +25,7 @@ class SecurityController extends AbstractController
     #[Route('/deconnexion', name: 'app_logout')]
     public function logout(): void
     {
-        // Symfony Security intercepte cette route, le corps n'est jamais execute
+        // Symfony Security intercepte cette route, le corps n'est jamais exécuté
         throw new \LogicException('Cette méthode ne doit pas être appelée directement.');
     }
 }

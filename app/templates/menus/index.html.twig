@@ -135,7 +135,7 @@
     var txtAucun  = msgAucun.textContent;
     var timer     = null;
 
-    // les deux poignees ne doivent pas se croiser : celle qu'on bouge repousse l'autre
+    // les deux poignées ne doivent pas se croiser : celle qu'on bouge repousse l'autre
     function empecherCroisement(source) {
         var min = parseInt(rangeMin.value);
         var max = parseInt(rangePrix.value);
@@ -154,12 +154,12 @@
         var txtMax = max >= 200 ? 'sans limite' : max + '€';
         labelPrix.textContent = min > 0 ? 'de ' + min + '€ à ' + txtMax : txtMax;
 
-        // la barre coloree suit les deux poignees
+        // la barre colorée suit les deux poignées
         rangeFill.style.left  = (min / 200 * 100) + '%';
         rangeFill.style.width = ((max - min) / 200 * 100) + '%';
     }
 
-    // echappe le texte venant du serveur avant de l'injecter dans du HTML
+    // échappe le texte venant du serveur avant de l'injecter dans du HTML
     function echapper(texte) {
         var div = document.createElement('div');
         div.textContent = texte;
@@ -231,7 +231,7 @@
         });
     }
 
-    // on attend que l'utilisateur arrete de bouger avant d'interroger le serveur
+    // on attend que l'utilisateur arrête de bouger avant d'interroger le serveur
     function filtrerBientot() {
         clearTimeout(timer);
         timer = setTimeout(filtrer, 300);

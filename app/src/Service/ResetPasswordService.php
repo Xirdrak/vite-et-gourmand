@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ResetPasswordService
 {
-    // Duree de validite du token en secondes (1 heure)
+    // Durée de validité du token en secondes (1 heure)
     private const TTL = 3600;
 
     public function __construct(
