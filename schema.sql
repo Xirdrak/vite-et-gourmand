@@ -1,4 +1,4 @@
--- Vite & Gourmand - schema MySQL
+-- Vite & Gourmand - schéma MySQL
 
 SET FOREIGN_KEY_CHECKS = 0;
 

@@ -31,7 +31,7 @@ class ResetPasswordController extends AbstractController
             $email = $form->get('email')->getData();
             $utilisateur = $utilisateurRepository->findOneBy(['email' => $email]);
 
-            // On affiche toujours le meme message pour eviter l'enumeration d'emails
+            // On affiche toujours le même message pour éviter l'énumération d'emails
             if ($utilisateur && $utilisateur->isActif()) {
                 $token = $resetService->generateToken($utilisateur);
                 $resetUrl = $this->generateUrl('app_reset_password', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);

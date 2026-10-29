@@ -31,7 +31,7 @@
   --color-success:           #2d6a4f;
   --color-success-container: #d8f3dc;
 
-  /* Couleurs semantiques badges */
+  /* Couleurs sémantiques badges */
   --color-vegetarien:        #639922;
   --color-vegetarien-bg:     #e8f5d6;
   --color-vegan:             #1d6b8a;
@@ -340,7 +340,7 @@ ul { list-style: none; }
 .btn-primary:hover { opacity: 0.9; }
 .btn-primary:active { transform: scale(0.98); }
 
-/* Spinner affiche pendant un envoi AJAX */
+/* Spinner affiché pendant un envoi AJAX */
 .spinner {
   display: none;
   width: 1em;
@@ -442,7 +442,7 @@ ul { list-style: none; }
 
 .btn-full { width: 100%; justify-content: center; }
 
-/* Centre un bouton d'action a taille naturelle sous un formulaire */
+/* Centre un bouton d'action à taille naturelle sous un formulaire */
 .form-actions {
   display: flex;
   justify-content: center;
@@ -802,9 +802,9 @@ textarea:focus {
   accent-color: var(--color-tertiary);
 }
 
-/* Double curseur de prix : deux input range superposes sur une meme barre.
+/* Double curseur de prix : deux input range superposés sur une même barre.
    Les inputs sont transparents et ne captent pas la souris, seules les
-   poignees restent cliquables, sinon celui du dessus bloquerait l'autre. */
+   poignées restent cliquables, sinon celui du dessus bloquerait l'autre. */
 .range-double {
   position: relative;
   height: 2rem;
@@ -864,7 +864,7 @@ textarea:focus {
   cursor: pointer;
 }
 
-/* le focus clavier doit se voir sur la poignee, pas sur l'input transparent */
+/* le focus clavier doit se voir sur la poignée, pas sur l'input transparent */
 .range-double input[type="range"]:focus-visible::-webkit-slider-thumb {
   outline: 3px solid var(--color-secondary);
   outline-offset: 2px;
@@ -996,7 +996,7 @@ ul.form-error li,
   text-decoration: underline;
 }
 
-/* Vue detail menu */
+/* Vue détail menu */
 .gallery-main {
   aspect-ratio: 16/9;
   width: 100%;
@@ -1241,7 +1241,7 @@ ul.form-error li,
 .gap-md          { gap: var(--space-md); }
 .gap-lg          { gap: var(--space-lg); }
 
-/* Page detail menu */
+/* Page détail menu */
 .menu-detail__back {
   display: inline-flex;
   align-items: center;
@@ -1522,7 +1522,7 @@ ul.form-error li,
   display: block;
 }
 
-/* Recapitulatif commande */
+/* Récapitulatif commande */
 .order-summary__card {
   background-color: var(--color-surface-white);
   border: 1px solid var(--color-primary-container);
@@ -1679,7 +1679,7 @@ ul.form-error li,
 .badge-statut--annulee                    { background: #fee2e2; color: #991b1b; }
 .badge-statut--en_attente_retour_materiel { background: #fef3c7; color: #92400e; }
 
-/* Detail commande */
+/* Détail commande */
 .commande-detail-header {
   display: flex;
   align-items: flex-start;
@@ -1806,7 +1806,7 @@ ul.form-error li,
   border: 0;
 }
 
-/* Lien d'evitement : visible seulement au focus clavier */
+/* Lien d'évitement : visible seulement au focus clavier */
 .skip-link {
   position: absolute;
   left: var(--space-md);
@@ -1823,7 +1823,7 @@ ul.form-error li,
   top: var(--space-md);
 }
 
-/* Focus visible coherent au clavier sur tous les elements interactifs */
+/* Focus visible cohérent au clavier sur tous les éléments interactifs */
 a:focus-visible,
 button:focus-visible,
 [tabindex]:focus-visible {

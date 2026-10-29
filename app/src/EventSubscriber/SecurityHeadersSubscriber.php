@@ -6,7 +6,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-// Ajoute les en-tetes HTTP de securite sur toutes les reponses
+// Ajoute les en-têtes HTTP de sécurité sur toutes les réponses
 class SecurityHeadersSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array
@@ -24,9 +24,9 @@ class SecurityHeadersSubscriber implements EventSubscriberInterface
 
         $headers = $event->getResponse()->headers;
 
-        // Empeche l'affichage du site dans une iframe (protection clickjacking)
+        // Empêche l'affichage du site dans une iframe (protection clickjacking)
         $headers->set('X-Frame-Options', 'DENY');
-        // Empeche le navigateur de deviner le type MIME (protection MIME-sniffing)
+        // Empêche le navigateur de deviner le type MIME (protection MIME-sniffing)
         $headers->set('X-Content-Type-Options', 'nosniff');
         // Limite les informations de referrer transmises aux sites tiers
         $headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');

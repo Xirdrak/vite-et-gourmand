@@ -72,7 +72,7 @@ class AdminStatistiqueController extends AbstractController
         return $this->redirectToRoute('app_admin_statistiques');
     }
 
-    // Convertit le filtre de periode en bornes de dates pour l'agregation Mongo.
+    // Convertit le filtre de période en bornes de dates pour l'agrégation Mongo.
     private function bornesPeriode(string $periode): array
     {
         $fin = new \DateTimeImmutable('now');
