@@ -28,7 +28,7 @@ class SyncStatsCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         if (!$this->statistiques->estDisponible()) {
-            $io->error('Impossible de joindre MongoDB. Verifie MONGODB_URI et l\'acces reseau (Atlas Network Access).');
+            $io->error('Impossible de joindre MongoDB. Vérifie MONGODB_URI et l\'accès réseau (Atlas Network Access).');
             return Command::FAILURE;
         }
 

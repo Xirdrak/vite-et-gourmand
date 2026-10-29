@@ -43,7 +43,7 @@ class MailerService
         $email = (new Email())
             ->from(self::FROM)
             ->to($utilisateur->getEmail())
-            ->subject('Reinitialisation de votre mot de passe')
+            ->subject('Réinitialisation de votre mot de passe')
             ->html($html);
 
         $this->mailer->send($email);

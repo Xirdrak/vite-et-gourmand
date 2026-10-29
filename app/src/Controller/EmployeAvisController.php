@@ -40,7 +40,7 @@ class EmployeAvisController extends AbstractController
         $avis->setStatut(AvisStatut::Valide);
         $em->flush();
 
-        $this->addFlash('success', 'Avis validé — il est maintenant visible sur la page d\'accueil.');
+        $this->addFlash('success', 'Avis validé : il est maintenant visible sur la page d\'accueil.');
         return $this->redirectToRoute('app_employe_avis');
     }
 

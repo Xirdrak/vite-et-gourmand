@@ -40,7 +40,7 @@
             {{ form_label(form.conditions, null, {label_attr: {class: 'form-label'}}) }}
             {{ form_widget(form.conditions, {attr: {class: 'form-input'}}) }}
             {{ form_errors(form.conditions) }}
-            <small class="form-hint">Delai de commande, precautions de stockage, etc.</small>
+            <small class="form-hint">Délai de commande, précautions de stockage, etc.</small>
         </div>
     </section>
 
@@ -94,7 +94,7 @@
         <h2 class="text-title-lg" style="margin-bottom: var(--space-md);">Images du menu</h2>
 
         {% if menu.id and menu.images|length > 0 %}
-            <p class="form-hint" style="margin-bottom: var(--space-md);">Images actuelles — cochez pour supprimer :</p>
+            <p class="form-hint" style="margin-bottom: var(--space-md);">Images actuelles (cochez pour supprimer) :</p>
             <div style="display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-bottom: var(--space-md);">
                 {% for image in menu.images %}
                 <div style="position: relative; text-align: center;">
