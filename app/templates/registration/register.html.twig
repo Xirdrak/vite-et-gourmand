@@ -7,7 +7,7 @@
     <div class="auth-card auth-card--wide">
         <h1 class="auth-card__title">Créer un compte</h1>
 
-        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_start(form, {'attr': {'id': 'form-inscription', 'novalidate': 'novalidate'}}) }}
 
         {{ include('_form_errors_alert.html.twig', {form: form}) }}
 
