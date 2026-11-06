@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class CommandeModificationType extends AbstractType
 {
@@ -75,6 +76,12 @@ class CommandeModificationType extends AbstractType
                 'attr'     => ['min' => 1],
                 'constraints' => [
                     new Assert\Positive(message: 'La distance doit être supérieure à 0 km.'),
+                    new Assert\Callback(function ($distance, ExecutionContextInterface $context) {
+                        // Positive ne se déclenche pas sur un champ vide
+                        if ($distance === null && $context->getRoot()->get('hors_bordeaux')->getData()) {
+                            $context->buildViolation('Indiquez la distance pour une livraison hors Bordeaux.')->addViolation();
+                        }
+                    }),
                 ],
             ]);
     }
