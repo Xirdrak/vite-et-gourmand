@@ -72,7 +72,7 @@
                     {{ form_label(form.hors_bordeaux) }}
                 </div>
 
-                <div class="form-group" id="km-field" style="display:{{ form.vars.value['hors_bordeaux'] ?? false ? 'block' : 'none' }};">
+                <div class="form-group" id="km-field" style="display:{{ form.hors_bordeaux.vars.checked ? 'block' : 'none' }};">
                     {{ form_label(form.nombre_km) }}
                     {{ form_widget(form.nombre_km, {attr: {class: 'form-input'}}) }}
                     {{ form_errors(form.nombre_km) }}
