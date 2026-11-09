@@ -88,13 +88,4 @@ class Menu
     public function getImages(): Collection { return $this->images; }
     public function getPlats(): Collection { return $this->plats; }
     public function getCommandes(): Collection { return $this->commandes; }
-
-    public function getPrixTotal(int $nombrePersonnes): float
-    {
-        $prix = (float) $this->prixParPersonne * $nombrePersonnes;
-        if ($nombrePersonnes >= $this->nombrePersonneMinimum + 5) {
-            $prix *= 0.9;
-        }
-        return round($prix, 2);
-    }
 }
