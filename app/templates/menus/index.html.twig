@@ -159,16 +159,16 @@
         rangeFill.style.width = ((max - min) / 200 * 100) + '%';
     }
 
-    // échappe le texte venant du serveur avant de l'injecter dans du HTML
+    // échappe le texte venant du serveur avant de l'injecter dans du HTML, guillemets compris pour les attributs
     function echapper(texte) {
         var div = document.createElement('div');
         div.textContent = texte;
-        return div.innerHTML;
+        return div.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
     function carteMenu(menu) {
         var image = menu.image
-            ? '<img class="card-menu__image" src="' + menu.image + '" alt="' + echapper(menu.titre) + '">'
+            ? '<img class="card-menu__image" src="' + echapper(menu.image) + '" alt="' + echapper(menu.titre) + '">'
             : '<div class="card-menu__placeholder">🍽️</div>';
 
         return '' +
@@ -177,8 +177,8 @@
             '<div class="card-menu__image-wrapper">' +
               image +
               '<div class="card-menu__badges">' +
-                '<span class="badge badge--' + menu.theme.slug + '">' + echapper(menu.theme.libelle) + '</span>' +
-                '<span class="badge badge--' + menu.regime.slug + '">' + echapper(menu.regime.libelle) + '</span>' +
+                '<span class="badge badge--' + echapper(menu.theme.slug) + '">' + echapper(menu.theme.libelle) + '</span>' +
+                '<span class="badge badge--' + echapper(menu.regime.slug) + '">' + echapper(menu.regime.libelle) + '</span>' +
               '</div>' +
             '</div>' +
             '<div class="card-menu__body">' +
@@ -186,10 +186,10 @@
               '<p class="card-menu__description">' + echapper(menu.description) + '</p>' +
               '<div class="card-menu__meta">' +
                 '<div>' +
-                  '<p class="card-menu__price">' + menu.prix + '€ / pers.</p>' +
-                  '<p class="card-menu__persons">Min. ' + menu.nbMin + ' personnes</p>' +
+                  '<p class="card-menu__price">' + echapper(menu.prix) + '€ / pers.</p>' +
+                  '<p class="card-menu__persons">Min. ' + echapper(menu.nbMin) + ' personnes</p>' +
                 '</div>' +
-                '<a href="' + menu.url + '" class="btn-ghost" style="padding: var(--space-xs) var(--space-sm); font-size: var(--fs-label-sm);">Voir le menu</a>' +
+                '<a href="' + echapper(menu.url) + '" class="btn-ghost" style="padding: var(--space-xs) var(--space-sm); font-size: var(--fs-label-sm);">Voir le menu</a>' +
               '</div>' +
             '</div>' +
           '</div>' +
