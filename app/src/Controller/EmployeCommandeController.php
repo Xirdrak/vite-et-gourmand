@@ -8,6 +8,7 @@ use App\Form\AnnulationCommandeType;
 use App\Repository\CommandeRepository;
 use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,7 +51,7 @@ class EmployeCommandeController extends AbstractController
     }
 
     #[Route('/{id}/statut', name: 'app_employe_commande_statut', methods: ['POST'], requirements: ['id' => '\d+'])]
-    public function changerStatut(int $id, Request $request, CommandeRepository $repo, EntityManagerInterface $em, MailerService $mailer): Response
+    public function changerStatut(int $id, Request $request, CommandeRepository $repo, EntityManagerInterface $em, MailerService $mailer, LoggerInterface $logger): Response
     {
         $commande = $repo->find($id);
         if (!$commande) {
@@ -91,7 +92,10 @@ class EmployeCommandeController extends AbstractController
             } elseif ($nouveauStatut === CommandeStatut::Terminee) {
                 $mailer->sendCommandeTerminee($commande->getUtilisateur(), $commande);
             }
-        } catch (\Exception) {}
+        } catch (\Exception $e) {
+            $logger->error('Mail de la commande ' . $commande->getNumeroCommande() . ' non envoyé : ' . $e->getMessage());
+            $this->addFlash('warning', "Le mail au client n'a pas pu être envoyé. Pensez à le prévenir par téléphone.");
+        }
 
         $this->addFlash('success', 'Statut mis à jour : ' . $nouveauStatut->label() . '.');
         return $this->redirectToRoute('app_employe_commande_show', ['id' => $commande->getId()]);

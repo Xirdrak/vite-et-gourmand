@@ -8,6 +8,7 @@ use App\Repository\RoleRepository;
 use App\Repository\UtilisateurRepository;
 use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,6 +36,7 @@ class AdminUtilisateurController extends AbstractController
         UserPasswordHasherInterface $hasher,
         MailerService $mailer,
         UtilisateurRepository $utilisateurRepo,
+        LoggerInterface $logger,
     ): Response {
         $form = $this->createForm(NouvelEmployeType::class);
         $form->handleRequest($request);
@@ -64,9 +66,13 @@ class AdminUtilisateurController extends AbstractController
 
             try {
                 $mailer->sendNouveauCompteEmploye($employe);
-            } catch (\Exception) {}
+                $this->addFlash('success', 'Compte employé créé pour ' . $employe->getNomComplet() . '. Un mail de notification a été envoyé.');
+            } catch (\Exception $e) {
+                $logger->error('Mail de création du compte employé non envoyé : ' . $e->getMessage());
+                $this->addFlash('success', 'Compte employé créé pour ' . $employe->getNomComplet() . '.');
+                $this->addFlash('warning', "Le mail de notification n'a pas pu être envoyé.");
+            }
 
-            $this->addFlash('success', 'Compte employé créé pour ' . $employe->getNomComplet() . '. Un mail de notification a été envoyé.');
             return $this->redirectToRoute('app_admin_employes');
         }
 
