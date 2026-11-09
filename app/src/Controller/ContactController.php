@@ -6,6 +6,7 @@ use App\Entity\Contact;
 use App\Form\ContactType;
 use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ContactController extends AbstractController
 {
     #[Route('/contact', name: 'app_contact')]
-    public function index(Request $request, MailerService $mailer, EntityManagerInterface $em): Response
+    public function index(Request $request, MailerService $mailer, EntityManagerInterface $em, LoggerInterface $logger): Response
     {
         $defaultData = [
             'email' => $this->getUser()?->getEmail() ?? '',
@@ -40,7 +41,9 @@ class ContactController extends AbstractController
                     $data['sujet'],
                     $data['message'],
                 );
-            } catch (\Exception) {}
+            } catch (\Exception $e) {
+                $logger->error('Mail de contact non envoyé : ' . $e->getMessage());
+            }
 
             $confirmation = 'Votre message a bien été envoyé. Nous vous répondrons dans les plus brefs délais.';
 

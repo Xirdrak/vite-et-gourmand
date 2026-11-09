@@ -7,6 +7,7 @@ use App\Form\CommandeType;
 use App\Repository\MenuRepository;
 use App\Service\CommandeService;
 use App\Service\MailerService;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +24,7 @@ class CommandeController extends AbstractController
         CommandeService $commandeService,
         MailerService $mailer,
         MenuRepository $menuRepository,
+        LoggerInterface $logger,
     ): Response {
         $menuPreselectionne = null;
         $menuId = $request->query->getInt('menu');
@@ -61,8 +63,9 @@ class CommandeController extends AbstractController
 
             try {
                 $mailer->sendCommandeConfirmation($utilisateur, $commande);
-            } catch (\Exception) {
-                // L'envoi du mail n'est pas bloquant
+            } catch (\Exception $e) {
+                // L'envoi du mail n'est pas bloquant, mais on garde une trace
+                $logger->error('Mail de confirmation de la commande ' . $commande->getNumeroCommande() . ' non envoyé : ' . $e->getMessage());
             }
 
             return $this->redirectToRoute('app_order_confirmation', [
